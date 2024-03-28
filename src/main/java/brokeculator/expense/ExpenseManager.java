@@ -76,18 +76,25 @@ public class ExpenseManager {
         }
     }
 
-    public String getExpensesListString(int amountToList) {
+    public String getExpensesListString(int beginIndex, int endIndex) {
         assert !this.expenses.isEmpty();
 
         int lastIdxToPrint;
-        if (amountToList <= 0 || amountToList > this.expenses.size()) {
+        if (endIndex < 0 || endIndex > this.expenses.size()) {
             lastIdxToPrint = this.expenses.size();
         } else {
-            lastIdxToPrint = amountToList;
+            lastIdxToPrint = endIndex;
+        }
+
+        int firstIdxToPrint;
+        if (beginIndex < 0) {
+            firstIdxToPrint = 0;
+        } else {
+            firstIdxToPrint = beginIndex;
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < lastIdxToPrint; i++) {
+        for (int i = firstIdxToPrint; i < lastIdxToPrint; i++) {
             sb.append(i + 1).append(". ").append(expenses.get(i)).append(System.lineSeparator());
         }
 
@@ -107,7 +114,7 @@ public class ExpenseManager {
 
     @Override
     public String toString() {
-        return getExpensesListString(expenses.size());
+        return getExpensesListString(0, expenses.size());
     }
     
     public int getNumberOfExpensesTracked() {
