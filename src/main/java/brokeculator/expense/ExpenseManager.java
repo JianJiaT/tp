@@ -1,6 +1,7 @@
 package brokeculator.expense;
 
 import brokeculator.enumerators.Category;
+import brokeculator.frontend.UI;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
@@ -64,6 +65,16 @@ public class ExpenseManager {
         }
         for (Expense expense : expensesToSummarise) {
             total += expense.getAmount();
+        }
+        if (expensesToSummarise.isEmpty()) {
+            UI.prettyPrint("Nothing to summarise!");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < expensesToSummarise.size(); i++) {
+                sb.append(i + 1).append(". ").append(expensesToSummarise.get(i)).append(System.lineSeparator());
+            }
+            String summarisedExpensesListString = String.valueOf(sb);
+            UI.prettyPrint(summarisedExpensesListString);
         }
         return total;
     }
