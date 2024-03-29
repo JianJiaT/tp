@@ -13,11 +13,13 @@ import java.util.Set;
 public class Category {
     private static final int LIST_ALL_EXPENSES = -1;
     private static final String DASH = "- ";
-    private static Dashboard dashboard;
+    private static Dashboard dashboard = null;
     private static boolean isDashboardSet = false;
     private static Set<String> categories = new HashSet<>();
     public static void setDashboard(Dashboard dashboard) {
-        assert !isDashboardSet : "Dashboard should not be set twice";
+        if (isDashboardSet) {
+            return;
+        }
         Category.isDashboardSet = true;
         Category.dashboard = dashboard;
     }
