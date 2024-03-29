@@ -16,19 +16,21 @@ public class CategoryParser {
             return new InvalidCommand("Please specify a subcommand." + System.lineSeparator()
                     + "Format: category <subcommand: list|add|delete> <string_value>");
         }
-        boolean validAddSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals("add") && userInputAsArray.length > 2;
-        boolean validDeleteSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals("delete")
-                                        && userInputAsArray.length > 2;
-        boolean validListSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals("list") && userInputAsArray.length == 2;
-        if (validAddSubcommand) {
+        boolean isAddSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals(ADD_SUBCOMMAND)
+                                  && userInputAsArray.length > 2;
+        boolean isDeleteSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals(DELETE_SUBCOMMAND)
+                                     && userInputAsArray.length > 2;
+        boolean isListSubcommand = userInputAsArray[SUBCOMMAND_INDEX].equals(LIST_SUBCOMMAND)
+                                   && userInputAsArray.length == 2;
+        if (isAddSubcommand) {
             int addFieldBeginIndex = userInput.indexOf(ADD_SUBCOMMAND) + ADD_SUBCOMMAND.length();
             return new CategoryCommand(ADD_SUBCOMMAND, userInput.substring(addFieldBeginIndex).trim());
         }
-        if (validDeleteSubcommand) {
+        if (isDeleteSubcommand) {
             int deleteFieldBeginIndex = userInput.indexOf(DELETE_SUBCOMMAND) + DELETE_SUBCOMMAND.length();
             return new CategoryCommand(DELETE_SUBCOMMAND, userInput.substring(deleteFieldBeginIndex).trim());
         }
-        if (validListSubcommand) {
+        if (isListSubcommand) {
             return new CategoryCommand(LIST_SUBCOMMAND);
         }
         return new InvalidCommand("Invalid category command");

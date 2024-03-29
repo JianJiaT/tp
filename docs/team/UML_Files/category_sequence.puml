@@ -31,15 +31,23 @@ deactivate CategoryParser
 alt CategoryCommand
     externalClasses -> CategoryCommand : execute()
     activate CategoryCommand
-    alt "add"
+    alt subcommand.equals("add")
         CategoryCommand -> Category : addCategory()
         activate Category
-    else "delete"
+        Category -[dashed]-> CategoryCommand: feedback:String
+        deactivate Category
+    else subcommand.equals("delete")
         CategoryCommand -> Category : deleteCategory()
-    else "list"
+        activate Category
+        Category -[dashed]-> CategoryCommand: feedback:String
+        deactivate Category
+    else subcommand.equals("list")
         CategoryCommand -> Category : listCategories()
+        activate Category
+        Category -[dashed]-> CategoryCommand: feedback:String
+        deactivate Category
     end
-    deactivate Category
+    CategoryCommand -[dashed]-> externalClasses
     deactivate CategoryCommand
     destroy CategoryCommand
 else InvalidCommand
@@ -48,6 +56,7 @@ else InvalidCommand
     InvalidCommand -> InvalidCommand : printErrorMessage()
     activate InvalidCommand
     deactivate InvalidCommand
+    InvalidCommand -[dashed]-> externalClasses
     destroy InvalidCommand
 end
 

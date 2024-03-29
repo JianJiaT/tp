@@ -32,6 +32,7 @@ The UML diagram below shows the main relationships between the classes in the Br
 
 ### Category feature
 **Implementation** </br>
+
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
 The `addCategory` method takes in a string as a parameter and adds it to the set of categories.
@@ -45,23 +46,28 @@ The `Category` class is supplemented by the following classes to interact with t
 - `CategoryParser` It is responsible for parsing the user input
 
 The UML diagram below shows the main relationships between the classes in the category feature.
-![img.png](images/category_class.png)
+![category_class.png](images/category_class.png)
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
-![img.png](images/category_parse_sequence.png)
+![category_parse_sequence.png](images/category_parse_sequence.png)
 **User input category parsing sequence**
 1. The user enters a command to add a category
 2. The `CategoryParser` class parses the user input and returns a `CategoryCommand` object or an `InvalidCommand` object
 depending on whether the user input is valid or not
 3. The returned Command object is executed by the Logic Class (omitted in the diagram for brevity)
 4. The appropriate method in the `Category` class is called to add the category, based on how the constructor
-of the `CategoryCommand` object was called
+of the `CategoryCommand` object was called. result of the command would be returned from the `Category` class
+to the `CategoryCommand` object, which would then be printed by the `UI` class to be viewed by the user (printing 
+omitted from sequence diagram for brevity)
 
 **Initialization** </br>
 On startup, the `Category` class has its' set of categories loaded from the file `categories.txt` in the data folder.
 This is facilitated by the `FileManager` and `GeneralFileParser` classes, with the `Logic` class serving as the main logic loop. 
 The `GeneralFileParser` class reads the file and returns a list of strings.
 The process is shown in the sequence diagram below:
-![img.png](images/category_load_sequence.png)
+![category_load_sequence.png](images/category_load_sequence.png)
+In addition, at program initialisation, the function `setDashboard(dashboard: Dashboard)`
+is called to set the dashboard object in the `Category` class.
+This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
 # Summarising expenses
 **Implementation** </br>

@@ -14,7 +14,29 @@
 ## Features 
 
 {Give detailed description of each feature}
-
+### 1. Handle categories: category
+#### **_SYNOPSIS_**
+```dtd    
+category [add|list|delete] [category_name]
+```
+#### **_DESCRIPTION_**
+Main command to handle categories. Add 
+and delete should be accompanied by category name. List will list all categories.
+When deleting a category, all expenses using that category must be deleted first.
+The category specified in `add` and `delete` will be converted to uppercase.
+#### **_USAGE_**
+Example of adding category: <br>
+```dtd
+category add test1
+```
+Example of deleting category: <br>
+```dtd
+category delete test2
+```
+Example of listing categories: <br>
+```dtd
+category list
+```
 ### Adding a todo: `todo`
 Adds a new item to the list of todo items.
 
