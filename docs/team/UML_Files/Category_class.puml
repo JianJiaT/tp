@@ -1,18 +1,44 @@
 @startuml
-class Dashboard
+class Dashboard {
+    expenseManager: ExpenseManager
+    eventManager: EventManager
+    fileManager: FileManager
+    --
+    getExpenseManager(): ExpenseManager
+    getEventManager(): EventManager
+    getFileManager(): FileManager
+}
+class command <<abstract>> {
+    execute(dashboard: Dashboard): void
+}
 class CategoryCommand {
+    subcommand: string
+    categoryString: string
+    --
     CategoryCommand(subcommand: string, categoryString: string)
     CategoryCommand(subcommand: string)
+    execute(dashboard: Dashboard): void
    }
-class AddCategoryFromFileCommand
-class CategoryParser
+class AddCategoryFromFileCommand {
+    --
+    execute(dashboard: Dashboard): void
+}
+class CategoryParser {
+    parseInput (userInput: string): Command
+}
 class GeneralFileParser
 class Category <<Singleton>> {
      catgories: HashSet<String>
+     --
+     addCategory(category: String): String
+     removeCategory(category: String): String
+     getCategoryListString(): String
 }
-Category --> Dashboard
+AddCategoryFromFileCommand --|> command
+CategoryCommand --|> command
+Category --> "1"  Dashboard
 CategoryParser -[dashed]-> CategoryCommand
-CategoryCommand -[dashed]-> Category
+CategoryCommand -[dashed]->  Category
 AddCategoryFromFileCommand -[dashed]-> Category
 GeneralFileParser -[dashed]-> AddCategoryFromFileCommand
 @enduml
