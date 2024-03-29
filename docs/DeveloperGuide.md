@@ -65,6 +65,9 @@ This is facilitated by the `FileManager` and `GeneralFileParser` classes, with t
 The `GeneralFileParser` class reads the file and returns a list of strings.
 The process is shown in the sequence diagram below:
 ![category_load_sequence.png](images/category_load_sequence.png)
+In addition, at program initialisation, the function `setDashboard(dashboard: Dashboard)`
+is called to set the dashboard object in the `Category` class.
+This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
 # Summarising expenses
 **Implementation** </br>

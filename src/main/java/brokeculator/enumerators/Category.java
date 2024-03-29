@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class Category {
     private static final int LIST_ALL_EXPENSES = -1;
+    private static final String DASH = "- ";
     private static Dashboard dashboard;
     private static boolean isDashboardSet = false;
     private static Set<String> categories = new HashSet<>();
@@ -21,10 +22,11 @@ public class Category {
         Category.dashboard = dashboard;
     }
     public static String addCategory(String category) {
-        if (categories.contains(category.toUpperCase())) {
+        category = category.toUpperCase();
+        if (categories.contains(category)) {
             return "Category already exists";
         }
-        categories.add(category.toUpperCase());
+        categories.add(category);
         return "Category added: " + category;
     }
     public static ArrayList<String> getCategoryList() {
@@ -34,6 +36,7 @@ public class Category {
         return categories.contains(category);
     }
     public static String removeCategory(String category) {
+        category = category.toUpperCase();
         if (isCategoryUsed(category)) {
             return "Cannot remove category that is in use";
         }
@@ -59,7 +62,7 @@ public class Category {
     public static String getCategoryListString() {
         StringBuilder sb = new StringBuilder();
         for (String category : categories) {
-            sb.append("- ").append(category).append(System.lineSeparator());
+            sb.append(DASH).append(category).append(System.lineSeparator());
         }
         return sb.toString();
     }

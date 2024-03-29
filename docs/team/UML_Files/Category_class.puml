@@ -27,7 +27,7 @@ class CategoryParser {
     parseInput (userInput: string): Command
 }
 class GeneralFileParser
-class Category <<Singleton>> {
+class Category {
      catgories: HashSet<String>
      --
      addCategory(category: String): String
