@@ -14,8 +14,7 @@ logic -> fileManager: openCategoryFile()
 activate fileManager
 fileManager -[dashed]-> logic: hasFileErrors: boolean
 deactivate fileManager
-    alt hasFileErrors
-        return
+    alt !hasFileErrors
     else
         logic -> fileManager : getNextLine()
         activate fileManager
@@ -39,7 +38,9 @@ deactivate fileManager
             activate AddCategoryFromFileCommand
             AddCategoryFromFileCommand -> category : addCategory(line)
             activate category
-            deactivate category
+            category -[dashed]-> AddCategoryFromFileCommand
+            deactivate
+            AddCategoryFromFileCommand -[dashed]-> logic
             deactivate AddCategoryFromFileCommand
             logic -> fileManager : getNextLine();
             activate fileManager

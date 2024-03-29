@@ -14,7 +14,6 @@ public class AddParser {
     public static final int DESCRIPTION_INDEX = 1;
     public static final int AMOUNT_INDEX = 2;
     public static final int CATEGORY_INDEX = 3;
-    public static final String DEFAULT_EXPENSE_CATEGORY = "null";
     public static final String AMOUNT_PATTERN = "^\\d+(\\.\\d+)?$";
     public static Command parseInput(String userInput) {
         if(!isOptionsPresent(userInput) || !isOptionsAppearOnce(userInput)) {
@@ -63,16 +62,16 @@ public class AddParser {
     }
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
-        boolean startAppending = false;
+        boolean shouldAppend = false;
         for (String s : userInputArray) {
             if (s.equals(option.trim())) {
-                startAppending = true;
+                shouldAppend = true;
                 continue;
             }
-            if (isWordOption(s) && startAppending) {
+            if (isWordOption(s) && shouldAppend) {
                 return optionField.toString().trim();
             }
-            if (startAppending) {
+            if (shouldAppend) {
                 optionField.append(s).append(" ");
             }
         }
