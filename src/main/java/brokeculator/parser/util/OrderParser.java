@@ -1,5 +1,8 @@
 package brokeculator.parser.util;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class OrderParser {
 
     /**
@@ -40,7 +43,7 @@ public class OrderParser {
             compressedKeywordPositions[compressedKeywordCount] = keywordPositions[i];
             compressedKeywordCount++;
         }
-        return compressedKeywordPositions;
+        return Arrays.copyOf(compressedKeywordPositions, compressedKeywordCount);
     }
 
     /**
