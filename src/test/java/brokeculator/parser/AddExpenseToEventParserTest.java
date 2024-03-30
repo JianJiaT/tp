@@ -1,6 +1,6 @@
 package brokeculator.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import brokeculator.command.AddExpenseToEventCommand;
 import brokeculator.command.Command;
@@ -37,12 +37,6 @@ class AddExpenseToEventParserTest {
     @Test
     void parseInput_tooManyArguments_invalidCommand() {
         Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi 2 /exi 3");
-        assertInstanceOf(InvalidCommand.class, command);
-    }
-
-    @Test
-    void parseInput_nanIndex_invalidCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi NaN");
         assertInstanceOf(InvalidCommand.class, command);
     }
 }

@@ -2,7 +2,9 @@ package brokeculator.parser.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class OrderParserTest {
     Keyword keyword1 = new Keyword("/from", "From date", false);

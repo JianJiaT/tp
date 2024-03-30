@@ -1,6 +1,5 @@
 package brokeculator.parser.util;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class OrderParser {
@@ -56,7 +55,7 @@ public class OrderParser {
      * @throws Exception If a mandatory keyword is missing or empty
      */
     private static String[] retrieveInputsForProvidedKeywords
-            (String userInput, Keyword[] keywords, int[] providedKeywordPositions, int[] keywordPositions)
+    (String userInput, Keyword[] keywords, int[] providedKeywordPositions, int[] keywordPositions)
             throws Exception {
         String[] userInputs = new String[keywords.length];
         int providedKeywordCount = providedKeywordPositions.length;
