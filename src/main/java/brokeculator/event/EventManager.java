@@ -2,9 +2,7 @@ package brokeculator.event;
 
 import java.util.ArrayList;
 
-import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
-import brokeculator.parser.util.OrderParser;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
@@ -39,6 +37,9 @@ public class EventManager {
         }
         return events.get(idx - 1);
     }
+    public int getEventIndex(Event event) {
+        return events.indexOf(event) + 1;
+    }
     public void removeEvent(int idx) {
         if (!isEventIdxValid(idx)) {
             return;
@@ -69,7 +70,7 @@ public class EventManager {
         }
         return sb.toString();
     }
-    
+
 }
 
 

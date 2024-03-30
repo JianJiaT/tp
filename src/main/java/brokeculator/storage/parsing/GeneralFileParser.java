@@ -4,6 +4,7 @@ import brokeculator.command.AddExpenseFromFileCommand;
 import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.command.AddCategoryFromFileCommand;
+import brokeculator.command.AddConnectionFromFileCommand;
 import brokeculator.command.AddEventFromFileCommand;
 
 public class GeneralFileParser {
@@ -27,6 +28,8 @@ public class GeneralFileParser {
             return new AddCategoryFromFileCommand(fileStringWithoutKeyword);
         case EVENT:
             return new AddEventFromFileCommand(fileStringWithoutKeyword);
+        case CONNECTION:
+            return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
         default:
             return new InvalidCommand("Saved file isn't recognized. Please check the file format.");
         }
