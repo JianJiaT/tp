@@ -52,6 +52,10 @@ public class EventExpenseDataIntegrityManager {
         expense.setOwningEvent(event);
     }
 
+    /**
+     * Returns a string representation of all connections between expenses and events
+     * @return String representation of all connections between expenses and events
+     */
     public String getConnectionsStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         ArrayList<Expense> expenses = expenseManager.getExpenses();
@@ -70,8 +74,13 @@ public class EventExpenseDataIntegrityManager {
         return sb.toString();
     }
 
-    public void loadConnectionFromStringRepresentation(String connectionsStringRepresentation) throws Exception {
-        String[] connectionDetails = OrderParser.parseOrder(connectionsStringRepresentation, CONNECTION_KEYWORDS);
+    /**
+     * Loads connection between expenses and events from a string representation
+     * @param connectionStringRepresentation String representation of a connection 
+     * @throws Exception If an invalid connection is detected
+     */
+    public void loadConnectionFromStringRepresentation(String connectionStringRepresentation) throws Exception {
+        String[] connectionDetails = OrderParser.parseOrder(connectionStringRepresentation, CONNECTION_KEYWORDS);
         int expenseIndex = Integer.parseInt(connectionDetails[0]);
         int eventIndex = Integer.parseInt(connectionDetails[1]);
         Expense expense = expenseManager.getExpense(expenseIndex);

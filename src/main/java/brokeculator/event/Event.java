@@ -13,7 +13,7 @@ public class Event implements Saveable {
             = new Keyword("|__EVENT_NAME__|:", "event name", false);
     private static final Keyword DESCRIPTION_KEYWORD
             = new Keyword("|__EVENT_DESCRIPTION__|:", "event description", false);
-    private static Keyword[] SAVING_KEYWORDS = {NAME_KEYWORD, DESCRIPTION_KEYWORD};
+    private static final Keyword[] SAVING_KEYWORDS = {NAME_KEYWORD, DESCRIPTION_KEYWORD};
 
     private String eventName;
     private String eventDescription;

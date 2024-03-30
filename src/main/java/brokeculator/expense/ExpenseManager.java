@@ -4,7 +4,6 @@ import brokeculator.enumerators.Category;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
