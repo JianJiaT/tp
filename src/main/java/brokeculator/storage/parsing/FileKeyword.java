@@ -5,7 +5,8 @@ import java.util.Map;
 public class FileKeyword {
 
     private static final Map<SaveableType, String> FILE_KEYWORDS = Map.of(
-        SaveableType.EXPENSE, "--expense--", SaveableType.CATEGORY, "--category--"
+        SaveableType.EXPENSE, "--expense--", SaveableType.CATEGORY, "--category--", 
+        SaveableType.EVENT, "--event--", SaveableType.CONNECTION, "--connection--"
     );
 
     /**

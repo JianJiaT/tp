@@ -2,7 +2,11 @@ package brokeculator.event;
 
 import java.util.ArrayList;
 
+import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
+import brokeculator.parser.util.OrderParser;
+import brokeculator.storage.parsing.FileKeyword;
+import brokeculator.storage.parsing.SaveableType;
 
 public class EventManager {
     private static EventManager eventManager = null;
@@ -54,6 +58,18 @@ public class EventManager {
         }
         UI.prettyPrint(sb.toString());
     }
+
+    public String getEventsStringRepresentation() {
+        StringBuilder sb = new StringBuilder();
+        for (Event event : events) {
+            String currentEventString = event.getStringRepresentation();
+            String finalEventString = FileKeyword.formatWithKeyword(SaveableType.EVENT, currentEventString);
+            sb.append(finalEventString);
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+    
 }
 
 

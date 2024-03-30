@@ -13,14 +13,19 @@ import java.io.FileWriter;
 public class FileManager {
     private static final String DEFAULT_DATA_FILE_PATH = "./data/data.txt";
     private static final String DEFAULT_CATEGORY_FILE_PATH = "./data/category.txt";
+    private static final String DEFAULT_EVENT_FILE_PATH = "./data/event.txt";
+
     private File dataFile;
     private File categoryFile;
+    private File eventFile;
+
     private Scanner scanner = null;
     private boolean hasFileErrors;
 
-    public FileManager(String dataFilePath, String categoryFilePath) {
-        this.dataFile = new File(dataFilePath);
-        this.categoryFile = new File(categoryFilePath);
+    public FileManager() {
+        this.dataFile = new File(DEFAULT_DATA_FILE_PATH);
+        this.categoryFile = new File(DEFAULT_CATEGORY_FILE_PATH);
+        this.eventFile = new File(DEFAULT_EVENT_FILE_PATH);
         try {
             if (!this.dataFile.exists()) {
                 createFile(this.dataFile);
@@ -28,18 +33,20 @@ public class FileManager {
             if (!this.categoryFile.exists()) {
                 createFile(this.categoryFile);
             }
+            if (!this.eventFile.exists()) {
+                createFile(this.eventFile);
+            }
             assert this.dataFile.exists();
             assert this.categoryFile.exists();
+            assert this.eventFile.exists();
             printDataSavedMessage(dataFile);
             printDataSavedMessage(categoryFile);
+            printDataSavedMessage(eventFile);
             this.hasFileErrors = false;
         } catch (Exception e) {
             printDataLossWarning(); 
             this.hasFileErrors = true;
         }
-    }
-    public FileManager() {
-        this(FileManager.DEFAULT_DATA_FILE_PATH, FileManager.DEFAULT_CATEGORY_FILE_PATH);
     }
 
     private boolean openFile(File file) {
@@ -64,6 +71,8 @@ public class FileManager {
             return openFile(this.categoryFile);
         case EXPENSE:
             return openFile(this.dataFile);
+        case EVENT:
+            return openFile(this.eventFile);
         default:
             return false;
         }
@@ -86,6 +95,9 @@ public class FileManager {
     }
     public void saveCategories(String data) {
         save(data, this.categoryFile);
+    }
+    public void saveEvents(String data) {
+        save(data, this.eventFile);
     }
 
     private void printDataLossWarning() {

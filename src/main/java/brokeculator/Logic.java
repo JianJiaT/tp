@@ -38,6 +38,7 @@ public class Logic {
     private void loadFiles() {
         loadFile(SaveableType.CATEGORY);
         loadFile(SaveableType.EXPENSE);
+        loadFile(SaveableType.EVENT);
     }
     private void loadFile(SaveableType saveableType) {
         boolean isFileErrorFree = dashboard.getFileManager().openFile(saveableType);
@@ -54,6 +55,7 @@ public class Logic {
     private void saveFiles() {
         saveExpensesToFile();
         saveCategoriesToFile();
+        saveEventsToFile();
     }
     private void saveExpensesToFile() {
         try {
@@ -67,6 +69,14 @@ public class Logic {
         try {
             String categoryListToSave = Category.getCategoriesStringRepresentation();
             dashboard.getFileManager().saveCategories(categoryListToSave);
+        } catch (Exception e) {
+            UI.prettyPrint("file save error occurred" + e.getMessage());
+        }
+    }
+    private void saveEventsToFile() {
+        try {
+            String eventListToSave = dashboard.getEventManager().getEventsStringRepresentation();
+            dashboard.getFileManager().saveEvents(eventListToSave);
         } catch (Exception e) {
             UI.prettyPrint("file save error occurred" + e.getMessage());
         }
