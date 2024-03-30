@@ -8,10 +8,21 @@ public class FileKeyword {
         SaveableType.EXPENSE, "--expense--", SaveableType.CATEGORY, "--category--"
     );
 
+    /**
+     * Formats the string representation of a saveable object with the keyword
+     * @param saveableType Type of the saveable object
+     * @param originalStringRepresentation Original string representation of the saveable object
+     * @return Formatted string representation with the keyword
+     */
     public static String formatWithKeyword(SaveableType saveableType, String originalStringRepresentation) {
         return FILE_KEYWORDS.get(saveableType) + originalStringRepresentation;
     }
 
+    /**
+     * Gets the saveable type of the object from the file string
+     * @param fileString File string
+     * @return Saveable type of the object
+     */
     public static SaveableType getSaveableType(String fileString) {
         for (Map.Entry<SaveableType, String> entry : FILE_KEYWORDS.entrySet()) {
             String keyword = entry.getValue();
@@ -23,6 +34,11 @@ public class FileKeyword {
         return null;
     }
 
+    /**
+     * Removes the keyword from the file string
+     * @param fileString File string
+     * @return File string without the keyword
+     */
     public static String removeKeyword(String fileString) {
         SaveableType saveableType = getSaveableType(fileString);
         if (saveableType == null) {

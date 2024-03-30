@@ -12,6 +12,10 @@ public class EventManager {
         this.events = new ArrayList<>();
     }
 
+    /**
+     * Returns the singleton instance of EventManager
+     * @return Singleton instance of EventManager
+     */
     public static EventManager getInstance() {
         if (EventManager.eventManager == null) {
             EventManager.eventManager = new EventManager();

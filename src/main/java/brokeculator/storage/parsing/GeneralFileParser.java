@@ -6,6 +6,12 @@ import brokeculator.command.InvalidCommand;
 import brokeculator.command.AddCategoryFromFileCommand;
 
 public class GeneralFileParser {
+    
+    /**
+     * Parses the file input to identify the type of saveable and returns the corresponding command
+     * @param fileString File input
+     * @return InvalidCommand if the input is invalid, AddExpenseFromFileCommand or AddCategoryFromFileCommand otherwise
+     */
     public static Command getCommandFromFileInput(String fileString) {
 
         SaveableType saveableType = FileKeyword.getSaveableType(fileString);

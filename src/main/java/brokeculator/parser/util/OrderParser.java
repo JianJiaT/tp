@@ -2,6 +2,13 @@ package brokeculator.parser.util;
 
 public class OrderParser {
 
+    /**
+     * Returns the positions of the keywords in the user input
+     * @param userInput User input
+     * @param keywords Keywords to search for
+     * @return Positions of the keywords in the user input
+     * @throws Exception If a mandatory keyword is missing
+     */
     private static int[] retrieveKeywordPositions(String userInput, Keyword[] keywords) throws Exception {
         int[] keywordPositions = new int[keywords.length];
         for (int i = 0; i < keywords.length; i++) {
@@ -13,6 +20,12 @@ public class OrderParser {
         return keywordPositions;
     }
 
+    /**
+     * Compresses the keyword positions array by removing the -1 values
+     * @param keywordPositions Keyword positions array
+     * @return Compressed keyword positions array
+     * @throws Exception If the input format is incorrect - an earlier keyword is found after a later keyword
+     */
     private static int[] compressKeywordPositions(int[] keywordPositions) throws Exception {
         int[] compressedKeywordPositions = new int[keywordPositions.length];
         int compressedKeywordCount = 0;
@@ -30,6 +43,15 @@ public class OrderParser {
         return compressedKeywordPositions;
     }
 
+    /**
+     * Retrieves the inputs for the provided keywords
+     * @param userInput User input
+     * @param keywords Keywords to search for
+     * @param providedKeywordPositions Positions of the provided keywords
+     * @param keywordPositions Positions of the keywords in the user input
+     * @return Inputs for the provided keywords
+     * @throws Exception If a mandatory keyword is missing or empty
+     */
     private static String[] retrieveInputsForProvidedKeywords
             (String userInput, Keyword[] keywords, int[] providedKeywordPositions, int[] keywordPositions)
             throws Exception {
@@ -56,6 +78,13 @@ public class OrderParser {
         return userInputs;
     }
 
+    /**
+     * Parses the user input to retrieve the inputs for the provided keywords
+     * @param userInput User input
+     * @param keywords Keywords to search for
+     * @return Inputs for the provided keywords
+     * @throws Exception If a mandatory keyword is missing or empty, or if the input format is incorrect
+     */
     public static String[] parseOrder(String userInput, Keyword[] keywords)
             throws Exception {
         int[] keywordPositions = retrieveKeywordPositions(userInput, keywords);
