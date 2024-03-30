@@ -5,16 +5,19 @@ import brokeculator.exceptions.BrokeculatorException;
 import brokeculator.frontend.UI;
 import brokeculator.command.Command;
 import brokeculator.storage.parsing.GeneralFileParser;
+import brokeculator.storage.parsing.SaveableType;
 import brokeculator.parser.GeneralInputParser;
 
+
+//@@author yeozhishen
 public class Logic {
     private final Dashboard dashboard;
     public Logic(Dashboard dashboard) {
         this.dashboard = dashboard;
     }
     public void run() {
-        loadCategoriesFromFile();
-        loadExpensesFromFile();
+        loadFiles();
+        saveFiles();
         UI.greetUser();
         while (true) {
             try {
@@ -23,8 +26,7 @@ public class Logic {
                 Command command = GeneralInputParser.getCommandFromUserInput(userInput);
                 assert command != null : "command should not be null";
                 command.execute(dashboard);
-                saveExpensesToFile();
-                saveCategoriesToFile();
+                saveFiles();
             } catch (BrokeculatorException b) {
                 UI.prettyPrint("Brokeculator error occurred. " + b.getMessage());
             } catch (Exception e) {
@@ -32,9 +34,14 @@ public class Logic {
             }
         }
     }
-    private void loadExpensesFromFile() {
-        boolean expenseFileHasNoFileErrors = dashboard.getFileManager().openExpenseFile();
-        if (!expenseFileHasNoFileErrors) {
+
+    private void loadFiles() {
+        loadFile(SaveableType.CATEGORY);
+        loadFile(SaveableType.EXPENSE);
+    }
+    private void loadFile(SaveableType saveableType) {
+        boolean isFileErrorFree = dashboard.getFileManager().openFile(saveableType);
+        if (!isFileErrorFree) {
             UI.println("continuing without file");
             return;
         }
@@ -43,8 +50,10 @@ public class Logic {
             Command loadCommand = GeneralFileParser.getCommandFromFileInput(line);
             loadCommand.execute(dashboard);
         }
-        //after obtaining a clean expense list, we save it back to the file to remove any corrupted data
+    }
+    private void saveFiles() {
         saveExpensesToFile();
+        saveCategoriesToFile();
     }
     private void saveExpensesToFile() {
         try {
@@ -53,19 +62,6 @@ public class Logic {
         } catch (Exception e) {
             UI.prettyPrint("file save error occurred" + e.getMessage());
         }
-    }
-    private void loadCategoriesFromFile() {
-        boolean categoryFileHasNoFileErrors = dashboard.getFileManager().openCategoryFile();
-        if (!categoryFileHasNoFileErrors) {
-            UI.println("continuing without file");
-            return;
-        }
-        while (dashboard.getFileManager().hasNextLine()) {
-            String line = dashboard.getFileManager().readNextLine();
-            Command loadCommand = GeneralFileParser.getCommandFromFileInput(line);
-            loadCommand.execute(dashboard);
-        }
-        saveCategoriesToFile();
     }
     private void saveCategoriesToFile() {
         try {
