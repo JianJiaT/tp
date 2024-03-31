@@ -16,6 +16,10 @@ public class Category {
     private static Dashboard dashboard = null;
     private static boolean isDashboardSet = false;
     private static Set<String> categories = new HashSet<>();
+    /**
+     * Sets the dashboard for the Category class
+     * @param dashboard Dashboard to be set
+     */
     public static void setDashboard(Dashboard dashboard) {
         if (isDashboardSet) {
             return;
@@ -61,6 +65,10 @@ public class Category {
         }
         return false;
     }
+    /**
+     * Returns a string representation of all categories, appended with a dash for each category
+     * @return String representation of all categories
+     */
     public static String getCategoryListString() {
         StringBuilder sb = new StringBuilder();
         for (String category : categories) {
@@ -68,6 +76,10 @@ public class Category {
         }
         return sb.toString();
     }
+    /**
+     * Returns a string representation of all categories, formatted for saving
+     * @return String representation of all categories, formatted for saving
+     */
     public static String getCategoriesStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         for (String category : categories) {

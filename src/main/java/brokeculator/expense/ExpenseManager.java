@@ -57,13 +57,15 @@ public class ExpenseManager {
             endIndex = expenses.size() - 1;
         }
         boolean isDescriptionNull = (description == null);
+        boolean isCategoryNull = (category == null);
         ArrayList<Expense> expensesToSummarise = new ArrayList<Expense>();
         for (Expense expense : expenses.subList(beginIndex, endIndex + 1)) {
-            if (!isDescriptionNull && !expense.getDescription().contains(description)) {
+            boolean isSummarizeDescription = isDescriptionNull || expense.getDescription().contains(description);
+            // TODO implement date processing
+            boolean isSummarizeCategory = isCategoryNull || expense.getCategory().equals(category);
+            if (!isSummarizeDescription && !isSummarizeCategory) {
                 continue;
             }
-            // TODO implement date processing
-            // TODO implement category processing
             expensesToSummarise.add(expense);
         }
         for (Expense expense : expensesToSummarise) {
