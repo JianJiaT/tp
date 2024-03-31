@@ -10,8 +10,8 @@ public class CategoryCommand extends Command {
     public static final String ADD_SUBCOMMAND = "add";
     public static final String DELETE_SUBCOMMAND = "delete";
     public static final String LIST_SUBCOMMAND = "list";
-    String subcommand;
-    String value;
+    private String subcommand;
+    private String value;
     public CategoryCommand(String subcommand) {
         this.subcommand = subcommand;
     };

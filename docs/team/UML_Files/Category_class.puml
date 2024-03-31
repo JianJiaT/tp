@@ -1,38 +1,39 @@
 @startuml
+skinparam classAttributeIconSize 0
 class Dashboard {
-    expenseManager: ExpenseManager
-    eventManager: EventManager
-    fileManager: FileManager
+    - expenseManager: ExpenseManager
+    - eventManager: EventManager
+    - fileManager: FileManager
     --
-    getExpenseManager(): ExpenseManager
-    getEventManager(): EventManager
-    getFileManager(): FileManager
+    + getExpenseManager(): ExpenseManager
+    + getEventManager(): EventManager
+    + getFileManager(): FileManager
 }
 class command <<abstract>> {
-    execute(dashboard: Dashboard): void
+    + execute(dashboard: Dashboard): void
 }
 class CategoryCommand {
-    subcommand: string
-    categoryString: string
+    - subcommand: string
+    - categoryString: string
     --
-    CategoryCommand(subcommand: string, categoryString: string)
-    CategoryCommand(subcommand: string)
-    execute(dashboard: Dashboard): void
+    + CategoryCommand(subcommand: string, categoryString: string)
+    + CategoryCommand(subcommand: string)
+    + execute(dashboard: Dashboard): void
    }
 class AddCategoryFromFileCommand {
     --
-    execute(dashboard: Dashboard): void
+    + execute(dashboard: Dashboard): void
 }
 class CategoryParser {
-    parseInput (userInput: string): Command
+    + parseInput (userInput: string): Command
 }
 class GeneralFileParser
 class Category {
-     catgories: HashSet<String>
+     - categories: HashSet<String>
      --
-     addCategory(category: String): String
-     removeCategory(category: String): String
-     getCategoryListString(): String
+     + addCategory(category: String): String
+     + removeCategory(category: String): String
+     + getCategoryListString(): String
 }
 AddCategoryFromFileCommand --|> command
 CategoryCommand --|> command
