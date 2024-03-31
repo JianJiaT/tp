@@ -1,15 +1,38 @@
 # Developer Guide
 
+* [Acknowledgements](#acknowledgements)
+* [Setting up, getting started] (#setting-up-getting-started)
+* [Design & implementation](#design--implementation)
+  * [Architecture](#architecture)
+  * [Category feature](#category-feature)
+* [Product scope](#product-scope)
+  * [Target user profile](#target-user-profile)
+  * [Value proposition](#value-proposition)
+* [User Stories](#user-stories)
+* [Non-Functional Requirements](#non-functional-requirements)
+* [Glossary](#glossary)
+* [Instructions for manual testing](#instructions-for-manual-testing)
+
 ## Acknowledgements
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+
+## Setting up, getting started
+
+Refer to the guide [Setting up and getting started]().
 
 ## Design & implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
-# Category feature
+### Architecture
+
+The UML diagram below shows the main relationships between the classes in the Brokeculator application.
+![img.png](images/architecture.png)
+
+### Category feature
 **Implementation** </br>
+
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
 The `addCategory` method takes in a string as a parameter and adds it to the set of categories.
@@ -23,23 +46,55 @@ The `Category` class is supplemented by the following classes to interact with t
 - `CategoryParser` It is responsible for parsing the user input
 
 The UML diagram below shows the main relationships between the classes in the category feature.
-![img.png](images/category_class.png)
+![category_class.png](images/category_class.png)
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
-![img.png](images/category_parse_sequence.png)
+![category_parse_sequence.png](images/category_parse_sequence.png)
 **User input category parsing sequence**
 1. The user enters a command to add a category
 2. The `CategoryParser` class parses the user input and returns a `CategoryCommand` object or an `InvalidCommand` object
 depending on whether the user input is valid or not
 3. The returned Command object is executed by the Logic Class (omitted in the diagram for brevity)
 4. The appropriate method in the `Category` class is called to add the category, based on how the constructor
-of the `CategoryCommand` object was called
+of the `CategoryCommand` object was called. result of the command would be returned from the `Category` class
+to the `CategoryCommand` object, which would then be printed by the `UI` class to be viewed by the user (printing 
+omitted from sequence diagram for brevity)
 
 **Initialization** </br>
 On startup, the `Category` class has its' set of categories loaded from the file `categories.txt` in the data folder.
 This is facilitated by the `FileManager` and `GeneralFileParser` classes, with the `Logic` class serving as the main logic loop. 
 The `GeneralFileParser` class reads the file and returns a list of strings.
 The process is shown in the sequence diagram below:
-![img.png](images/category_load_sequence.png)
+![category_load_sequence.png](images/category_load_sequence.png)
+In addition, at program initialisation, the function `setDashboard(dashboard: Dashboard)`
+is called to set the dashboard object in the `Category` class.
+This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
+
+# Summarising expenses
+**Implementation** </br>
+The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
+The `SummariseParser` class is responsible for constructing a `SummariseCommand` object from valid user input, which upon
+execution would call the `summariseExpenses` method of the application's `ExpenseManager` object to obtain a summary of the expenses
+currently tracked.
+
+The following sequence diagram shows how user input is parsed to produce a summary of expenses in accordance with user
+specifications:
+
+![img.png](images/summarise_sequence.png)
+
+**User input parsing sequence**
+1. The user enters a command to summarise expenses, which is caught by the `UI` class and returned to the `Logic` class
+2. The `Logic` class directs the user input to the `GeneralInputParser` class, which sees the `summarise` keyword
+in the user input and directs it to the `SummariseParser` class
+3. The `SummariseParser` class parses the user input and returns a `SummariseCommand` object or an `InvalidCommand` object 
+depending on whether the user input is valid or not. A `SummariseCommand` object would store relevant information from
+the user input in its private fields, whereas an `InvalidCommand` object would store an error message specifying the issues
+of the user input
+4. The `Logic` class calls the `execute(Dashboard dashboard)` method of the returned `Command` object
+5. Upon execution, a `SummariseCommand` object would retrieve a reference to the `ExpenseManager` object stored within the 
+`dashboard` and execute its `summariseExpenses` method, passing in its fields as parameters to the method call. This summarises
+the expenses stored in the `ExpenseManager` object according to the user's specifications. The summary is then printed 
+by the `UI` class to be viewed by the user
+6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
 # Event feature
 **Implementation** </br>

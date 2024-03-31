@@ -1,7 +1,7 @@
 package brokeculator.command;
 
 import brokeculator.dashboard.Dashboard;
-import brokeculator.event.Event;
+import brokeculator.event.EventExpenseDataIntegrityManager;
 import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
 
@@ -20,10 +20,7 @@ public class DeleteCommand extends Command {
             return;
         }
         Expense expense = dashboard.getExpenseManager().getExpense(indexToDelete);
-        Event owningEvent = expense.getOwningEvent();
-        if (owningEvent != null) {
-            owningEvent.removeExpense(expense);
-        }
+        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense);
         dashboard.getExpenseManager().delete(indexToDelete);
         UI.prettyPrint("Deleted expense at index " + indexToDelete);
     }

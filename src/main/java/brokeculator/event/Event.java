@@ -3,8 +3,17 @@ package brokeculator.event;
 import java.util.ArrayList;
 
 import brokeculator.expense.Expense;
+import brokeculator.expense.Saveable;
+import brokeculator.parser.util.Keyword;
+import brokeculator.parser.util.OrderParser;
 
-public class Event {
+public class Event implements Saveable {
+
+    private static final Keyword NAME_KEYWORD
+            = new Keyword("|__EVENT_NAME__|:", "event name", false);
+    private static final Keyword DESCRIPTION_KEYWORD
+            = new Keyword("|__EVENT_DESCRIPTION__|:", "event description", false);
+    private static final Keyword[] SAVING_KEYWORDS = {NAME_KEYWORD, DESCRIPTION_KEYWORD};
 
     private String eventName;
     private String eventDescription;
@@ -49,4 +58,14 @@ public class Event {
         return sb.toString();
     }
 
+
+    @Override
+    public String getStringRepresentation() {
+        return NAME_KEYWORD.keywordMarker + eventName + DESCRIPTION_KEYWORD.keywordMarker + eventDescription;
+    }
+
+    public static Event getEventFromFile(String stringRepresentation) throws Exception {
+        String[] eventDetails = OrderParser.parseOrder(stringRepresentation, Event.SAVING_KEYWORDS);
+        return new Event(eventDetails[0], eventDetails[1]);
+    }
 }

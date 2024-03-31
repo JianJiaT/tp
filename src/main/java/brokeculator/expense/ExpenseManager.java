@@ -40,6 +40,10 @@ public class ExpenseManager {
         return expenses.get(index - 1);
     }
 
+    public int getExpenseIndex(Expense expense) {
+        return expenses.indexOf(expense) + 1;
+    }
+
     public void delete(int index) {
         if (!isExpenseIndexValid(index)) {
             return;
@@ -85,6 +89,10 @@ public class ExpenseManager {
         } else {
             return new ArrayList<>(expenses.subList(0, Math.min(amountToList, expenses.size())));
         }
+    }
+
+    public ArrayList<Expense> getExpenses() {
+        return expenses;
     }
 
     public String getExpensesListString(int beginIndex, int endIndex) {
