@@ -62,8 +62,10 @@ public class ExpenseManager {
         for (Expense expense : expenses.subList(beginIndex, endIndex + 1)) {
             boolean isSummarizeDescription = isDescriptionNull || expense.getDescription().contains(description);
             // TODO implement date processing
-            boolean isSummarizeCategory = isCategoryNull || expense.getCategory().equals(category);
-            if (!isSummarizeDescription && !isSummarizeCategory) {
+            String expenseCategory = expense.getCategory();
+            boolean isCategoryEquals = expenseCategory != null && expenseCategory.equals(category);
+            boolean isSummarizeCategory = isCategoryNull || isCategoryEquals;
+            if (!(isSummarizeDescription && isSummarizeCategory)) {
                 continue;
             }
             expensesToSummarise.add(expense);
