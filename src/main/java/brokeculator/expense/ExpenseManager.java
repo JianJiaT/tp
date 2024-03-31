@@ -1,6 +1,7 @@
 package brokeculator.expense;
 
 import brokeculator.enumerators.Category;
+import brokeculator.frontend.UI;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
@@ -69,6 +70,16 @@ public class ExpenseManager {
         for (Expense expense : expensesToSummarise) {
             total += expense.getAmount();
         }
+        if (expensesToSummarise.isEmpty()) {
+            UI.prettyPrint("Nothing to summarise!");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < expensesToSummarise.size(); i++) {
+                sb.append(i + 1).append(". ").append(expensesToSummarise.get(i)).append(System.lineSeparator());
+            }
+            String summarisedExpensesListString = String.valueOf(sb);
+            UI.prettyPrint(summarisedExpensesListString);
+        }
         return total;
     }
 
@@ -84,18 +95,25 @@ public class ExpenseManager {
         return expenses;
     }
 
-    public String getExpensesListString(int amountToList) {
+    public String getExpensesListString(int beginIndex, int endIndex) {
         assert !this.expenses.isEmpty();
 
         int lastIdxToPrint;
-        if (amountToList <= 0 || amountToList > this.expenses.size()) {
+        if (endIndex < 0 || endIndex > this.expenses.size()) {
             lastIdxToPrint = this.expenses.size();
         } else {
-            lastIdxToPrint = amountToList;
+            lastIdxToPrint = endIndex;
+        }
+
+        int firstIdxToPrint;
+        if (beginIndex < 0) {
+            firstIdxToPrint = 0;
+        } else {
+            firstIdxToPrint = beginIndex;
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < lastIdxToPrint; i++) {
+        for (int i = firstIdxToPrint; i < lastIdxToPrint; i++) {
             sb.append(i + 1).append(". ").append(expenses.get(i)).append(System.lineSeparator());
         }
 
@@ -115,7 +133,7 @@ public class ExpenseManager {
 
     @Override
     public String toString() {
-        return getExpensesListString(expenses.size());
+        return getExpensesListString(0, expenses.size());
     }
     
     public int getNumberOfExpensesTracked() {
