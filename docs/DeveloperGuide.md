@@ -47,8 +47,10 @@ The `Category` class is supplemented by the following classes to interact with t
 
 The UML diagram below shows the main relationships between the classes in the category feature.
 ![category_class.png](images/category_class.png)
+</br>
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
 ![category_parse_sequence.png](images/category_parse_sequence.png)
+</br>
 **User input category parsing sequence**
 1. The user enters a command to add a category
 2. The `CategoryParser` class parses the user input and returns a `CategoryCommand` object or an `InvalidCommand` object
