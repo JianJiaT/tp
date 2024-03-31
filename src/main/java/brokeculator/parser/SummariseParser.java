@@ -22,8 +22,9 @@ public class SummariseParser {
         int beginIndex = 0;
         int endIndex = -1;
 
-        if (userInput.contains(SUMMARISE_COMMAND_OPTIONS[NAME_INDEX])) {
-            nameToSummariseBy = getOptionField(userInputAsArray, SUMMARISE_COMMAND_OPTIONS[NAME_INDEX]);
+        String currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[NAME_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
+            nameToSummariseBy = getOptionField(userInputAsArray, currKeywordToCheck);
             nameToSummariseBy = nameToSummariseBy.isBlank() ? null : nameToSummariseBy;
         }
 
@@ -31,11 +32,10 @@ public class SummariseParser {
 
         // TODO implement category processing
 
-        if (userInput.contains(SUMMARISE_COMMAND_OPTIONS[FROM_INDEX])) {
+        currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[FROM_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
             try {
-                String beginIndexAsString = getOptionField(userInputAsArray, SUMMARISE_COMMAND_OPTIONS[FROM_INDEX]);
-                beginIndexAsString = beginIndexAsString.isBlank() ? "1" : beginIndexAsString;
-                beginIndex = Integer.parseInt(beginIndexAsString.trim()) - 1;
+                beginIndex = getIndex(userInputAsArray, currKeywordToCheck);
             } catch (NumberFormatException e) {
                 return new InvalidCommand("Start index cannot be non-integer");
             }
@@ -43,14 +43,12 @@ public class SummariseParser {
                 return new InvalidCommand("Start index must be one or greater");
             }
         }
-
         assert beginIndex >= 0 : "beginIndex should be 0 or greater";
 
-        if (userInput.contains(SUMMARISE_COMMAND_OPTIONS[TO_INDEX])) {
+        currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[TO_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
             try {
-                String endIndexAsString = getOptionField(userInputAsArray, SUMMARISE_COMMAND_OPTIONS[TO_INDEX]);
-                endIndexAsString = endIndexAsString.isBlank() ? "0" : endIndexAsString;
-                endIndex = Integer.parseInt(endIndexAsString.trim()) - 1;
+                endIndex = getIndex(userInputAsArray, currKeywordToCheck);
             } catch (NumberFormatException e) {
                 return new InvalidCommand("End index cannot be non-integer");
             }
@@ -58,7 +56,6 @@ public class SummariseParser {
                 return new InvalidCommand("End index must be one or greater");
             }
         }
-
         assert endIndex >= -1 : "endIndex should be -1 or greater";
 
         if (endIndex != -1 && beginIndex > endIndex) {
@@ -67,7 +64,6 @@ public class SummariseParser {
 
         return new SummariseCommand(nameToSummariseBy, dateToSummariseBy, categoryToSummariseBy,
                 beginIndex, endIndex);
-        
     }
 
     private static String getOptionField(String[] userInputArray, String option) {
@@ -97,4 +93,15 @@ public class SummariseParser {
         return false;
     }
 
+    private static int getIndex(String[] userInputArray, String currKeyword) {
+        int index = 0;
+        try {
+            String indexAsString = getOptionField(userInputArray, currKeyword);
+            indexAsString = indexAsString.isBlank() ? "0" : indexAsString;
+            index = Integer.parseInt(indexAsString.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException();
+        }
+        return index;
+    }
 }
