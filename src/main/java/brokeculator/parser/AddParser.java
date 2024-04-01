@@ -15,6 +15,13 @@ public class AddParser {
     public static final int AMOUNT_INDEX = 2;
     public static final int CATEGORY_INDEX = 3;
     public static final String AMOUNT_PATTERN = "^\\d+(\\.\\d+)?$";
+
+    /**
+     * Returns a AddCommand specifying the expense to add if user input is valid, otherwise
+     * returns an InvalidCommand with relevant error message
+     * @param userInput User input
+     * @return AddCommand if user input is valid, InvalidCommand otherwise
+     */
     public static Command parseInput(String userInput) {
         if(!isOptionsPresent(userInput) || !isOptionsAppearOnce(userInput)) {
             return new InvalidCommand(CommandErrorMessages.INVALID_ADD_COMMAND.getString());
@@ -41,17 +48,43 @@ public class AddParser {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
         }
     }
+
+    /**
+     * Checks whether any of the mandatory fields is empty
+     * @param expenseDescription Expense description
+     * @param expenseDate Expense date
+     * @param expenseAmountAsString Expense amount
+     * @return True if any of the mandatory fields is empty, false otherwise
+     */
     private static boolean isFieldsEmpty(String expenseDescription, String expenseDate, String expenseAmountAsString) {
         return expenseDescription.isBlank() || expenseDate.isBlank() || expenseAmountAsString.isBlank();
     }
+
+    /**
+     * Checks whether all the mandatory fields are present
+     * @param userInput User input
+     * @return True if all mandatory fields are present, false otherwise
+     */
     private static boolean isOptionsPresent(String userInput) {
         return userInput.contains(" /n ") && userInput.contains(" /d ") && userInput.contains(" /a ");
     }
+
+    /**
+     * Checks whether expense amount is a number
+     * @param expenseAmountAsString Expense amount as a String
+     * @return True if expense amount is a number, false otherwise
+     */
     private static boolean isAmountNumericString(String expenseAmountAsString) {
         Pattern pattern = Pattern.compile(AMOUNT_PATTERN, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(expenseAmountAsString);
         return matcher.find();
     }
+
+    /**
+     * Checks whether the keywords are not repeated
+     * @param userInput User input
+     * @return True if the keywords are not repeated, false otherwise
+     */
     private static boolean isOptionsAppearOnce(String userInput) {
         for (String option : ADD_COMMAND_OPTIONS) {
             if (userInput.indexOf(option) != userInput.lastIndexOf(option)) {
@@ -60,6 +93,13 @@ public class AddParser {
         }
         return true;
     }
+
+    /**
+     * Extracts a specification about the expense to add from user input as denoted by a keyword
+     * @param userInputArray User input as an array of Strings
+     * @param option The keyword that denotes which information to extract
+     * @return A specification about the expense to add
+     */
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
         boolean shouldAppend = false;
@@ -77,6 +117,12 @@ public class AddParser {
         }
         return optionField.toString().trim();
     }
+
+    /**
+     * Checks whether a word is a keyword
+     * @param word The word to check
+     * @return True if the word is a keyword, false otherwise
+     */
     private static boolean isWordOption(String word) {
         for (String option : ADD_COMMAND_OPTIONS) {
             if (word.equals(option.trim())) {
