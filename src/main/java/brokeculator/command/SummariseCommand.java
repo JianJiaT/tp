@@ -20,6 +20,10 @@ public class SummariseCommand extends Command {
         this.endIndex = endIndex;
     }
 
+    /**
+     * Summarises expenses
+     * @param dashboard The dashboard that contains the expense manager from which expenses will be summarised
+     */
     @Override
     public void execute(Dashboard dashboard) {
         if (beginIndex >= dashboard.getExpenseManager().getNumberOfExpensesTracked()) {

@@ -11,6 +11,10 @@ public class AddCommand extends Command{
         this.expenseToAdd = expenseToAdd;
     }
 
+    /**
+     * Adds an expense to be tracked
+     * @param dashboard The dashboard that contains the expense manager that will track the new expense
+     */
     @Override
     public void execute(Dashboard dashboard) {
         try {

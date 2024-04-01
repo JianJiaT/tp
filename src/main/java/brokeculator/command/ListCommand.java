@@ -10,6 +10,10 @@ public class ListCommand extends Command {
         this.amountToList = amountToList;
     }
 
+    /**
+     * Lists expenses
+     * @param dashboard The dashboard that contains the expense manager from which expenses will be listed
+     */
     @Override
     public void execute(Dashboard dashboard) {
         boolean isListEmpty = dashboard.getExpenseManager().getNumberOfExpensesTracked() == 0;

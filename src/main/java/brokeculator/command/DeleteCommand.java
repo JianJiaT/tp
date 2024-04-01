@@ -12,6 +12,10 @@ public class DeleteCommand extends Command {
         this.indexToDelete = indexToDelete;
     }
 
+    /**
+     * Deletes an expense
+     * @param dashboard The dashboard that contains the expense manager from which an expense will be deleted
+     */
     @Override
     public void execute(Dashboard dashboard) {
         boolean isValidExpenseIndex = dashboard.getExpenseManager().isExpenseIndexValid(indexToDelete);
