@@ -21,7 +21,7 @@ public class SummariseCommand extends Command {
     }
 
     /**
-     * Summarises expenses
+     * Summarises expenses and prints out the summary
      * @param dashboard The dashboard that contains the expense manager from which expenses will be summarised
      */
     @Override

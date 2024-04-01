@@ -12,7 +12,7 @@ public class AddCommand extends Command{
     }
 
     /**
-     * Adds an expense to be tracked
+     * Adds an expense to be tracked and prints out an acknowledgement
      * @param dashboard The dashboard that contains the expense manager that will track the new expense
      */
     @Override
