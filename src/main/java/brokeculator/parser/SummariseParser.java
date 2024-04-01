@@ -30,8 +30,12 @@ public class SummariseParser {
 
         // TODO implement date processing
 
-        // TODO implement category processing
-        categoryToSummariseBy = extractCategory(userInput, userInputAsArray);
+        currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[CATEGORY_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
+            categoryToSummariseBy = getOptionField(userInputAsArray, currKeywordToCheck);
+            categoryToSummariseBy = categoryToSummariseBy.isBlank() ? null : categoryToSummariseBy.toUpperCase();
+        }
+
 
         currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[FROM_INDEX];
         if (userInput.contains(currKeywordToCheck)) {
@@ -66,14 +70,7 @@ public class SummariseParser {
         return new SummariseCommand(nameToSummariseBy, dateToSummariseBy, categoryToSummariseBy,
                 beginIndex, endIndex);
     }
-    private static String extractCategory(String userInput, String[] userInputAsArray) {
-        String categoryToSummariseBy = null;
-        if (userInput.contains(SUMMARISE_COMMAND_OPTIONS[CATEGORY_INDEX])) {
-            categoryToSummariseBy = getOptionField(userInputAsArray, SUMMARISE_COMMAND_OPTIONS[CATEGORY_INDEX]);
-            categoryToSummariseBy = categoryToSummariseBy.isBlank() ? null : categoryToSummariseBy.toUpperCase();
-        }
-        return categoryToSummariseBy;
-    }
+
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
         boolean startAppending = false;
