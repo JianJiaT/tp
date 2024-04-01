@@ -14,6 +14,12 @@ public class SummariseParser {
     private static final int FROM_INDEX = 3;
     private static final int TO_INDEX = 4;
 
+    /**
+     * Returns a SummariseCommand containing instructions on how to summarise expenses if user input is valid, otherwise
+     * returns an InvalidCommand with relevant error message
+     * @param userInput User input
+     * @return SummariseCommand if user input is valid, InvalidCommand otherwise
+     */
     public static Command parseInput(String userInput) {
         String[] userInputAsArray = userInput.trim().split("\\s+");
         String nameToSummariseBy = null;
@@ -35,7 +41,6 @@ public class SummariseParser {
             categoryToSummariseBy = getOptionField(userInputAsArray, currKeywordToCheck);
             categoryToSummariseBy = categoryToSummariseBy.isBlank() ? null : categoryToSummariseBy.toUpperCase();
         }
-
 
         currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[FROM_INDEX];
         if (userInput.contains(currKeywordToCheck)) {
@@ -71,6 +76,12 @@ public class SummariseParser {
                 beginIndex, endIndex);
     }
 
+    /**
+     * Extracts a condition for summarising from user input as denoted by a keyword
+     * @param userInputArray User input as an array of Strings
+     * @param option The keyword that denotes which information to extract
+     * @return A condition for summarising expenses by
+     */
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
         boolean startAppending = false;
@@ -89,6 +100,11 @@ public class SummariseParser {
         return optionField.toString().trim();
     }
 
+    /**
+     * Checks if a word is a keyword
+     * @param word The word to check
+     * @return True if the word is a keyword, false otherwise
+     */
     private static boolean isWordOption(String word) {
         for (String option : SUMMARISE_COMMAND_OPTIONS) {
             if (word.equals(option.trim())) {
@@ -98,6 +114,12 @@ public class SummariseParser {
         return false;
     }
 
+    /**
+     * Returns the start index or end index depending on the keyword passed in
+     * @param userInputArray User input as an array of Strings
+     * @param currKeyword The keyword that determines whether the index is a start index or end index
+     * @return Start index or end index
+     */
     private static int getIndex(String[] userInputArray, String currKeyword) {
         int index = 0;
         try {
