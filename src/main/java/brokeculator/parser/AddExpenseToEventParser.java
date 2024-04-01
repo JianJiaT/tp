@@ -11,6 +11,12 @@ public class AddExpenseToEventParser {
         new Keyword(" /exi ", "Expense index", false),
         new Keyword(" /evi ", "Event index", false)
     };
+
+    /**
+     * Parses the user input to identify the expense and event indexes
+     * @param userInput User input
+     * @return InvalidCommand if the input is invalid, AddExpenseToEventCommand otherwise
+     */
     public static Command parseInput(String userInput) {
 
         String[] userInputs;

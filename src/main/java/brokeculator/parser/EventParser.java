@@ -11,6 +11,12 @@ public class EventParser {
         new Keyword(" /n ", "Event name", false),
         new Keyword(" /d ", "Event description", false)
     };
+
+    /**
+     * Parses the user input to identify the event name and description
+     * @param userInput User input
+     * @return InvalidCommand if the input is invalid, AddEventCommand otherwise
+     */
     public static Command parseInput(String userInput) {
         String[] userInputs;
         try {

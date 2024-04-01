@@ -10,6 +10,12 @@ public class DeleteExpenseFromEventParser {
     private static final Keyword[] KEYWORDS = {
         new Keyword(" /i ", "Expense index", false),
     };
+
+    /**
+     * Parses the user input to identify the expense index
+     * @param userInput User input
+     * @return InvalidCommand if the input is invalid, DeleteExpenseFromEventCommand otherwise
+     */
     public static Command parseInput(String userInput) {
         String[] userInputs;
         try {

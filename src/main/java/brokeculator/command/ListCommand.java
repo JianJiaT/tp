@@ -17,7 +17,7 @@ public class ListCommand extends Command {
             UI.prettyPrint("You have no added expenses!");
             return;
         }
-        String expensesListString = dashboard.getExpenseManager().getExpensesListString(amountToList);
+        String expensesListString = dashboard.getExpenseManager().getExpensesListString(0, amountToList);
         UI.prettyPrint(expensesListString);
     }
 }

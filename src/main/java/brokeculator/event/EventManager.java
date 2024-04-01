@@ -3,6 +3,8 @@ package brokeculator.event;
 import java.util.ArrayList;
 
 import brokeculator.frontend.UI;
+import brokeculator.storage.parsing.FileKeyword;
+import brokeculator.storage.parsing.SaveableType;
 
 public class EventManager {
     private static EventManager eventManager = null;
@@ -12,6 +14,10 @@ public class EventManager {
         this.events = new ArrayList<>();
     }
 
+    /**
+     * Returns the singleton instance of EventManager
+     * @return Singleton instance of EventManager
+     */
     public static EventManager getInstance() {
         if (EventManager.eventManager == null) {
             EventManager.eventManager = new EventManager();
@@ -30,6 +36,9 @@ public class EventManager {
             return null;
         }
         return events.get(idx - 1);
+    }
+    public int getEventIndex(Event event) {
+        return events.indexOf(event) + 1;
     }
     public void removeEvent(int idx) {
         if (!isEventIdxValid(idx)) {
@@ -50,6 +59,18 @@ public class EventManager {
         }
         UI.prettyPrint(sb.toString());
     }
+
+    public String getEventsStringRepresentation() {
+        StringBuilder sb = new StringBuilder();
+        for (Event event : events) {
+            String currentEventString = event.getStringRepresentation();
+            String finalEventString = FileKeyword.formatWithKeyword(SaveableType.EVENT, currentEventString);
+            sb.append(finalEventString);
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
 }
 
 
