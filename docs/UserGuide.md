@@ -14,16 +14,17 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 4. Enter `java -jar brokeculator.jar` into the terminal to run the application
 5. Refer to the Features section below for details of each command
 
-## Features 
-
+## Features
+1. Words in UPPER_CASE are parameters
+2. Parameters in square brackets are optional parameters
 ### 1. Handle categories: category
 #### **_SYNOPSIS_**
 ```dtd    
-category [add|list|delete] [category_name]
+category [add|list|delete] [CATEGORY_NAME]
 ```
 #### **_DESCRIPTION_**
-Main command to handle categories. Add 
-and delete should be accompanied by category name. List will list all categories.
+Main command to handle categories. `add` 
+and `delete` should be accompanied by `CATEGORY_NAME`. `list` will list all categories.
 When deleting a category, all expenses using that category must be deleted first.
 The category specified in `add` and `delete` will be converted to uppercase.
 #### **_USAGE_**
@@ -43,11 +44,11 @@ category list
 ### 2. Adding expenses: add
 #### **_SYNOPSIS_**
 ```dtd
-add [/n EXPENSE_NAME] [/d DATE] [/a AMOUNT] [/c CATEGORY]
+add /n EXPENSE_NAME /d DATE /a AMOUNT [/c CATEGORY]
 ```
 #### **_DESCRIPTION_**
 Adds an expense to the list of expenses tracked by the application.
-The expense must have a name, date, amount.
+The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
 `/d DATE` : Date of the expense. <br>
@@ -67,7 +68,7 @@ add /n coffee /d 15-02 /a 3.00
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
-delete [INDEX]
+delete INDEX
 ```
 #### **_DESCRIPTION_**
 Deletes the expense at the specified INDEX.
@@ -150,7 +151,7 @@ summarise /n chicken /c food /from 2
 ### 6. Adding events: event
 #### **_SYNOPSIS_**
 ```dtd
-event [/n EVENT NAME] [/d EVENT DESCRIPTION]
+event /n EVENT NAME /d EVENT DESCRIPTION
 ```
 #### **_DESCRIPTION_**
 Adds an event to the list of events tracked by the application.
