@@ -2,14 +2,17 @@
 
 ## Introduction
 
-{Give a product intro}
+Brokeculator is a CLI application designed for university students to log and view their
+expenses. It aims to tackle the challenge they face of managing a myriad of expenses across various categories. For 
+experienced CLI users, they can enter their expenses faster compared to GUI applications
 
 ## Quick Start
 
-{Give steps to get started quickly}
-
-1. Ensure that you have Java 11 or above installed.
-1. Down the latest version of `Duke` from [here](http://link.to/duke).
+1. Ensure that you have Java 11 or above installed
+2. Download the latest version of `brokeculator` from [here](https://github.com/AY2324S2-CS2113-F14-1/tp/releases)
+3. Open a command terminal and `cd` to the folder you put the `brokeculator.jar` file in
+4. Enter `java -jar brokeculator.jar` into the terminal to run the application
+5. Refer to the Features section below for details of each command
 
 ## Features 
 
