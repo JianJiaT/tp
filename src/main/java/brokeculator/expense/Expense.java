@@ -3,13 +3,27 @@ package brokeculator.expense;
 import java.util.logging.Logger;
 
 import brokeculator.event.Event;
+import brokeculator.parser.util.Keyword;
+import brokeculator.parser.util.OrderParser;
 
 /**
  * Represents an expense in the expense tracker.
  */
 public class Expense implements Saveable {
+
+    private static final Keyword DESCRIPTION_KEYWORD =
+            new Keyword("|__EXPENSE_DESCRIPTION__|:", "expense description", false);
+    private static final Keyword DATE_KEYWORD =
+            new Keyword("|__EXPENSE_DATE__|:", "expense date", false);
+    private static final Keyword AMOUNT_KEYWORD =
+            new Keyword("|__EXPENSE_AMOUNT__|:", "expense amount", false);
+    private static final Keyword CATEGORY_KEYWORD =
+            new Keyword("|__EXPENSE_CATEGORY__|:", "expense category", true);
+    private static final Keyword[] SAVING_KEYWORDS
+            = {DESCRIPTION_KEYWORD, DATE_KEYWORD, AMOUNT_KEYWORD, CATEGORY_KEYWORD};
+
     private static final Logger logger = Logger.getLogger(Expense.class.getName());
-    private static final String FILE_DELIMITER = "EXPENSE_DELIMITER";
+
     private final String description;
     private final String date;
     private final double amount;
@@ -81,35 +95,32 @@ public class Expense implements Saveable {
      * @return a string representation of the expense.
      */
     public String getStringRepresentation() {
-        String stringRepresentation = description
-                + FILE_DELIMITER + date
-                + FILE_DELIMITER + amount;
+        String stringRepresentation =
+                DESCRIPTION_KEYWORD.keywordMarker + this.description
+                + DATE_KEYWORD.keywordMarker + this.date
+                + AMOUNT_KEYWORD.keywordMarker + this.amount;
         if (this.category != null) {
-            stringRepresentation += (FILE_DELIMITER + this.category.toUpperCase());
+            stringRepresentation += (CATEGORY_KEYWORD.keywordMarker + this.category);
         }
         return stringRepresentation;
     }
 
     public static Expense getExpenseFromFile(String stringRepresentation) throws Exception {
-        String[] split = stringRepresentation.split(FILE_DELIMITER);
-        if (split.length != 3 && split.length != 4) {
+        String[] expenseDetails = OrderParser.parseOrder(stringRepresentation, Expense.SAVING_KEYWORDS);
+        assert expenseDetails.length == 4;
+
+        String description = expenseDetails[0];
+        String date = expenseDetails[1];
+        String amountString = expenseDetails[2];
+        String category = expenseDetails[3];
+
+        try {
+            double amount = Double.parseDouble(amountString);
+            return new Expense(description, amount, date, category);
+        } catch (Exception e) {
             logger.warning("Expense file is corrupted.");
-            throw new Exception("Expense file is corrupted.");
+            throw new Exception("Expense string: " + stringRepresentation + " is corrupted");
         }
-        
-        String description = split[0];
-
-        String date = split[1];
-
-        String amountString = split[2];
-        double amount = Double.parseDouble(amountString);
-
-        String category = null;
-        if (split.length == 4) {
-            category = split[3];
-        }
-
-        return new Expense(description, amount, date, category);
     }
 
     @Override

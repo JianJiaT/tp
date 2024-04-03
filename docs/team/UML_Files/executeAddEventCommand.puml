@@ -7,7 +7,7 @@ participant UI
 Logic -> AddEventCommand : execute()
 activate AddEventCommand
 create "x:Event" as Event 
-AddEventCommand -> Event: new Event(eventName, eventDesction)
+AddEventCommand -> Event: new Event(eventName, eventDescription)
 activate Event
 Event --> AddEventCommand : x
 deactivate Event
@@ -21,6 +21,8 @@ AddEventCommand -> UI : prettyPrint("Event added successfully")
 activate UI
 UI --> AddEventCommand
 deactivate UI
+
+destroy AddEventCommand
 
 AddEventCommand --> Logic 
 deactivate AddEventCommand
