@@ -22,9 +22,8 @@ activate UI
 UI --> AddEventCommand
 deactivate UI
 
-destroy AddEventCommand
-
 AddEventCommand --> Logic 
 deactivate AddEventCommand
 
+destroy AddEventCommand
 @enduml
