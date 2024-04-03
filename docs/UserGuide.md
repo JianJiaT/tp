@@ -151,7 +151,7 @@ summarise /n chicken /c food /from 2
 ### 6. Adding events: event
 #### **_SYNOPSIS_**
 ```dtd
-event /n EVENT NAME /d EVENT DESCRIPTION
+event /n EVENT_NAME /d EVENT_DESCRIPTION
 ```
 #### **_DESCRIPTION_**
 Adds an event to the list of events tracked by the application.
@@ -159,12 +159,96 @@ This event can be used to group expenses together. This is to be used
 in conjunction with `addExpenseToEvent` to add expenses to the event.
 #### **_PARAMETERS_**
 `/n EVENT_NAME` : Name of the event. <br>
-`/d DESCRIPTION` : Description of the event. <br>
+`/d EVENT_DESCRIPTION` : Description of the event. <br>
 
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
 event /n birthday /d birthday party for bob
+```
+
+### 7. Viewing events: listEvents
+#### **_SYNOPSIS_**
+```dtd
+listEvents
+```
+
+#### **_DESCRIPTION_**
+Lists all events tracked by the application. Each event has an index associated with it.
+This index can be used to add expenses to the event using the `addExpenseToEvent` command.
+
+#### **_USAGE_**
+Example of usage: <br>
+```dtd
+listEvents
+```
+
+### 8. Deleting events: deleteEvent
+#### **_SYNOPSIS_**
+```dtd
+deleteEvent /i INDEX
+```
+#### **_DESCRIPTION_**
+Delete an event that you no longer wish to track. Note that events associated with expenses cannot be deleted. To delete
+an event, first delete the expenses associated with the event using `deleteExpenseFromEvent` and then delete the event.
+#### **_PARAMETERS_**
+`/i INDEX` : Index of the event to be deleted. <br>
+
+#### **_USAGE_**
+Examples of usage: <br>
+```dtd
+deleteEvent /i 1
+```
+
+### 9. Adding expenses to events: addExpenseToEvent
+#### **_SYNOPSIS_**
+```dtd
+addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
+```
+#### **_DESCRIPTION_**
+Adds an expense to an event. The expense and event are identified by their respective indices.
+If an expense already belongs to an event, it will be removed from the previous event and added to the new event.
+
+#### **_PARAMETERS_**
+`/exi EXPENSE_INDEX` : Index of the expense to be added to the event. <br>
+`/evi EVENT_INDEX` : Index of the event to which the expense is to be added. <br>
+
+#### **_USAGE_**
+Examples of usage: <br>
+```dtd
+addExpenseToEvent /exi 1 /evi 1
+```
+
+### 10. Deleting expenses from events: deleteExpenseFromEvent
+#### **_SYNOPSIS_**
+```dtd
+deleteExpenseFromEvent /i EXPENSE_INDEX_FROM_LIST_COMMAND
+```
+#### **_DESCRIPTION_**
+Deletes an expense from an event. The expense is identified by its index in the list of expenses.
+#### **_PARAMETERS_**
+`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted from the event. <br>
+
+#### **_USAGE_**
+Examples of usage: <br>
+```dtd  
+deleteExpenseFromEvent /i 1
+```
+
+### 11. Viewing expenses in events: viewEvent
+#### **_SYNOPSIS_**
+```dtd
+viewEvent /i INDEX
+```
+#### **_DESCRIPTION_**
+Displays the expenses associated with the event at the specified index.
+#### **_PARAMETERS_**
+`/i INDEX` : Index of the event whose expenses are to be displayed. <br>
+
+#### **_USAGE_**
+Examples of usage: <br>
+```dtd
+viewEvent /i 1
 ```
 
 ## FAQ
