@@ -4,8 +4,8 @@ participant "x:AddExpenseToEventCommand" as Command
 participant ":ExpenseManager" as ExpenseManager
 participant ":EventManager" as EventManager
 participant "newOwningEvent:Event" as noe
-participant "originalOwningEvent:Event" as ooe
 participant "expense:Expense" as Expense
+participant "dataManager:EventExpenseDataIntegrityManager" as dataManager
 
 
 Logic -> Command: execute(dashboard : Dashboard)
@@ -23,7 +23,7 @@ deactivate EventManager
 
 opt !isValidExpenseIndex || !isValidEventIndex
     note right of Command
-        Invalid expense or event index
+        Invalid indexes. Return immediately.
     end note
     Command --> Logic: 
 end
@@ -45,38 +45,33 @@ deactivate noe
 
 opt isExpenseOwnedByEvent
     note right of Command
-        Expense is already owned by the event
+        No further action required. Return immediately.
     end note
     Command --> Logic:
 end
 
 Command -> Expense: getOwningEvent()
 activate Expense
-Expense --> Command: originalOwningEvent
+Expense --> Command: originalOwningEvent : Event
 deactivate Expense
 
 opt originalOwningEvent != null
-    Command -> ooe: removeExpense(expense)
-    activate ooe
-    ooe --> Command:
-    deactivate ooe
-    Command -> Expense: removeOwningEvent()
-    activate Expense
-    Expense --> Command:
-    deactivate Expense
+    note right of Command
+        Inform the user that the expense is being moved to a new event.
+    end note
 end
 
-Command -> noe: addExpense(expense)
-activate noe
-noe --> Command:
-deactivate noe
+Command -> dataManager: buildConnection(expense, newOwningEvent)
+activate dataManager
+dataManager --> Command:
+deactivate dataManager
 
-Command -> Expense: setOwningEvent(newOwningEvent)
-activate Expense
-Expense --> Command:
-deactivate Expense
+note right of Command
+    Inform the user that the expense has been successfully added to the new event.
+end note
 
 Command --> Logic:
 deactivate Command
+destroy Command
 
 @enduml
