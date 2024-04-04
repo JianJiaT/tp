@@ -52,19 +52,24 @@ The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
 `/d DATE` : Date of the expense in the format dd-MM-yyyy. <br>
-`/a AMOUNT` : Amount of the expense. Must be a float/integer value. <br>
+`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
 If not present, add the category using the `category add` command. <br>
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
+add /n tea /d 14-02-2002 /a 2.50 /c food
+```
+```dtd
+add /n coffee /d 15-02-2003 /a 3.00
+```
+```dtd
 add /n tea /d 14-02-2024 /a 2.50 /c food
 ```
 ```dtd
 add /n coffee /d 15-02-2024 /a 3.00
 ```
-
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
@@ -119,6 +124,10 @@ are provided, will summarise all expenses tracked by the application.
 If not provided, will summarise from start of list <br>
 `/to END_INDEX` : Expenses up to this `END_INDEX` (inclusive) will be  summarised. Must be positive integer.
 If not provided, will summarise up to end of list <br>
+`/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified) 
+will be summarised. Must be in the format `dd-MM-yyyy`.
+`/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
+
 #### **_USAGE_**
 Example of summarising all expenses: <br>
 ```dtd
