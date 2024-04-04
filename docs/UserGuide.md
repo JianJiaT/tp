@@ -17,6 +17,7 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 ## Features
 1. Words in UPPER_CASE are parameters
 2. Parameters in square brackets are optional parameters
+
 ### 1. Handle categories: category
 #### **_SYNOPSIS_**
 ```dtd    
@@ -40,6 +41,7 @@ Example of listing categories: <br>
 ```dtd
 category list
 ```
+<div style="page-break-after: always;"></div>
 
 ### 2. Adding expenses: add
 #### **_SYNOPSIS_**
@@ -70,6 +72,8 @@ add /n tea /d 14-02-2024 /a 2.50 /c food
 ```dtd
 add /n coffee /d 15-02-2024 /a 3.00
 ```
+<div style="page-break-after: always;"></div>
+
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
@@ -86,6 +90,7 @@ Example of deleting the 5th expense: <br>
 ```dtd
 delete 5
 ```
+<div style="page-break-after: always;"></div>
 
 ### 4. Listing expenses: list
 #### **_SYNOPSIS_**
@@ -106,6 +111,8 @@ Example of listing the first 5 tasks: <br>
 ```dtd
 list 5
 ```
+<div style="page-break-after: always;"></div>
+
 ### 5. Summarising expenses: summarise
 #### **_SYNOPSIS_**
 ```dtd    
@@ -162,6 +169,7 @@ Example of summarising expenses with the date equal to or after `14-02-2024` and
 ```dtd
 summarise /start 14-02-2024 /c food
 ```
+<div style="page-break-after: always;"></div>
 
 ### 6. Adding events: event
 #### **_SYNOPSIS_**
@@ -197,6 +205,7 @@ Example of usage: <br>
 ```dtd
 listEvents
 ```
+<div style="page-break-after: always;"></div>
 
 ### 8. Deleting events: deleteEvent
 #### **_SYNOPSIS_**
@@ -233,6 +242,7 @@ Examples of usage: <br>
 ```dtd
 addExpenseToEvent /exi 1 /evi 1
 ```
+<div style="page-break-after: always;"></div>
 
 ### 10. Deleting expenses from events: deleteExpenseFromEvent
 #### **_SYNOPSIS_**
@@ -265,6 +275,7 @@ Examples of usage: <br>
 ```dtd
 viewEvent /i 1
 ```
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
