@@ -230,7 +230,7 @@ deleteEvent /i 1
 addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
-Adds an expense to an event. If an expense already belongs to an event, it will be removed from the original event and added to the new event.
+Adds an expense to an event. 
 
 #### **_PARAMETERS_**
 `/exi EXPENSE_INDEX` : Index of the expense to be added to the event. <br>
