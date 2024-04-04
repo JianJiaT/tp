@@ -5,6 +5,9 @@ import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.enumerators.CommandErrorMessages;
 import brokeculator.expense.Expense;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,23 +32,26 @@ public class AddParser {
         String[] userInputAsArray = userInput.trim().split("\\s+");
         try {
             String expenseDescription = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[NAME_INDEX]);
-            String expenseDate = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[DESCRIPTION_INDEX]);
+            String expenseDateString = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[DESCRIPTION_INDEX]);
             String expenseAmountAsString = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[AMOUNT_INDEX]);
             String expenseCategory = null;
             if (userInput.contains(" /c ")) {
                 expenseCategory = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[CATEGORY_INDEX]);
                 expenseCategory = expenseCategory.isBlank() ? null : expenseCategory;
             }
-            boolean isDesiredFieldsEmpty = isFieldsEmpty(expenseDescription, expenseDate, expenseAmountAsString);
+            boolean isDesiredFieldsEmpty = isFieldsEmpty(expenseDescription, expenseDateString, expenseAmountAsString);
             boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
             if (isDesiredFieldsEmpty || !isAmountNumeric) {
                 return new InvalidCommand("Expense description, date and amount cannot be empty");
             }
             double expenseAmount = Double.parseDouble(expenseAmountAsString);
+            LocalDate expenseDate = DateParser.parseDate(expenseDateString);
             Expense expenseToAdd = new Expense(expenseDescription, expenseAmount, expenseDate, expenseCategory);
             return new AddCommand(expenseToAdd);
         } catch (NumberFormatException e) {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
+        } catch (DateTimeParseException e) {
+            return new InvalidCommand("Invalid date format. Please enter date in the format dd-MM-yyyy");
         }
     }
 
