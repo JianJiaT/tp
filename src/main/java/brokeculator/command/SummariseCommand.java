@@ -3,18 +3,21 @@ package brokeculator.command;
 import brokeculator.dashboard.Dashboard;
 import brokeculator.frontend.UI;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class SummariseCommand extends Command {
-    private String name;
-    private LocalDateTime date;
-    private String category;
-    private int beginIndex;
-    private int endIndex;
+    private final String name;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final String category;
+    private final int beginIndex;
+    private final int endIndex;
 
-    public SummariseCommand(String name, LocalDateTime date, String category, int beginIndex, int endIndex) {
+    public SummariseCommand(String name, LocalDate startDate, LocalDate endDate, String category,
+                            int beginIndex, int endIndex) {
         this.name = name;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.category = category;
         this.beginIndex = beginIndex;
         this.endIndex = endIndex;
@@ -30,7 +33,9 @@ public class SummariseCommand extends Command {
             UI.print("Start index exceeds number of expenses currently tracked");
             return;
         }
-        double summary = dashboard.getExpenseManager().summariseExpenses(name, date, category, beginIndex, endIndex);
+        double summary = dashboard
+                .getExpenseManager()
+                .summariseExpenses(name, startDate, endDate, category, beginIndex, endIndex);
         UI.prettyPrint("The total is $" + summary);
     }
 }

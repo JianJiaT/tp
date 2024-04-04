@@ -7,7 +7,7 @@ public class GeneralInputParser {
     public static Command getCommandFromUserInput(String userInput) {
         Command commandToExecute;
         String commandKeyword = userInput.split(" ")[0];
-        switch (commandKeyword) {
+        switch (commandKeyword.trim()) {
         case "add":
             commandToExecute = AddParser.parseInput(userInput);
             break;
