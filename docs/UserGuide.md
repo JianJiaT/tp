@@ -52,19 +52,21 @@ The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
 `/d DATE` : Date of the expense. <br>
-`/a AMOUNT` : Amount of the expense. Must be a float/integer value. <br>
+`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
 If not present, add the category using the `category add` command. <br>
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
-add /n tea /d 14-02 /a 2.50 /c food
+add /n tea /d 14-02-2002 /a 2.50 /c food
 ```
 ```dtd
-add /n coffee /d 15-02 /a 3.00
+add /n coffee /d 15-02-2003 /a 3.00
 ```
-
+```dtd
+add /n milk /d 15-02-2004 /a 3 /c food
+```
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
@@ -104,7 +106,7 @@ list 5
 ### 5. Summarising expenses: summarise
 #### **_SYNOPSIS_**
 ```dtd    
-summarise [/n NAME] [/d DATE] [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]
+summarise [/n NAME] [/d DATE] [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX] [/start START_DATE] [/end END_DATE]
 ```
 #### **_DESCRIPTION_**
 Displays a summary of the expenses between the specified indices that match all of the user specifications. The summary
@@ -118,6 +120,10 @@ are provided, will summarise all expenses tracked by the application.
 If not provided, will summarise from start of list <br>
 `/to END_INDEX` : Expenses up to this `END_INDEX` (inclusive) will be  summarised. Must be positive integer.
 If not provided, will summarise up to end of list <br>
+`/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified) 
+will be summarised. Must be in the format `dd-MM-yyyy`.
+`/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
+
 #### **_USAGE_**
 Example of summarising all expenses: <br>
 ```dtd
@@ -139,9 +145,9 @@ Example of summarising all expenses with the name `tea`: <br>
 ```dtd
 summarise /n tea
 ```
-Example of summarising expenses with the date `14/02` up to the 7th index: <br>
+Example of summarising expenses with the date `14-02-2002` up to the 7th index: <br>
 ```dtd
-summarise /d 14/02 /to 7
+summarise /d 14-02-2002 /to 7
 ```
 Example of summarising expenses with the name `chicken` and the category `food` beginning from the 2nd index: <br>
 ```dtd
