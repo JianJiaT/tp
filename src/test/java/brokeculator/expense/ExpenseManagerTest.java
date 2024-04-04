@@ -5,13 +5,16 @@ import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExpenseManagerTest {
+    LocalDate date = LocalDate.now();
     ExpenseManager expenseManager = new ExpenseManager();
-    Expense expense1 = new Expense("pasta", 10.0, "2021-10-10", "food");
-    Expense expense2 = new Expense("bus", 20.0, "2021-10-11", "transport");
-    Expense expense3 = new Expense("movie", 30.0, "2021-10-12", "entertainment");
+    Expense expense1 = new Expense("pasta", 10.0, date, "food");
+    Expense expense2 = new Expense("bus", 20.0, date, "transport");
+    Expense expense3 = new Expense("movie", 30.0, date, "entertainment");
 
     @Test
     void testAdd() {
