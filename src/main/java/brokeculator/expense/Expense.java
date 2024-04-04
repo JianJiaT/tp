@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import brokeculator.event.Event;
 import brokeculator.parser.DateParser;
@@ -27,6 +29,8 @@ public class Expense implements Saveable {
             = {DESCRIPTION_KEYWORD, DATE_KEYWORD, AMOUNT_KEYWORD, CATEGORY_KEYWORD};
 
     private static final String EXPENSE_DATE_FORMAT = "EEEE, dd MMMM yyyy";
+
+    private static final String AMOUNT_PATTERN = "^\\d+(\\.\\d\\d)?$";
 
     private static final Logger logger = Logger.getLogger(Expense.class.getName());
 
@@ -104,7 +108,7 @@ public class Expense implements Saveable {
         String stringRepresentation =
                 DESCRIPTION_KEYWORD.keywordMarker + this.description
                         + DATE_KEYWORD.keywordMarker + this.date.format(DateParser.DATE_FORMATTER)
-                        + AMOUNT_KEYWORD.keywordMarker + this.amount;
+                        + AMOUNT_KEYWORD.keywordMarker + String.format("%.2f", this.amount);
         if (this.category != null) {
             stringRepresentation += (CATEGORY_KEYWORD.keywordMarker + this.category);
         }
@@ -121,6 +125,10 @@ public class Expense implements Saveable {
         String category = expenseDetails[3];
 
         try {
+            boolean isAmountNumeric = isAmountNumericString(amountString.trim());
+            if (!isAmountNumeric) {
+                throw new Exception("Amount must be 0 or 2 decimal places");
+            }
             double amount = Double.parseDouble(amountString);
             LocalDate date = DateParser.parseDate(dateString);
             return new Expense(description, amount, date, category);
@@ -128,6 +136,11 @@ public class Expense implements Saveable {
             logger.warning("Expense file is corrupted.");
             throw new Exception("Expense string: " + stringRepresentation + " is corrupted");
         }
+    }
+    private static boolean isAmountNumericString(String expenseAmountAsString) {
+        Pattern pattern = Pattern.compile(AMOUNT_PATTERN, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expenseAmountAsString);
+        return matcher.find();
     }
 
     @Override

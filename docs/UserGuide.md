@@ -51,7 +51,7 @@ Adds an expense to the list of expenses tracked by the application.
 The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
-`/d DATE` : Date of the expense. <br>
+`/d DATE` : Date of the expense, mus be in DD-MM-YYYY format. <br>
 `/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
