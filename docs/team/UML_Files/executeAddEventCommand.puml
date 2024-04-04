@@ -7,7 +7,7 @@ participant UI
 Logic -> AddEventCommand : execute()
 activate AddEventCommand
 create "x:Event" as Event 
-AddEventCommand -> Event: new Event(eventName, eventDesction)
+AddEventCommand -> Event: new Event(eventName, eventDescription)
 activate Event
 Event --> AddEventCommand : x
 deactivate Event
@@ -25,4 +25,5 @@ deactivate UI
 AddEventCommand --> Logic 
 deactivate AddEventCommand
 
+destroy AddEventCommand
 @enduml

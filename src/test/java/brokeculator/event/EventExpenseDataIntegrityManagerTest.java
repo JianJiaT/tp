@@ -2,6 +2,7 @@ package brokeculator.event;
 
 import brokeculator.expense.Expense;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,9 +14,12 @@ import brokeculator.storage.parsing.FileKeyword;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 class EventExpenseDataIntegrityManagerTest {
-    Expense expense1 = new Expense("ex1", 1, "today", null);
-    Expense expense2 = new Expense("ex2", 2, "today", null);
+    LocalDate date = LocalDate.now();
+    Expense expense1 = new Expense("ex1", 1, date, null);
+    Expense expense2 = new Expense("ex2", 2, date, null);
     Event event1 = new Event("event 1 name", "event 1 description");
     Event event2 = new Event("event 2 name", "event 2 description");
 
@@ -32,7 +36,7 @@ class EventExpenseDataIntegrityManagerTest {
     @Test
     void addExpenseToEvent_validExpenseAndEvent_expenseConnectedToEvent() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        assertTrue(expense1.getOwningEvent() == event1);
+        assertSame(expense1.getOwningEvent(), event1);
     }
 
     @Test
@@ -83,7 +87,7 @@ class EventExpenseDataIntegrityManagerTest {
     void addExpenseToEvent_expenseAddedToNewEvent_expenseConnectedToNewEvent() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
         EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
-        assertTrue(expense1.getOwningEvent() == event2);
+        assertSame(expense1.getOwningEvent(), event2);
     }
 
     @Test

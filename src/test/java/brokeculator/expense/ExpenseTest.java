@@ -5,8 +5,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 public class ExpenseTest {
-    Expense testExpense = new Expense("Lunch", 12.50, "today", "food");
+    LocalDate date = LocalDate.now();
+    Expense testExpense = new Expense("Lunch", 12.50, date, "food");
 
     @Test
     void testGetDescription() {
@@ -20,7 +23,7 @@ public class ExpenseTest {
 
     @Test
     void testGetDate() {
-        assertEquals("today", testExpense.getDate());
+        assertEquals(date, testExpense.getDate());
     }
 
     @Test
@@ -35,7 +38,7 @@ public class ExpenseTest {
             Expense expenseFromFile = Expense.getExpenseFromFile(stringRepresentation);
             assertEquals("Lunch", expenseFromFile.getDescription());
             assertEquals(12.50, expenseFromFile.getAmount());
-            assertEquals("today", expenseFromFile.getDate());
+            assertEquals(date, expenseFromFile.getDate());
             assertEquals("FOOD", expenseFromFile.getCategory());
         } catch (Exception e) {
             fail();
