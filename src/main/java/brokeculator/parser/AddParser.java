@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class AddParser {
     public static final String[] ADD_COMMAND_OPTIONS = {" /n ", " /d ", " /a ", " /c "};
     public static final int NAME_INDEX = 0;
-    public static final int DESCRIPTION_INDEX = 1;
+    public static final int DATE_INDEX = 1;
     public static final int AMOUNT_INDEX = 2;
     public static final int CATEGORY_INDEX = 3;
     public static final String AMOUNT_PATTERN = "^\\d+(\\.\\d+)?$";
@@ -29,7 +29,7 @@ public class AddParser {
         String[] userInputAsArray = userInput.trim().split("\\s+");
         try {
             String expenseDescription = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[NAME_INDEX]);
-            String expenseDate = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[DESCRIPTION_INDEX]);
+            String expenseDate = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[DATE_INDEX]);
             String expenseAmountAsString = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[AMOUNT_INDEX]);
             String expenseCategory = null;
             if (userInput.contains(" /c ")) {
