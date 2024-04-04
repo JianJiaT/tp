@@ -116,12 +116,13 @@ public class Expense implements Saveable {
         assert expenseDetails.length == 4;
 
         String description = expenseDetails[0];
-        LocalDate date = DateParser.parseDate(expenseDetails[1]);
+        String dateString = expenseDetails[1];
         String amountString = expenseDetails[2];
         String category = expenseDetails[3];
 
         try {
             double amount = Double.parseDouble(amountString);
+            LocalDate date = DateParser.parseDate(dateString);
             return new Expense(description, amount, date, category);
         } catch (Exception e) {
             logger.warning("Expense file is corrupted.");
