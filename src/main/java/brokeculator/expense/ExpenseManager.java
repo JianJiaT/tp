@@ -5,7 +5,7 @@ import brokeculator.frontend.UI;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 
@@ -77,35 +77,23 @@ public class ExpenseManager {
     /**
      * Summarises expenses
      * @param description The description an expense requires to be summarised
-     * @param date The date an expense requires to be summarised
+     * @param startDate The start date an expense requires to be summarised
+     * @param endDate The end date an expense requires to be summarised
      * @param category The category an expense requires to be summarised
      * @param beginIndex The index to start summarising from
      * @param endIndex The index to end summarising at
      * @return A summary of the expenses in the form of the sum of the expenses' amounts
      */
-    public double summariseExpenses(String description, LocalDateTime date, String category,
+    public double summariseExpenses(String description, LocalDate startDate, LocalDate endDate, String category,
                                     int beginIndex, int endIndex) {
         double total = 0;
-        if (endIndex == -1 || endIndex >= expenses.size()) {
-            endIndex = expenses.size() - 1;
-        }
-        boolean isDescriptionNull = (description == null);
-        boolean isCategoryNull = (category == null);
-        ArrayList<Expense> expensesToSummarise = new ArrayList<Expense>();
-        for (Expense expense : expenses.subList(beginIndex, endIndex + 1)) {
-            boolean isSummarizeDescription = isDescriptionNull || expense.getDescription().contains(description);
-            // TODO implement date processing
-            String expenseCategory = expense.getCategory();
-            boolean isCategoryEquals = expenseCategory != null && expenseCategory.equals(category);
-            boolean isSummarizeCategory = isCategoryNull || isCategoryEquals;
-            if (!(isSummarizeDescription && isSummarizeCategory)) {
-                continue;
-            }
-            expensesToSummarise.add(expense);
-        }
+        ArrayList<Expense> expensesToSummarise = getExpensesToSummarise(description, startDate, endDate, category,
+                beginIndex, endIndex);
+
         for (Expense expense : expensesToSummarise) {
             total += expense.getAmount();
         }
+
         if (expensesToSummarise.isEmpty()) {
             UI.prettyPrint("Nothing to summarise!");
         } else {
@@ -116,7 +104,56 @@ public class ExpenseManager {
             String summarisedExpensesListString = String.valueOf(sb);
             UI.prettyPrint(summarisedExpensesListString);
         }
+
         return total;
+    }
+
+    private ArrayList<Expense> getExpensesToSummarise(String description, LocalDate startDate, LocalDate endDate,
+                                                      String category, int beginIndex, int endIndex) {
+        if (endIndex == -1 || endIndex >= expenses.size()) {
+            endIndex = expenses.size() - 1;
+        }
+        ArrayList<Expense> expensesToSummarise = new ArrayList<>();
+        boolean isDescriptionNull = (description == null);
+        boolean isCategoryNull = (category == null);
+
+        for (Expense expense : expenses.subList(beginIndex, endIndex + 1)) {
+            boolean isSummarizeDescription = isDescriptionNull || expense.getDescription().contains(description);
+            if (!isSummarizeDescription) {
+                continue;
+            }
+
+            if (!isExpenseWithinDateRange(expense, startDate, endDate)) {
+                continue;
+            }
+
+            String expenseCategory = expense.getCategory();
+            boolean isCategoryEquals = expenseCategory != null && expenseCategory.equalsIgnoreCase(category);
+            boolean isSummarizeCategory = isCategoryNull || isCategoryEquals;
+            if (!isSummarizeCategory) {
+                continue;
+            }
+
+            expensesToSummarise.add(expense);
+        }
+
+        return expensesToSummarise;
+    }
+
+    private boolean isExpenseWithinDateRange(Expense expense, LocalDate startDate, LocalDate endDate) {
+        boolean isStartDateNull = (startDate == null);
+        boolean isEndDateNull = (endDate == null);
+        LocalDate expenseDate = expense.getDate();
+
+        if (!isStartDateNull && !isEndDateNull) {
+            return !expenseDate.isBefore(startDate) && !expenseDate.isAfter(endDate);
+        } else if (!isStartDateNull) {
+            return !expenseDate.isBefore(startDate);
+        } else if (!isEndDateNull) {
+            return !expenseDate.isAfter(endDate);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -156,12 +193,7 @@ public class ExpenseManager {
             lastIdxToPrint = endIndex;
         }
 
-        int firstIdxToPrint;
-        if (beginIndex < 0) {
-            firstIdxToPrint = 0;
-        } else {
-            firstIdxToPrint = beginIndex;
-        }
+        int firstIdxToPrint = Math.max(beginIndex, 0);
 
         StringBuilder sb = new StringBuilder();
         for (int i = firstIdxToPrint; i < lastIdxToPrint; i++) {

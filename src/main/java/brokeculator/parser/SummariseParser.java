@@ -4,15 +4,18 @@ import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.command.SummariseCommand;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class SummariseParser {
-    private static final String[] SUMMARISE_COMMAND_OPTIONS = {" /n ", " /d ", " /c ", " /from ", " /to "};
+    private static final String[] SUMMARISE_COMMAND_OPTIONS =
+        {" /n ", " /start ", " /end ", " /c ", " /from ", " /to "};
     private static final int NAME_INDEX = 0;
-    private static final int DATE_INDEX = 1;
-    private static final int CATEGORY_INDEX = 2;
-    private static final int FROM_INDEX = 3;
-    private static final int TO_INDEX = 4;
+    private static final int START_DATE_INDEX = 1;
+    private static final int END_DATE_INDEX = 2;
+    private static final int CATEGORY_INDEX = 3;
+    private static final int FROM_INDEX = 4;
+    private static final int TO_INDEX = 5;
 
     /**
      * Returns a SummariseCommand containing instructions on how to summarise expenses if user input is valid, otherwise
@@ -23,7 +26,8 @@ public class SummariseParser {
     public static Command parseInput(String userInput) {
         String[] userInputAsArray = userInput.trim().split("\\s+");
         String nameToSummariseBy = null;
-        LocalDateTime dateToSummariseBy = null;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
         String categoryToSummariseBy = null;
         int beginIndex = 0;
         int endIndex = -1;
@@ -34,7 +38,25 @@ public class SummariseParser {
             nameToSummariseBy = nameToSummariseBy.isBlank() ? null : nameToSummariseBy;
         }
 
-        // TODO implement date processing
+        currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[START_DATE_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
+            String startDateString = getOptionField(userInputAsArray, currKeywordToCheck);
+            try {
+                startDate = startDateString.isBlank() ? null : DateParser.parseDate(startDateString);
+            } catch (DateTimeParseException e) {
+                return new InvalidCommand("Start date must use dd-MM-yyyy format.");
+            }
+        }
+
+        currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[END_DATE_INDEX];
+        if (userInput.contains(currKeywordToCheck)) {
+            String endDateString = getOptionField(userInputAsArray, currKeywordToCheck);
+            try {
+                endDate = endDateString.isBlank() ? null : DateParser.parseDate(endDateString);
+            } catch (DateTimeParseException e) {
+                return new InvalidCommand("End date must use dd-MM-yyyy format.");
+            }
+        }
 
         currKeywordToCheck = SUMMARISE_COMMAND_OPTIONS[CATEGORY_INDEX];
         if (userInput.contains(currKeywordToCheck)) {
@@ -72,7 +94,7 @@ public class SummariseParser {
             return new InvalidCommand("Start index cannot be greater than end index");
         }
 
-        return new SummariseCommand(nameToSummariseBy, dateToSummariseBy, categoryToSummariseBy,
+        return new SummariseCommand(nameToSummariseBy, startDate, endDate, categoryToSummariseBy,
                 beginIndex, endIndex);
     }
 
@@ -121,7 +143,7 @@ public class SummariseParser {
      * @return Start index or end index
      */
     private static int getIndex(String[] userInputArray, String currKeyword) {
-        int index = 0;
+        int index;
         try {
             String indexAsString = getOptionField(userInputArray, currKeyword);
             indexAsString = indexAsString.isBlank() ? "0" : indexAsString;
