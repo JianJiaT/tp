@@ -26,6 +26,7 @@ public class ExpenseManager {
      * @return An acknowledgement of the expense addition
      */
     public String add(Expense expense) {
+        assert expense != null : "Expense cannot be null";
         if (expense.getCategory() != null && !Category.isValidCategory(expense.getCategory())) {
             return "Category does not exist";
         }

@@ -51,7 +51,7 @@ Adds an expense to the list of expenses tracked by the application.
 The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
-`/d DATE` : Date of the expense. <br>
+`/d DATE` : Date of the expense in the format dd-MM-yyyy. <br>
 `/a AMOUNT` : Amount of the expense. Must be a float/integer value. <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
@@ -59,10 +59,10 @@ If not present, add the category using the `category add` command. <br>
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
-add /n tea /d 14-02 /a 2.50 /c food
+add /n tea /d 14-02-2024 /a 2.50 /c food
 ```
 ```dtd
-add /n coffee /d 15-02 /a 3.00
+add /n coffee /d 15-02-2024 /a 3.00
 ```
 
 ### 3. Deleting expenses: delete
@@ -104,7 +104,7 @@ list 5
 ### 5. Summarising expenses: summarise
 #### **_SYNOPSIS_**
 ```dtd    
-summarise [/n NAME] [/d DATE] [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]
+summarise [/n NAME] [/start START_DATE] [/end END_DATE] [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]
 ```
 #### **_DESCRIPTION_**
 Displays a summary of the expenses between the specified indices that match all of the user specifications. The summary
@@ -112,7 +112,8 @@ consists of the sum of the cost of said expenses as well as a list of the expens
 are provided, will summarise all expenses tracked by the application.
 #### **_OPTIONAL PARAMETERS_**
 `/n NAME` : Expenses need to have this `NAME` to be summarised <br>
-`/d DATE` : Expenses need to have this `DATE` to be summarised <br>
+`/start START_DATE` : Expenses need to have this `START_DATE` or after to be summarised <br>
+`/end END_DATE` : Expenses need to have this `END_DATE` or earlier to be summarised <br>
 `/c CATEGORY` : Expenses need to have this `CATEGORY` to be summarised <br>
 `/from BEGIN_INDEX` : Expenses from this `BEGIN_INDEX` onwards (inclusive) will be summarised. Must be positive integer.
 If not provided, will summarise from start of list <br>
@@ -139,13 +140,17 @@ Example of summarising all expenses with the name `tea`: <br>
 ```dtd
 summarise /n tea
 ```
-Example of summarising expenses with the date `14/02` up to the 7th index: <br>
+Example of summarising expenses with the date `14-02-2024` up to the 7th index: <br>
 ```dtd
-summarise /d 14/02 /to 7
+summarise /start 14-02-2024 /end 14-02-2024 /to 7
 ```
 Example of summarising expenses with the name `chicken` and the category `food` beginning from the 2nd index: <br>
 ```dtd
 summarise /n chicken /c food /from 2
+```
+Example of summarising expenses with the date equal to or after `14-02-2024` and the category `food`: <br>
+```dtd
+summarise /start 14-02-2024 /c food
 ```
 
 ### 6. Adding events: event
@@ -266,12 +271,12 @@ application startup.
     * List categories `category list`
     * Delete category `category delete CATEGORY_NAME`
 2. **Expenses**:
-    * Add expense `add n/EXPENSE_NAME d/DATE a/AMOUNT c/CATEGORY`
+    * Add expense `add /n EXPENSE_NAME /d DATE a/AMOUNT c/CATEGORY`
     * List expenses `list INDEX`
     * Delete expense `delete INDEX`
-    * summarise expenses `summarise /n NAME /d DATE /c CATEGORY /from BEGIN_INDEX /to END_INDEX`
+    * summarise expenses `summarise /n NAME /start START_DATE /end END_DATE /c CATEGORY /from BEGIN_INDEX /to END_INDEX`
 3. **Events**:
-    * Add event `event n/EVENT_NAME d/DESCRIPTION`
+    * Add event `event /n EVENT_NAME /d DESCRIPTION`
     * List events `listEvents`
     * Delete event `deleteEvent /i INDEX`
     * Add expense to event `addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX `
