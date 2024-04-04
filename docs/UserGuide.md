@@ -18,6 +18,7 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 1. Words in UPPER_CASE are parameters
 2. Parameters in square brackets are optional parameters
 
+<div style="page-break-after: always;"></div>
 ### 1. Handle categories: category
 #### **_SYNOPSIS_**
 ```dtd    
@@ -177,15 +178,14 @@ summarise /start 14-02-2024 /c food
 event /n EVENT_NAME /d EVENT_DESCRIPTION
 ```
 #### **_DESCRIPTION_**
-Adds an event to the list of events tracked by the application.
-This event can be used to group expenses together. This is to be used
+Adds an event to group expenses together. This is to be used
 in conjunction with `addExpenseToEvent` to add expenses to the event.
 #### **_PARAMETERS_**
 `/n EVENT_NAME` : Name of the event. <br>
 `/d EVENT_DESCRIPTION` : Description of the event. <br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of usage: <br>
 ```dtd
 event /n birthday /d birthday party for bob
 ```
@@ -213,8 +213,8 @@ listEvents
 deleteEvent /i INDEX
 ```
 #### **_DESCRIPTION_**
-Delete an event that you no longer wish to track. Note that events associated with expenses cannot be deleted. To delete
-an event, first delete the expenses associated with the event using `deleteExpenseFromEvent` and then delete the event.
+Delete an event that you no longer wish to track. To delete
+an event, you must first delete the expenses associated with the event using `deleteExpenseFromEvent`.
 #### **_PARAMETERS_**
 `/i INDEX` : Index of the event to be deleted. <br>
 
@@ -230,8 +230,7 @@ deleteEvent /i 1
 addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
-Adds an expense to an event. The expense and event are identified by their respective indices.
-If an expense already belongs to an event, it will be removed from the previous event and added to the new event.
+Adds an expense to an event. If an expense already belongs to an event, it will be removed from the original event and added to the new event.
 
 #### **_PARAMETERS_**
 `/exi EXPENSE_INDEX` : Index of the expense to be added to the event. <br>
@@ -250,9 +249,9 @@ addExpenseToEvent /exi 1 /evi 1
 deleteExpenseFromEvent /i EXPENSE_INDEX_FROM_LIST_COMMAND
 ```
 #### **_DESCRIPTION_**
-Deletes an expense from an event. The expense is identified by its index in the list of expenses.
+Deletes an expense from an event. 
 #### **_PARAMETERS_**
-`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted from the event. <br>
+`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted <br>
 
 #### **_USAGE_**
 Examples of usage: <br>
