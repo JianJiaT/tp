@@ -8,7 +8,7 @@ participant ":GeneralFileParser" as generalFileParser
 participant ":Logic" as logic
 
 activate logic
-logic -> logic: loadCategoriesFromFile()
+logic -> logic: loadFile(SavableType.CATEGORY)
 activate logic
 logic -> fileManager: openCategoryFile()
 activate fileManager
