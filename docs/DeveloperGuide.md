@@ -1,7 +1,6 @@
 # Developer Guide
 
 * [Acknowledgements](#acknowledgements)
-* [Setting up, getting started] (#setting-up-getting-started)
 * [Design & implementation](#design--implementation)
   * [Architecture](#architecture)
   * [Category feature](#category-feature)
@@ -17,10 +16,6 @@
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Setting up, getting started
-
-Refer to the guide [Setting up and getting started]().
-
 ## Design & implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
@@ -31,26 +26,25 @@ The UML diagram below shows the main relationships between the classes in the Br
 ![img.png](images/architecture.png)
 
 ### Category feature
-**Implementation** </br>
-
+**Implementation** <br>
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
 The `addCategory` method takes in a string as a parameter and adds it to the set of categories.
 The `Category` class implements the following operations:
-- `addCategory(String category)` - Adds a category to the set of categories
-- `getCategoryListString()` - Returns a string representation of the set of categories
-- `removeCategory(String category)` - Deletes a category from the set of categories
+- `addCategory(String category)` Adds a category to the set of categories
+- `getCategoryListString()` Returns a string representation of the set of categories
+- `removeCategory(String category)` Deletes a category from the set of categories
 
 The `Category` class is supplemented by the following classes to interact with the user:
-- `CategoryCommand` - This class is responsible for handling and executing the commands related to categories 
+- `CategoryCommand` This class is responsible for handling and executing the commands related to categories 
 - `CategoryParser` It is responsible for parsing the user input
 
 The UML diagram below shows the main relationships between the classes in the category feature.
 ![category_class.png](images/category_class.png)
-</br>
+<br>
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
 ![category_parse_sequence.png](images/category_parse_sequence.png)
-</br>
+<br>
 **User input category parsing sequence**
 1. The user enters a command to add a category
 2. The `CategoryParser` class parses the user input and returns a `CategoryCommand` object or an `InvalidCommand` object
@@ -61,7 +55,7 @@ of the `CategoryCommand` object was called. result of the command would be retur
 to the `CategoryCommand` object, which would then be printed by the `UI` class to be viewed by the user (printing 
 omitted from sequence diagram for brevity)
 
-**Initialization** </br>
+**Initialization** <br>
 On startup, the `Category` class has its' set of categories loaded from the file `categories.txt` in the data folder.
 This is facilitated by the `FileManager` and `GeneralFileParser` classes, with the `Logic` class serving as the main logic loop. 
 The `GeneralFileParser` class reads the file and returns a list of strings.
@@ -72,7 +66,7 @@ is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
 # Summarising expenses
-**Implementation** </br>
+**Implementation** <br>
 The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
 The `SummariseParser` class is responsible for constructing a `SummariseCommand` object from valid user input, which upon
 execution would call the `summariseExpenses` method of the application's `ExpenseManager` object to obtain a summary of the expenses
@@ -99,7 +93,7 @@ by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
 # Event feature
-**Implementation** </br>
+**Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
 The `EventManager` class is responsible for aggregate operations on the events.
@@ -109,7 +103,7 @@ The UMl diagram below shows the main relationships between the classes in the ev
 
 The following sequence diagrams show how a user input is processed to add the events: </br>
 
-![img.png](images/addEventCommand.png) </br>
+![img.png](images/addEventCommand.png) <br>
 ![img.png](images/executeAddEventCommand.png)
 
 **User input event main parsing sequence**
