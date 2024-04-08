@@ -31,7 +31,7 @@ public class Expense implements Saveable {
 
     private static final String EXPENSE_DATE_FORMAT = "EEEE, dd MMMM yyyy";
 
-    private static final String AMOUNT_PATTERN = "^\\d+(\\.\\d\\d)?$";
+    private static final String AMOUNT_PATTERN = "^\\d{1,7}(\\.\\d\\d)?$";
 
     private static final Logger logger = Logger.getLogger(Expense.class.getName());
 
