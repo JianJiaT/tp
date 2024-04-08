@@ -55,7 +55,8 @@ The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
 `/d DATE` : Date of the expense in the format dd-MM-yyyy. <br>
-`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. <br>
+`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. 
+the integer portion of the amount is limited to 7 digits <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
 If not present, add the category using the `category add` command. <br>
@@ -108,7 +109,7 @@ Example of usage: <br>
 ```dtd
 list
 ```
-Example of listing the first 5 tasks: <br>
+Example of listing the first 5 expenses: <br>
 ```dtd
 list 5
 ```
