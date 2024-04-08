@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class ExpenseTest {
     LocalDate date = LocalDate.now();
-    Expense testExpense = new Expense("Lunch", 12.50, date, "food");
+    Expense testExpense = new Expense("Lunch", 12.50, date, "testExpenseCategory");
 
     @Test
     void testGetDescription() {
@@ -28,7 +28,7 @@ public class ExpenseTest {
 
     @Test
     void testGetCategory() {
-        assertEquals("FOOD", testExpense.getCategory());
+        assertEquals("TESTEXPENSECATEGORY", testExpense.getCategory());
     }
 
     @Test
