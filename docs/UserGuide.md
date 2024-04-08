@@ -19,7 +19,9 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 2. Parameters in square brackets are optional parameters
 
 <div style="page-break-after: always;"></div>
+
 ### 1. Handle categories: category
+
 #### **_SYNOPSIS_**
 ```dtd    
 category [add|list|delete] [CATEGORY_NAME]
@@ -29,19 +31,43 @@ Main command to handle categories. `add`
 and `delete` should be accompanied by `CATEGORY_NAME`. `list` will list all categories.
 When deleting a category, all expenses using that category must be deleted first.
 The category specified in `add` and `delete` will be converted to uppercase.
+
 #### **_USAGE_**
+
 Example of adding category: <br>
 ```dtd
 category add test1
+```
+output:
+
+```dtd
+------------------------------------
+Category added: TEST1
+------------------------------------
 ```
 Example of deleting category: <br>
 ```dtd
 category delete test2
 ```
+output:
+```dtd
+------------------------------------
+Category removed: TEST2
+------------------------------------
+```
 Example of listing categories: <br>
 ```dtd
 category list
 ```
+output:
+```dtd
+------------------------------------
+Categories:
+- TEST3
+- TEST1
+------------------------------------
+```
+
 <div style="page-break-after: always;"></div>
 
 ### 2. Adding expenses: add
