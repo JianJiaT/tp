@@ -39,7 +39,7 @@ public class ExpenseTest {
             assertEquals("Lunch", expenseFromFile.getDescription());
             assertEquals(12.50, expenseFromFile.getAmount());
             assertEquals(date, expenseFromFile.getDate());
-            assertEquals("FOOD", expenseFromFile.getCategory());
+            assertEquals(null, expenseFromFile.getCategory());
         } catch (Exception e) {
             fail();
         }

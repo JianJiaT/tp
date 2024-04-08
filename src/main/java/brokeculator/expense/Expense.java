@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import brokeculator.enumerators.Category;
 import brokeculator.event.Event;
 import brokeculator.parser.DateParser;
 import brokeculator.parser.util.Keyword;
@@ -123,6 +124,9 @@ public class Expense implements Saveable {
         String dateString = expenseDetails[1];
         String amountString = expenseDetails[2];
         String category = expenseDetails[3];
+        if (!Category.isValidCategory(category)) {
+            category = null;
+        }
 
         try {
             boolean isAmountNumeric = isAmountNumericString(amountString.trim());
