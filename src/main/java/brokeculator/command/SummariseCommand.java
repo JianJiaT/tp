@@ -32,6 +32,6 @@ public class SummariseCommand extends Command {
         double summary = dashboard
                 .getExpenseManager()
                 .summariseExpenses(name, startDate, endDate, category, beginIndex, endIndex);
-        UI.prettyPrint("The total is $" + summary);
+        UI.prettyPrint("The total is $" + String.format("%.2f", summary));
     }
 }
