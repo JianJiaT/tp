@@ -19,7 +19,7 @@ public class ListParser {
         int amountToList = 0;
         if (userInputAsArray.length == 1) {
             amountToList = LIST_ALL_EXPENSES;
-        } else if (userInputAsArray.length == 3 && userInputAsArray[1].trim().equals("/i")) {
+        } else if (userInputAsArray.length == 3 && userInputAsArray[1].trim().equals("/a")) {
             try {
                 amountToList = Integer.parseInt(userInputAsArray[2]);
                 if (amountToList < 0) {
