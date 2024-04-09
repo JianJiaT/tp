@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import brokeculator.enumerators.Category;
 import brokeculator.event.Event;
 import brokeculator.parser.DateParser;
 import brokeculator.parser.util.Keyword;
@@ -30,7 +31,7 @@ public class Expense implements Saveable {
 
     private static final String EXPENSE_DATE_FORMAT = "EEEE, dd MMMM yyyy";
 
-    private static final String AMOUNT_PATTERN = "^\\d+(\\.\\d\\d)?$";
+    private static final String AMOUNT_PATTERN = "^\\d{1,7}(\\.\\d\\d)?$";
 
     private static final Logger logger = Logger.getLogger(Expense.class.getName());
 
@@ -123,6 +124,9 @@ public class Expense implements Saveable {
         String dateString = expenseDetails[1];
         String amountString = expenseDetails[2];
         String category = expenseDetails[3];
+        if (!Category.isValidCategory(category)) {
+            category = null;
+        }
 
         try {
             boolean isAmountNumeric = isAmountNumericString(amountString.trim());

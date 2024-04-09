@@ -30,7 +30,7 @@ public class Logic {
             } catch (BrokeculatorException b) {
                 UI.prettyPrint("Brokeculator error occurred. " + b.getMessage());
             } catch (Exception e) {
-                UI.prettyPrint("Exception caught in main loop. " + e.getMessage());
+                UI.prettyPrint("Oops, your command is not recognized!. ");
             }
         }
     }

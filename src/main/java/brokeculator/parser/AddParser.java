@@ -17,7 +17,7 @@ public class AddParser {
     public static final int DATE_INDEX = 1;
     public static final int AMOUNT_INDEX = 2;
     public static final int CATEGORY_INDEX = 3;
-    public static final String AMOUNT_PATTERN = "^\\d+(\\.\\d\\d)?$";
+    public static final String AMOUNT_PATTERN = "^\\d{1,7}(\\.\\d\\d)?$";
 
     /**
      * Returns a AddCommand specifying the expense to add if user input is valid, otherwise
@@ -43,7 +43,8 @@ public class AddParser {
             boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
             if (isDesiredFieldsEmpty || !isAmountNumeric) {
                 return new InvalidCommand("Expense description, date and amount cannot be empty, " +
-                                            "amount must be 0 or 2 decimal places");
+                                            "amount must be 0 or 2 decimal places, up to 7 digits long"
+                                            + "(excluding decimal places)");
             }
             double expenseAmount = Double.parseDouble(expenseAmountAsString);
             LocalDate expenseDate = DateParser.parseDate(expenseDateString);
@@ -52,7 +53,7 @@ public class AddParser {
         } catch (NumberFormatException e) {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
         } catch (DateTimeParseException e) {
-            return new InvalidCommand("Invalid date format. Please enter date in the format dd-MM-yyyy");
+            return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
         }
     }
 
