@@ -17,6 +17,8 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 ## Features
 1. Words in UPPER_CASE are parameters
 2. Parameters in square brackets are optional parameters
+
+<div style="page-break-after: always;"></div>
 ### 1. Handle categories: category
 #### **_SYNOPSIS_**
 ```dtd    
@@ -40,6 +42,7 @@ Example of listing categories: <br>
 ```dtd
 category list
 ```
+<div style="page-break-after: always;"></div>
 
 ### 2. Adding expenses: add
 #### **_SYNOPSIS_**
@@ -70,6 +73,8 @@ add /n tea /d 14-02-2024 /a 2.50 /c food
 ```dtd
 add /n coffee /d 15-02-2024 /a 3.00
 ```
+<div style="page-break-after: always;"></div>
+
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
@@ -86,6 +91,7 @@ Example of deleting the 5th expense: <br>
 ```dtd
 delete 5
 ```
+<div style="page-break-after: always;"></div>
 
 ### 4. Listing expenses: list
 #### **_SYNOPSIS_**
@@ -106,10 +112,13 @@ Example of listing the first 5 tasks: <br>
 ```dtd
 list 5
 ```
+<div style="page-break-after: always;"></div>
+
 ### 5. Summarising expenses: summarise
 #### **_SYNOPSIS_**
 ```dtd    
-summarise [/n NAME] [/start START_DATE] [/end END_DATE] [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]
+summarise [/n NAME] [/start START_DATE] [/end END_DATE] 
+[/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]
 ```
 #### **_DESCRIPTION_**
 Displays a summary of the expenses between the specified indices that match all of the user specifications. The summary
@@ -125,7 +134,7 @@ If not provided, will summarise from start of list <br>
 `/to END_INDEX` : Expenses up to this `END_INDEX` (inclusive) will be  summarised. Must be positive integer.
 If not provided, will summarise up to end of list <br>
 `/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified) 
-will be summarised. Must be in the format `dd-MM-yyyy`.
+will be summarised. Must be in the format `dd-MM-yyyy`. <br>
 `/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
 
 #### **_USAGE_**
@@ -161,6 +170,7 @@ Example of summarising expenses with the date equal to or after `14-02-2024` and
 ```dtd
 summarise /start 14-02-2024 /c food
 ```
+<div style="page-break-after: always;"></div>
 
 ### 6. Adding events: event
 #### **_SYNOPSIS_**
@@ -168,15 +178,14 @@ summarise /start 14-02-2024 /c food
 event /n EVENT_NAME /d EVENT_DESCRIPTION
 ```
 #### **_DESCRIPTION_**
-Adds an event to the list of events tracked by the application.
-This event can be used to group expenses together. This is to be used
+Adds an event to group expenses together. This is to be used
 in conjunction with `addExpenseToEvent` to add expenses to the event.
 #### **_PARAMETERS_**
 `/n EVENT_NAME` : Name of the event. <br>
 `/d EVENT_DESCRIPTION` : Description of the event. <br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of usage: <br>
 ```dtd
 event /n birthday /d birthday party for bob
 ```
@@ -196,6 +205,7 @@ Example of usage: <br>
 ```dtd
 listEvents
 ```
+<div style="page-break-after: always;"></div>
 
 ### 8. Deleting events: deleteEvent
 #### **_SYNOPSIS_**
@@ -203,8 +213,8 @@ listEvents
 deleteEvent /i INDEX
 ```
 #### **_DESCRIPTION_**
-Delete an event that you no longer wish to track. Note that events associated with expenses cannot be deleted. To delete
-an event, first delete the expenses associated with the event using `deleteExpenseFromEvent` and then delete the event.
+Delete an event that you no longer wish to track. To delete
+an event, you must first delete the expenses associated with the event using `deleteExpenseFromEvent`.
 #### **_PARAMETERS_**
 `/i INDEX` : Index of the event to be deleted. <br>
 
@@ -220,8 +230,7 @@ deleteEvent /i 1
 addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
-Adds an expense to an event. The expense and event are identified by their respective indices.
-If an expense already belongs to an event, it will be removed from the previous event and added to the new event.
+Adds an expense to an event. 
 
 #### **_PARAMETERS_**
 `/exi EXPENSE_INDEX` : Index of the expense to be added to the event. <br>
@@ -232,6 +241,7 @@ Examples of usage: <br>
 ```dtd
 addExpenseToEvent /exi 1 /evi 1
 ```
+<div style="page-break-after: always;"></div>
 
 ### 10. Deleting expenses from events: deleteExpenseFromEvent
 #### **_SYNOPSIS_**
@@ -239,9 +249,9 @@ addExpenseToEvent /exi 1 /evi 1
 deleteExpenseFromEvent /i EXPENSE_INDEX_FROM_LIST_COMMAND
 ```
 #### **_DESCRIPTION_**
-Deletes an expense from an event. The expense is identified by its index in the list of expenses.
+Deletes an expense from an event. 
 #### **_PARAMETERS_**
-`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted from the event. <br>
+`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted <br>
 
 #### **_USAGE_**
 Examples of usage: <br>
@@ -264,6 +274,7 @@ Examples of usage: <br>
 ```dtd
 viewEvent /i 1
 ```
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
