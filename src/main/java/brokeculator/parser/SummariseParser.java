@@ -44,7 +44,11 @@ public class SummariseParser {
             try {
                 startDate = startDateString.isBlank() ? null : DateParser.parseDate(startDateString);
             } catch (DateTimeParseException e) {
-                return new InvalidCommand("Start date must use dd-MM-yyyy format.");
+                if (e.getMessage().contains("Invalid date")) {
+                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
+                } else {
+                    return new InvalidCommand("Invalid start date format. Please enter date in the format DD-MM-YYYY");
+                }
             }
         }
 
@@ -54,7 +58,11 @@ public class SummariseParser {
             try {
                 endDate = endDateString.isBlank() ? null : DateParser.parseDate(endDateString);
             } catch (DateTimeParseException e) {
-                return new InvalidCommand("End date must use dd-MM-yyyy format.");
+                if (e.getMessage().contains("Invalid date")) {
+                    return new InvalidCommand("Invalid end date. The date you entered does not exist");
+                } else {
+                    return new InvalidCommand("Invalid end date format. Please enter date in the format DD-MM-YYYY");
+                }
             }
         }
 
