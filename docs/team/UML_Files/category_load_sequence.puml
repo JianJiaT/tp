@@ -1,5 +1,5 @@
 @startuml
-
+skinparam Style strictuml
 box Category Load Logic
 
 participant ":Category" as category
@@ -7,7 +7,7 @@ participant ":FileManager" as fileManager
 participant ":GeneralFileParser" as generalFileParser
 participant ":Logic" as logic
 
-activate logic
+
 logic -> logic: loadFile(SavableType.CATEGORY)
 activate logic
 logic -> fileManager: openCategoryFile()
@@ -49,5 +49,7 @@ deactivate fileManager
 
         end
     end
+    logic -[dashed]-> logic
+    deactivate logic
 end box
 @enduml

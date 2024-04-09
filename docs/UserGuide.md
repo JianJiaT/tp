@@ -19,7 +19,9 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 2. Parameters in square brackets are optional parameters
 
 <div style="page-break-after: always;"></div>
+
 ### 1. Handle categories: category
+
 #### **_SYNOPSIS_**
 ```dtd    
 category [add|list|delete] [CATEGORY_NAME]
@@ -29,19 +31,43 @@ Main command to handle categories. `add`
 and `delete` should be accompanied by `CATEGORY_NAME`. `list` will list all categories.
 When deleting a category, all expenses using that category must be deleted first.
 The category specified in `add` and `delete` will be converted to uppercase.
+
 #### **_USAGE_**
+
 Example of adding category: <br>
 ```dtd
 category add test1
+```
+output:
+
+```dtd
+------------------------------------
+Category added: TEST1
+------------------------------------
 ```
 Example of deleting category: <br>
 ```dtd
 category delete test2
 ```
+output:
+```dtd
+------------------------------------
+Category removed: TEST2
+------------------------------------
+```
 Example of listing categories: <br>
 ```dtd
 category list
 ```
+output:
+```dtd
+------------------------------------
+Categories:
+- TEST3
+- TEST1
+------------------------------------
+```
+
 <div style="page-break-after: always;"></div>
 
 ### 2. Adding expenses: add
@@ -55,7 +81,8 @@ The expense must have a name, date and amount.
 #### **_PARAMETERS_**
 `/n EXPENSE_NAME` : Name of the expense. <br>
 `/d DATE` : Date of the expense in the format dd-MM-yyyy. <br>
-`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. <br>
+`/a AMOUNT` : Amount of the expense. Must be a float/integer value, either 0 or 2 decimal places. 
+the integer portion of the amount is limited to 7 digits <br>
 #### **_OPTIONAL PARAMETERS_**
 `/c CATEGORY` : Category of the expense. Category must be present in the category list.
 If not present, add the category using the `category add` command. <br>
@@ -108,7 +135,7 @@ Example of usage: <br>
 ```dtd
 list
 ```
-Example of listing the first 5 tasks: <br>
+Example of listing the first 5 expenses: <br>
 ```dtd
 list 5
 ```
@@ -126,8 +153,6 @@ consists of the sum of the cost of said expenses as well as a list of the expens
 are provided, will summarise all expenses tracked by the application.
 #### **_OPTIONAL PARAMETERS_**
 `/n NAME` : Expenses need to have this `NAME` to be summarised <br>
-`/start START_DATE` : Expenses need to have this `START_DATE` or after to be summarised <br>
-`/end END_DATE` : Expenses need to have this `END_DATE` or earlier to be summarised <br>
 `/c CATEGORY` : Expenses need to have this `CATEGORY` to be summarised <br>
 `/from BEGIN_INDEX` : Expenses from this `BEGIN_INDEX` onwards (inclusive) will be summarised. Must be positive integer.
 If not provided, will summarise from start of list <br>
@@ -136,6 +161,7 @@ If not provided, will summarise up to end of list <br>
 `/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified) 
 will be summarised. Must be in the format `dd-MM-yyyy`. <br>
 `/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
+Must be in the format `dd-MM-yyyy`. <br>
 
 #### **_USAGE_**
 Example of summarising all expenses: <br>

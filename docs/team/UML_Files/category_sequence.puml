@@ -1,6 +1,6 @@
 @startuml
 !include style.puml
-
+skinparam Style strictuml
 box Category Command Logic
 
 participant ":otherClasses" as externalClasses

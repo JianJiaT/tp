@@ -1,4 +1,5 @@
 @startuml
+hide circle
 skinparam classAttributeIconSize 0
 class Dashboard {
     - expenseManager: ExpenseManager
@@ -9,7 +10,8 @@ class Dashboard {
     + getEventManager(): EventManager
     + getFileManager(): FileManager
 }
-class command <<abstract>> {
+abstract class command {
+    --
     + execute(dashboard: Dashboard): void
 }
 class CategoryCommand {
