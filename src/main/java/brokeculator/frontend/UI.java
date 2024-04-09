@@ -28,7 +28,7 @@ public class UI {
             return scanner.nextLine();
         } catch (Exception e) {
             recreateScanner();
-            throw new BrokeculatorException("Error in scanning input detected. Please try again");
+            return "";
         }
     }
     private static void recreateScanner() {
