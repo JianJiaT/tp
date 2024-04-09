@@ -23,7 +23,7 @@ public class ListParser {
             try {
                 amountToList = Integer.parseInt(userInputAsArray[2]);
                 if (amountToList < 0) {
-                    return new InvalidCommand("Amount to list must be non-negative");
+                    return new InvalidCommand("Amount to list cannot be negative");
                 }
             } catch (NumberFormatException e) {
                 return new InvalidCommand("Invalid integer for list command.");
