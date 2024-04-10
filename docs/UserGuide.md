@@ -150,18 +150,18 @@ summarise [/n NAME] [/start START_DATE] [/end END_DATE]
 #### **_DESCRIPTION_**
 Displays a summary of the expenses between the specified indices that match all of the user specifications. The summary
 consists of the sum of the cost of said expenses as well as a list of the expenses that were summarised. If no parameters
-are provided, will summarise all expenses tracked by the application.
+are provided, will summarise all expenses tracked by the application. Any extraneous or invalid parameters will be disregarded.
 #### **_OPTIONAL PARAMETERS_**
 `/n NAME` : Expenses need to have this `NAME` to be summarised <br>
 `/c CATEGORY` : Expenses need to have this `CATEGORY` to be summarised <br>
+`/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified)
+will be summarised. Must be in the format `dd-MM-yyyy`. <br>
+`/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
+Must be in the format `dd-MM-yyyy`. <br>
 `/from BEGIN_INDEX` : Expenses from this `BEGIN_INDEX` onwards (inclusive) will be summarised. Must be positive integer.
 If not provided, will summarise from start of list <br>
 `/to END_INDEX` : Expenses up to this `END_INDEX` (inclusive) will be  summarised. Must be positive integer.
 If not provided, will summarise up to end of list <br>
-`/start START_DATE` : Expenses from this `START_DATE` onwards (inclusive) or till the end date (if specified) 
-will be summarised. Must be in the format `dd-MM-yyyy`. <br>
-`/end END_DATE` : Expenses up to this `END_DATE` (inclusive) or from the start date (if specified) will be summarised.
-Must be in the format `dd-MM-yyyy`. <br>
 
 #### **_USAGE_**
 Example of summarising all expenses: <br>
