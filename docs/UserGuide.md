@@ -310,6 +310,12 @@ viewEvent /i 1
 and run the jar on your other computer. The categories, events and expenses will be automatically loaded on
 application startup.
 
+**Q**: What happens if a certain file entry is corrupted?
+**A**: For corrupted entries, the application will remove the corrupted entry. However, for
+objects reliant on the corrupted entry, ie) an expense that is associated with a corrupted category, some modifications
+to the dependent objects will be made ie) the category of the expense will be set to null.
+
+
 ## Command Summary
 
 1. **Category**: 

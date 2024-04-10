@@ -3,20 +3,23 @@
 skinparam Style strictuml
 box Category Command Logic
 
-participant ":otherClasses" as externalClasses
-participant ":CategoryParser" as CategoryParser
+participant ":Logic   " as logic
+participant "<<class>>\n:CategoryParser" as CategoryParser
 participant ":Category" as Category
-
-
-
-externalClasses -> CategoryParser : parseInput("Category [text]")
+participant ":CategoryCommand" as CategoryCommand
+participant ":InvalidCommand" as InvalidCommand
+participant ":GeneralInputParser" as generalinputparser
+activate logic
+logic -> generalinputparser : getCommandFromUserInput(userInput:String)
+activate generalinputparser
+generalinputparser -> CategoryParser : parseInput(userInput:String)
 activate CategoryParser
 
 alt validAddCommand || validDeleteCommand || validListCommand
     create CategoryCommand
     CategoryParser -> CategoryCommand : new CategoryCommand(...)
     activate CategoryCommand
-    CategoryCommand -[dashed]-> CategoryParser: commandToExecute:CategoryCommand
+    CategoryCommand -[dashed]-> CategoryParser: commandToExecute:Command
     deactivate CategoryCommand
 else default
     create InvalidCommand
@@ -25,11 +28,12 @@ else default
     InvalidCommand -[dashed]-> CategoryParser: commandToExecute:InvalidCommand
     deactivate InvalidCommand
 end
-CategoryParser -[dashed]-> externalClasses : commandToExecute
+CategoryParser -[dashed]-> generalinputparser : commandToExecute:Command
 deactivate CategoryParser
-
+generalinputparser -[dashed]-> logic : commandToExecute:Command
+deactivate generalinputparser
 alt CategoryCommand
-    externalClasses -> CategoryCommand : execute()
+    logic -> CategoryCommand : execute()
     activate CategoryCommand
     alt subcommand.equals("add")
         CategoryCommand -> Category : addCategory()
@@ -47,18 +51,19 @@ alt CategoryCommand
         Category -[dashed]-> CategoryCommand: feedback:String
         deactivate Category
     end
-    CategoryCommand -[dashed]-> externalClasses
+    CategoryCommand -[dashed]-> logic
     deactivate CategoryCommand
     destroy CategoryCommand
 else InvalidCommand
-    externalClasses -> InvalidCommand : execute()
+    logic -> InvalidCommand : execute()
     activate InvalidCommand
     InvalidCommand -> InvalidCommand : printErrorMessage()
     activate InvalidCommand
     deactivate InvalidCommand
-    InvalidCommand -[dashed]-> externalClasses
+    InvalidCommand -[dashed]-> logic
     destroy InvalidCommand
 end
+deactivate logic
 
 
 end box
