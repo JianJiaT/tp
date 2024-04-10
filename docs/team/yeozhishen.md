@@ -26,4 +26,9 @@ The developer will just need to edit a array of options allowed and call a funct
 - Setting up tooling such as github milestones and issuess, github actions.
 - maintaining issue tracker
 - Updating user docs not related to features
+
+## Contributions to the User Guide
+Gave rough structure to the user guide and filled up details for features
+## Contributions to the Developer Guide
+Filled up the class and sequence diagrams for the category class
 ### Summary of Contributions
