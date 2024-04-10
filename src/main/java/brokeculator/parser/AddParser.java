@@ -39,13 +39,28 @@ public class AddParser {
                 expenseCategory = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[CATEGORY_INDEX]);
                 expenseCategory = expenseCategory.isBlank() ? null : expenseCategory;
             }
-            boolean isDesiredFieldsEmpty = isFieldsEmpty(expenseDescription, expenseDateString, expenseAmountAsString);
+            boolean isDescriptionEmpty = expenseDescription.isBlank();
+            boolean isDateStringEmpty = expenseDateString.isBlank();
+            boolean isAmountStringEmpty = expenseAmountAsString.isBlank();
             boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
-            if (isDesiredFieldsEmpty || !isAmountNumeric) {
-                return new InvalidCommand("Expense description, date and amount cannot be empty, " +
-                                            "amount must be 0 or 2 decimal places, up to 7 digits long"
-                                            + "(excluding decimal places)");
+
+            String inputFieldsErrorMessage = "";
+            if (isDescriptionEmpty) {
+                inputFieldsErrorMessage += "Description cannot be empty. ";
             }
+            if (isDateStringEmpty) {
+                inputFieldsErrorMessage += "Date cannot be empty. ";
+            }
+            if (isAmountStringEmpty) {
+                inputFieldsErrorMessage += "Amount cannot be empty. ";
+            } else if (!isAmountNumeric) {
+                inputFieldsErrorMessage += "Amount must be 0 or 2 decimal places, up to 7 digits long"
+                        + " (excluding decimal places)";
+            }
+            if (!inputFieldsErrorMessage.isBlank()) {
+                return new InvalidCommand(inputFieldsErrorMessage);
+            }
+
             double expenseAmount = Double.parseDouble(expenseAmountAsString);
             LocalDate expenseDate = DateParser.parseDate(expenseDateString);
             Expense expenseToAdd = new Expense(expenseDescription, expenseAmount, expenseDate, expenseCategory);

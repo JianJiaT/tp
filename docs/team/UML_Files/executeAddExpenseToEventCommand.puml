@@ -1,6 +1,8 @@
 @startuml
-participant Logic 
-participant "x:AddExpenseToEventCommand" as Command
+skinparam Style strictuml
+
+participant ":Logic" AS Logic
+participant ":AddExpenseToEventCommand" as Command
 participant ":ExpenseManager" as ExpenseManager
 participant ":EventManager" as EventManager
 participant "newOwningEvent:Event" as noe
@@ -8,7 +10,7 @@ participant "expense:Expense" as Expense
 participant "dataManager:EventExpenseDataIntegrityManager" as dataManager
 
 
-Logic -> Command: execute(dashboard : Dashboard)
+Logic -> Command: execute(dashboard)
 activate Command
 
 Command -> ExpenseManager: isExpenseIndexValid(expenseIdx : int)

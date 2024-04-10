@@ -8,6 +8,7 @@ public class GeneralInputParser {
         Command commandToExecute;
         try {
             String commandKeyword = userInput.split(" ")[0];
+            commandKeyword = commandKeyword.toLowerCase();
             switch (commandKeyword.trim()) {
             case "add":
                 commandToExecute = AddParser.parseInput(userInput);
@@ -30,19 +31,19 @@ public class GeneralInputParser {
             case "category":
                 commandToExecute = CategoryParser.parseInput(userInput);
                 break;
-            case "viewEvent":
+            case "viewevent":
                 commandToExecute = ViewSingleEventParser.parseInput(userInput);
                 break;
-            case "listEvents":
+            case "listevents":
                 commandToExecute = ListEventsParser.parseInput(userInput);
                 break;
-            case "deleteEvent":
+            case "deleteevent":
                 commandToExecute = DeleteEventParser.parseInput(userInput);
                 break;
-            case "addExpenseToEvent":
+            case "addexev":
                 commandToExecute = AddExpenseToEventParser.parseInput(userInput);
                 break;
-            case "deleteExpenseFromEvent":
+            case "delexev":
                 commandToExecute = DeleteExpenseFromEventParser.parseInput(userInput);
                 break;
             default:

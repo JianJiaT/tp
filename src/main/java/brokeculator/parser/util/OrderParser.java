@@ -73,7 +73,7 @@ public class OrderParser {
             }
             userInputs[i] = userInput.substring(startIndex, endIndex).trim();
             if (userInputs[i].isBlank()) {
-                throw new Exception(keywords[i].keywordMeaning + " cannot be empty");
+                throw new Exception(keywords[i].keywordMeaning + " is missing");
             }
             parsedKeywordCount++;
         }

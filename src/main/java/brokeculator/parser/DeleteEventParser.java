@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.DeleteEventCommand;
 import brokeculator.command.InvalidCommand;
+import brokeculator.errors.ErrorMessages;
 import brokeculator.parser.util.Keyword;
 import brokeculator.parser.util.OrderParser;
 
@@ -29,7 +30,7 @@ public class DeleteEventParser {
         try {
             idx = Integer.parseInt(idxString);
         } catch (NumberFormatException e) {
-            return new InvalidCommand("Event index must be an integer");
+            return new InvalidCommand(ErrorMessages.INVALID_INDEX);
         }
 
         return new DeleteEventCommand(idx);

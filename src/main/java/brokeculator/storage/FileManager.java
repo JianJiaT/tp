@@ -48,16 +48,15 @@ public class FileManager {
             assert this.eventFile.exists();
             assert this.connectionFile.exists();
 
-            printDataSavedMessage(dataFile);
-            printDataSavedMessage(categoryFile);
-            printDataSavedMessage(eventFile);
-            printDataSavedMessage(connectionFile);
-
             this.hasFileErrors = false;
         } catch (Exception e) {
             printDataLossWarning(); 
             this.hasFileErrors = true;
         }
+    }
+
+    private void printDataLossWarning() {
+        UI.println("Errors! Your data will not be saved");
     }
 
     private boolean openFile(File file) {
@@ -114,13 +113,6 @@ public class FileManager {
     }
     public void saveConnections(String data) {
         save(data, this.connectionFile);
-    }
-
-    private void printDataLossWarning() {
-        UI.println("Errors! Your data will not be saved");
-    }
-    private void printDataSavedMessage(File file) {
-        UI.println("Data file: " + file + " successfully created!");
     }
 
     private void createFile(File file) throws Exception {

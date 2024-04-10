@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.DeleteCommand;
 import brokeculator.command.InvalidCommand;
+import brokeculator.errors.ErrorMessages;
 import brokeculator.enumerators.CommandErrorMessages;
 
 public class DeleteParser {
@@ -25,7 +26,7 @@ public class DeleteParser {
                 return new InvalidCommand("Delete index must be one or greater");
             }
         } catch (NumberFormatException e) {
-            return new InvalidCommand("Delete index must be integer");
+            return new InvalidCommand(ErrorMessages.INVALID_INDEX);
         }
         return new DeleteCommand(indexToDelete);
     }

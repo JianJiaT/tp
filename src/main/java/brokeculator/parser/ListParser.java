@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.command.ListCommand;
+import brokeculator.errors.ErrorMessages;
 import brokeculator.enumerators.CommandErrorMessages;
 
 public class ListParser {
@@ -26,7 +27,7 @@ public class ListParser {
                     return new InvalidCommand("Amount to list must be non-negative");
                 }
             } catch (NumberFormatException e) {
-                return new InvalidCommand("Amount to list must be integer");
+                return new InvalidCommand(ErrorMessages.INVALID_INDEX);
             }
         } else {
             return new InvalidCommand(CommandErrorMessages.INVALID_LIST_COMMAND.getString());
