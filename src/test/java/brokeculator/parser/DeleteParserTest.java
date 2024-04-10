@@ -9,21 +9,21 @@ public class DeleteParserTest {
 
     @Test
     public void parseInput_inputPosIntIndex_deleteCommand() {
-        String input = "delete 1";
+        String input = "delete /i 1";
         Command resultCommand = DeleteParser.parseInput(input);
         assertInstanceOf(DeleteCommand.class, resultCommand);
     }
 
     @Test
     public void parseInput_inputPosDoubleIndex_invalidCommand() {
-        String input = "delete 2.5";
+        String input = "delete /i 2.5";
         Command resultCommand = DeleteParser.parseInput(input);
         assertInstanceOf(InvalidCommand.class, resultCommand);
     }
 
     @Test
     public void parseInput_inputNegDoubleIndex_invalidCommand() {
-        String input = "delete -1.5";
+        String input = "delete /i -1.5";
         Command resultCommand = DeleteParser.parseInput(input);
         assertInstanceOf(InvalidCommand.class, resultCommand);
     }

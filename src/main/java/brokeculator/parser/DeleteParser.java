@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.DeleteCommand;
 import brokeculator.command.InvalidCommand;
+import brokeculator.enumerators.CommandErrorMessages;
 
 public class DeleteParser {
 
@@ -15,14 +16,16 @@ public class DeleteParser {
     public static Command parseInput(String userInput) {
         String[] userInputAsArray = userInput.trim().split("\\s+");
         int indexToDelete = 0;
-        if (userInputAsArray.length == 1) {
-            return new InvalidCommand("Please specify an index to delete." + System.lineSeparator()
-                    + "Format: delete <index>");
+        if (userInputAsArray.length != 3 || !userInputAsArray[1].trim().equals("/i")) {
+            return new InvalidCommand(CommandErrorMessages.INVALID_DELETE_COMMAND.getString());
         }
         try {
-            indexToDelete = Integer.parseInt(userInputAsArray[1]);
+            indexToDelete = Integer.parseInt(userInputAsArray[2]);
+            if (indexToDelete <= 0) {
+                return new InvalidCommand("Delete index must be one or greater");
+            }
         } catch (NumberFormatException e) {
-            return new InvalidCommand("The delete index must be an integer.");
+            return new InvalidCommand("Delete index must be integer");
         }
         return new DeleteCommand(indexToDelete);
     }
