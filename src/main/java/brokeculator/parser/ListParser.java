@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.command.ListCommand;
+import brokeculator.errors.ErrorMessages;
 
 public class ListParser {
     private static final int LIST_ALL_EXPENSES = -1;
@@ -22,7 +23,7 @@ public class ListParser {
             try {
                 amountToList = Integer.parseInt(userInputAsArray[1]);
             } catch (NumberFormatException e) {
-                return new InvalidCommand("Invalid integer for list command.");
+                return new InvalidCommand(ErrorMessages.INVALID_INDEX);
             }
         }
 

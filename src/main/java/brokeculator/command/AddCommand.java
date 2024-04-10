@@ -21,7 +21,7 @@ public class AddCommand extends Command{
             String feedback = dashboard.getExpenseManager().add(expenseToAdd);
             UI.prettyPrint(feedback);
         } catch (Exception e) {
-            UI.println("There was an error adding the expense. Please try again.");
+            UI.prettyPrint("There was an error adding the expense. Please try again.");
         }
     }
 }
