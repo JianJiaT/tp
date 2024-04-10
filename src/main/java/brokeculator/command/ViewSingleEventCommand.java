@@ -29,7 +29,7 @@ public class ViewSingleEventCommand extends Command {
         }
 
         String string = event + System.lineSeparator()
-                + "has " + expenseCount + " expenses:"
+                + "Event has " + expenseCount + " expenses:"
                 + System.lineSeparator()
                 + event.listExpenses();
         UI.prettyPrint(string);
