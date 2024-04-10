@@ -87,6 +87,11 @@ public class ExpenseManager {
      */
     public double summariseExpenses(String description, LocalDate startDate, LocalDate endDate, String category,
                                     int beginIndex, int endIndex) {
+        if (beginIndex > expenses.size()) {
+            UI.prettyPrint("Nothing to summarise!");
+            return(0);
+        }
+
         double total = 0;
         ArrayList<Expense> expensesToSummarise = getExpensesToSummarise(description, startDate, endDate, category,
                 beginIndex, endIndex);
