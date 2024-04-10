@@ -27,10 +27,11 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 6. [Adding events: event](#6-adding-events-event)
 7. [Viewing events: listEvents](#7-viewing-events-listevents)
 8. [Deleting events: deleteEvent](#8-deleting-events-deleteevent)
-9. [Adding expenses to events: addExpenseToEvent](#9-adding-expenses-to-events-addexpensetoevent)
-10. [Deleting expenses from events: deleteExpenseFromEvent](#10-deleting-expenses-from-events-deleteexpensefromevent)
+9. [Adding expenses to events: addExEv](#9-adding-expenses-to-events-addexev)
+10. [Deleting expenses from events: delExEv](#10-deleting-expenses-from-events-delexev)
 11. [Viewing expenses in events: viewEvent](#11-viewing-expenses-in-events-viewevent)
 
+> NOTE : The commands are case insensitive
 
 <div style="page-break-after: always;"></div>
 
@@ -271,10 +272,10 @@ Examples of usage: <br>
 deleteEvent /i 1
 ```
 
-### 9. Adding expenses to events: addExpenseToEvent
+### 9. Adding expenses to events: addExEv
 #### **_SYNOPSIS_**
 ```dtd
-addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
+addExEv /exi EXPENSE_INDEX /evi EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
 Adds an expense to an event. 
@@ -286,14 +287,14 @@ Adds an expense to an event.
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
-addExpenseToEvent /exi 1 /evi 1
+addExEv /exi 1 /evi 1
 ```
 <div style="page-break-after: always;"></div>
 
-### 10. Deleting expenses from events: deleteExpenseFromEvent
+### 10. Deleting expenses from events: delExEv
 #### **_SYNOPSIS_**
 ```dtd
-deleteExpenseFromEvent /i EXPENSE_INDEX
+delExEv /i EXPENSE_INDEX
 ```
 #### **_DESCRIPTION_**
 Deletes an expense from its associated event. 
@@ -303,7 +304,7 @@ Deletes an expense from its associated event.
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd  
-deleteExpenseFromEvent /i 1
+delExEv /i 1
 ```
 
 ### 11. Viewing expenses in events: viewEvent

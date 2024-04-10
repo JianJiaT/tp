@@ -12,31 +12,31 @@ class AddExpenseToEventParserTest {
 
     @Test
     void parseInput_validInput_addExpenseToEventCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi 2");
+        Command command = AddExpenseToEventParser.parseInput("addexev /exi 1 /evi 2");
         assertInstanceOf(AddExpenseToEventCommand.class, command);
     }
 
     @Test
     void parseInput_missingIndex_invalidCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi");
+        Command command = AddExpenseToEventParser.parseInput("addexev /exi 1 /evi");
         assertInstanceOf(InvalidCommand.class, command);
     }
 
     @Test
     void parseInput_nonIntegerIndex_invalidCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi a");
+        Command command = AddExpenseToEventParser.parseInput("addexev /exi 1 /evi a");
         assertInstanceOf(InvalidCommand.class, command);
     }
 
     @Test 
     void parseInput_missingKeyword_invalidCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1");
+        Command command = AddExpenseToEventParser.parseInput("addexev /exi 1");
         assertInstanceOf(InvalidCommand.class, command);
     }
 
     @Test
     void parseInput_tooManyArguments_invalidCommand() {
-        Command command = AddExpenseToEventParser.parseInput("addExpenseToEvent /exi 1 /evi 2 /exi 3");
+        Command command = AddExpenseToEventParser.parseInput("addexev /exi 1 /evi 2 /exi 3");
         assertInstanceOf(InvalidCommand.class, command);
     }
 }
