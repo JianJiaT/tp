@@ -23,11 +23,11 @@ public class HelpCommand extends Command {
             + System.lineSeparator()
             + "\t8. listEvents - lists all events"
             + System.lineSeparator()
-            + "\t9. deleteEvent /i <index> - deletes an event" 
+            + "\t9. deleteEvent /i <index> - deletes an event"
             + System.lineSeparator()
-            + "\t10. addExpenseToEvent /exi <expense index> /evi <event index> - adds an expense to an event"
+            + "\t10. addExEv /exi <expense index> /evi <event index> - adds an expense to an event"
             + System.lineSeparator()
-            + "\t11. deleteExpenseFromEvent /i <expense index> - deletes an expense from an event"
+            + "\t11. delExEv /i <expense index> - deletes an expense from an event"
             + System.lineSeparator()
             + "\t12. exit - exits the application"
             + System.lineSeparator()

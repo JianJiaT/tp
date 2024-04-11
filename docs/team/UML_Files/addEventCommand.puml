@@ -1,23 +1,25 @@
-@startuml 
-participant "GeneralInputParser" as GIP
-participant "EventParser" as EP
-participant "OrderParser" as OP
+@startuml
+skinparam Style strictuml
 
-GIP -> EP: parseInput(userInput : String)
-activate EP
-EP -> OP: parseOrder(userInput, keywords)
-activate OP
-OP --> EP : userInputs : String[]
-deactivate OP
-note right of EP : userInputs[0] is the eventName\nuserInputs[1] is the eventDescription
+participant GeneralInputParser <<class>>
+participant EventParser <<class>>
+participant OrderParser <<class>>
+
+GeneralInputParser -> EventParser: parseInput(userInput)
+activate EventParser
+EventParser -> OrderParser: parseOrder(userInput, Event.keywords)
+activate OrderParser
+OrderParser --> EventParser : userInputs : String[]
+deactivate OrderParser
+note right of EventParser : userInputs[0] is the eventName\nuserInputs[1] is the eventDescription
 
 create "x:AddEventCommand" AS AddEventCommand
-EP -> AddEventCommand: new AddEventCommand(userInputs[0], userInputs[1]) 
+EventParser -> AddEventCommand: new AddEventCommand(userInputs[0], userInputs[1])
 activate AddEventCommand
-AddEventCommand --> EP : x
+AddEventCommand --> EventParser : x
 deactivate AddEventCommand
 
-EP --> GIP : x
-deactivate EP
+EventParser --> GeneralInputParser : x
+deactivate EventParser
 
 @enduml

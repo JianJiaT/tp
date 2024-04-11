@@ -24,8 +24,12 @@ public class UI {
      */
     public static String getUserInput() throws BrokeculatorException {
         try {
-            UI.print("\t-> ");
-            return scanner.nextLine();
+            String userInput;
+            do {
+                UI.print("\t-> ");
+                userInput = scanner.nextLine();
+            } while (userInput.isBlank());
+            return userInput;
         } catch (Exception e) {
             recreateScanner();
             return "";

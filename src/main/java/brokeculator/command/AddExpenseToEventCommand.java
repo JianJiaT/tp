@@ -1,6 +1,7 @@
 package brokeculator.command;
 
 import brokeculator.dashboard.Dashboard;
+import brokeculator.errors.ErrorMessages;
 import brokeculator.event.Event;
 import brokeculator.event.EventExpenseDataIntegrityManager;
 import brokeculator.expense.Expense;
@@ -21,7 +22,7 @@ public class AddExpenseToEventCommand extends Command {
         boolean isValidExpenseIdx = dashboard.getExpenseManager().isExpenseIndexValid(expenseIdx);
         boolean isValidEventIdx = dashboard.getEventManager().isEventIdxValid(eventIdx);
         if (!isValidExpenseIdx || !isValidEventIdx) {
-            UI.prettyPrint("Indexes provided are invalid");
+            UI.prettyPrint(ErrorMessages.INVALID_INDEX);
             return;
         }
 

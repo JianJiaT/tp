@@ -18,9 +18,24 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 1. Words in UPPER_CASE are parameters
 2. Parameters in square brackets are optional parameters
 
+## Commands
+1. [Handling categories: category](#1-handling-categories-category)
+2. [Adding expenses: add](#2-adding-expenses-add)
+3. [Deleting expenses: delete](#3-deleting-expenses-delete)
+4. [Listing expenses: list](#4-listing-expenses-list)
+5. [Summarising expenses: summarise](#5-summarising-expenses-summarise)
+6. [Adding events: event](#6-adding-events-event)
+7. [Viewing events: listEvents](#7-viewing-events-listevents)
+8. [Deleting events: deleteEvent](#8-deleting-events-deleteevent)
+9. [Adding expenses to events: addExEv](#9-adding-expenses-to-events-addexev)
+10. [Deleting expenses from events: delExEv](#10-deleting-expenses-from-events-delexev)
+11. [Viewing expenses in events: viewEvent](#11-viewing-expenses-in-events-viewevent)
+
+> NOTE : The commands are case insensitive
+
 <div style="page-break-after: always;"></div>
 
-### 1. Handle categories: category
+### 1. Handling categories: category
 
 #### **_SYNOPSIS_**
 ```dtd    
@@ -231,6 +246,13 @@ Example of usage: <br>
 ```dtd
 listEvents
 ```
+output:
+```dtd
+------------------------------------
+1. Party Woohoo! (Bob's birthday)
+2. Party YOYO! (Anna's wedding)
+------------------------------------
+```
 <div style="page-break-after: always;"></div>
 
 ### 8. Deleting events: deleteEvent
@@ -250,10 +272,10 @@ Examples of usage: <br>
 deleteEvent /i 1
 ```
 
-### 9. Adding expenses to events: addExpenseToEvent
+### 9. Adding expenses to events: addExEv
 #### **_SYNOPSIS_**
 ```dtd
-addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX
+addExEv /exi EXPENSE_INDEX /evi EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
 Adds an expense to an event. 
@@ -265,40 +287,49 @@ Adds an expense to an event.
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
-addExpenseToEvent /exi 1 /evi 1
+addExEv /exi 1 /evi 1
 ```
 <div style="page-break-after: always;"></div>
 
-### 10. Deleting expenses from events: deleteExpenseFromEvent
+### 10. Deleting expenses from events: delExEv
 #### **_SYNOPSIS_**
 ```dtd
-deleteExpenseFromEvent /i EXPENSE_INDEX_FROM_LIST_COMMAND
+delExEv /i EXPENSE_INDEX
 ```
 #### **_DESCRIPTION_**
-Deletes an expense from an event. 
+Deletes an expense from its associated event. 
 #### **_PARAMETERS_**
-`/i EXPENSE_INDEX_FROM_LIST_COMMAND` : Index of the expense to be deleted <br>
+`/i EXPENSE_INDEX` : Index of the expense to be deleted from its associated event<br>
 
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd  
-deleteExpenseFromEvent /i 1
+delExEv /i 1
 ```
 
 ### 11. Viewing expenses in events: viewEvent
 #### **_SYNOPSIS_**
 ```dtd
-viewEvent /i INDEX
+viewEvent /i EVENT_INDEX
 ```
 #### **_DESCRIPTION_**
 Displays the expenses associated with the event at the specified index.
 #### **_PARAMETERS_**
-`/i INDEX` : Index of the event whose expenses are to be displayed. <br>
+`/i EVENT_INDEX` : Index of the event whose expenses are to be displayed. <br>
 
 #### **_USAGE_**
 Examples of usage: <br>
 ```dtd
 viewEvent /i 1
+```
+output:
+```dtd
+------------------------------------
+Party Woohoo! (Bob's birthday)
+Event has 2 expenses:
+Pizza $25.00 (Monday, 08 April 2024)
+Soda $10.00 (Monday, 08 April 2024)
+------------------------------------
 ```
 <div style="page-break-after: always;"></div>
 
@@ -309,6 +340,12 @@ viewEvent /i 1
 **A**: copy over the files in ./data (in the directory that you ran the jar file from)
 and run the jar on your other computer. The categories, events and expenses will be automatically loaded on
 application startup.
+
+**Q**: What happens if a certain file entry is corrupted?
+**A**: For corrupted entries, the application will remove the corrupted entry. However, for
+objects reliant on the corrupted entry, ie) an expense that is associated with a corrupted category, some modifications
+to the dependent objects will be made ie) the category of the expense will be set to null.
+
 
 ## Command Summary
 

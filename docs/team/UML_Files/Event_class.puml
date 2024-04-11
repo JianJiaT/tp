@@ -1,5 +1,8 @@
 @startuml
 skinparam classAttributeIconSize 0
+hide circle
+skinparam classAttributeIconSize 0
+
 class Event {
     - eventName: String
     - eventDescription: String
@@ -9,7 +12,8 @@ class Event {
     + listExpenses() : String
 }
 
-class EventManager <<Singleton>> {
+class EventManager {
+    + addEvent(event : Event) : void
     + getEvent(idx : int) : Event
     + removeEvent(idx : int) : void
     + printEvents() : void
