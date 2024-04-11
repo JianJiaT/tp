@@ -105,25 +105,25 @@ add /n coffee /d 15-02-2024 /a 3.00
 ### 3. Deleting expenses: delete
 #### **_SYNOPSIS_**
 ```dtd    
-delete INDEX
+delete /i INDEX
 ```
 #### **_DESCRIPTION_**
 Deletes the expense at the specified INDEX.
 #### **_USAGE_**
 Example of deleting the first expense: <br>
 ```dtd
-delete 1
+delete /i 1
 ```
 Example of deleting the 5th expense: <br>
 ```dtd
-delete 5
+delete /i 5
 ```
 <div style="page-break-after: always;"></div>
 
 ### 4. Listing expenses: list
 #### **_SYNOPSIS_**
 ```dtd
-list [AMOUNT_TO_LIST]
+list /a [AMOUNT_TO_LIST]
 ```
 #### **_DESCRIPTION_**
 Lists the tasks tracked by the application
@@ -137,7 +137,7 @@ list
 ```
 Example of listing the first 5 expenses: <br>
 ```dtd
-list 5
+list /a 5
 ```
 <div style="page-break-after: always;"></div>
 
