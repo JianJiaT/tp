@@ -69,7 +69,7 @@ public class SummariseParser {
             try {
                 beginIndex = getIndex(userInputAsArray, currKeywordToCheck);
             } catch (NumberFormatException e) {
-                return new InvalidCommand("Start index cannot be non-integer");
+                return new InvalidCommand("Invalid start index");
             }
             if (beginIndex < 0) {
                 return new InvalidCommand("Start index must be one or greater");
@@ -82,7 +82,7 @@ public class SummariseParser {
             try {
                 endIndex = getIndex(userInputAsArray, currKeywordToCheck);
             } catch (NumberFormatException e) {
-                return new InvalidCommand("End index cannot be non-integer");
+                return new InvalidCommand("Invalid end index");
             }
             if (endIndex < 0) {
                 return new InvalidCommand("End index must be one or greater");

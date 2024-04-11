@@ -46,8 +46,7 @@ public class Event implements Saveable {
 
     @Override
     public String toString() {
-        return "Event Name: " + eventName
-                + " Event Description: " + eventDescription;
+        return eventName + " (" + eventDescription + ")";
     }
 
     public String listExpenses() {

@@ -18,7 +18,7 @@ public class GeneralFileParser {
 
         SaveableType saveableType = FileKeyword.getSaveableType(fileString);
         if (saveableType == null) {
-            return new InvalidCommand("Saved file isn't recognized. Please check the file format.");
+            return new InvalidCommand("Corrupted entry: " + fileString);
         }
         String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
         switch (saveableType) {
@@ -31,7 +31,7 @@ public class GeneralFileParser {
         case CONNECTION:
             return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
         default:
-            return new InvalidCommand("Saved file isn't recognized. Please check the file format.");
+            return new InvalidCommand("Corrupted entry: " + fileString);
         }
     }
 }

@@ -3,6 +3,7 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.DeleteExpenseFromEventCommand;
 import brokeculator.command.InvalidCommand;
+import brokeculator.errors.ErrorMessages;
 import brokeculator.parser.util.Keyword;
 import brokeculator.parser.util.OrderParser;
 
@@ -28,7 +29,7 @@ public class DeleteExpenseFromEventParser {
         try {
             expenseIdx = Integer.parseInt(userInputs[0]);
         } catch (NumberFormatException e) {
-            return new InvalidCommand("Indexes must be integers");
+            return new InvalidCommand(ErrorMessages.INVALID_INDEX);
         }
 
         return new DeleteExpenseFromEventCommand(expenseIdx);

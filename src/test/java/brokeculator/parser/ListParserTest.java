@@ -16,7 +16,7 @@ public class ListParserTest {
     }
     @Test
     void parseInput_stringCorrectFormatWithNumber_listCommand() {
-        String input = "list 1";
+        String input = "list /a 1";
         Command resultCommand = ListParser.parseInput(input);
         assertInstanceOf(ListCommand.class, resultCommand);
     }
