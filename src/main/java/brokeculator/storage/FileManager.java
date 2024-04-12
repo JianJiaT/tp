@@ -16,44 +16,60 @@ public class FileManager {
     private static final String DEFAULT_EVENT_FILE_PATH = "./data/event.txt";
     private static final String DEFAULT_CONNECTION_FILE_PATH = "./data/connection.txt";
 
-    private File dataFile;
-    private File categoryFile;
-    private File eventFile;
-    private File connectionFile;
+    private final File dataFile = new File(DEFAULT_DATA_FILE_PATH);
+    private final File categoryFile = new File(DEFAULT_CATEGORY_FILE_PATH);
+    private final File eventFile = new File(DEFAULT_EVENT_FILE_PATH);
+    private final File connectionFile = new File(DEFAULT_CONNECTION_FILE_PATH);
 
     private Scanner scanner = null;
     private boolean hasFileErrors;
+
     private final UI ui;
 
     public FileManager(UI ui) {
-        this.dataFile = new File(DEFAULT_DATA_FILE_PATH);
-        this.categoryFile = new File(DEFAULT_CATEGORY_FILE_PATH);
-        this.eventFile = new File(DEFAULT_EVENT_FILE_PATH);
-        this.connectionFile = new File(DEFAULT_CONNECTION_FILE_PATH);
         this.ui = ui;
         try {
-            if (!this.dataFile.exists()) {
-                createFile(this.dataFile);
-            }
-            if (!this.categoryFile.exists()) {
-                createFile(this.categoryFile);
-            }
-            if (!this.eventFile.exists()) {
-                createFile(this.eventFile);
-            }
-            if (!this.connectionFile.exists()) {
-                createFile(this.connectionFile);
-            }
-
-            assert this.dataFile.exists();
-            assert this.categoryFile.exists();
-            assert this.eventFile.exists();
-            assert this.connectionFile.exists();
-
+            createFiles();
+            checkFilesExist();
             this.hasFileErrors = false;
         } catch (Exception e) {
             printDataLossWarning();
             this.hasFileErrors = true;
+        }
+    }
+
+    private void createFiles() throws Exception {
+        if (!this.dataFile.exists()) {
+            createFile(this.dataFile);
+        }
+        if (!this.categoryFile.exists()) {
+            createFile(this.categoryFile);
+        }
+        if (!this.eventFile.exists()) {
+            createFile(this.eventFile);
+        }
+        if (!this.connectionFile.exists()) {
+            createFile(this.connectionFile);
+        }
+    }
+    private void createFile(File file) throws Exception {
+        boolean hasDataDirectory = file.getParentFile().exists();
+        boolean isDataDirectoryReady = hasDataDirectory || file.getParentFile().mkdirs();
+        if (!isDataDirectoryReady) {
+            throw new Exception();
+        }
+        assert file.getParentFile().exists();
+        boolean isDataFileCreated = file.createNewFile();
+        if (!isDataFileCreated) {
+            throw new Exception();
+        }
+        assert file.exists();
+    }
+
+    private void checkFilesExist() throws Exception {
+        if (!this.dataFile.exists() || !this.categoryFile.exists() || !this.eventFile.exists()
+                || !this.connectionFile.exists()) {
+            throw new Exception();
         }
     }
 
@@ -117,25 +133,26 @@ public class FileManager {
         save(data, this.connectionFile);
     }
 
-    private void createFile(File file) throws Exception {
-        boolean hasDataDirectory = file.getParentFile().exists();
-        boolean isDataDirectoryReady = hasDataDirectory || file.getParentFile().mkdirs();
-        if (!isDataDirectoryReady) {
-            throw new Exception();
-        }
-        assert file.getParentFile().exists();
-        boolean isDataFileCreated = file.createNewFile();
-        if (!isDataFileCreated) {
-            throw new Exception();
-        }
-        assert file.exists();
-    }
-
+    /**
+     * Returns true if there is another line to read
+     * Reads from the file opened by openFile
+     * @return true if there is another line to read, false otherwise
+     */
     public boolean hasNextLine() {
+        if (this.scanner == null) {
+            return false;
+        }
         return this.scanner.hasNext();
     }
 
+    /**
+     * Reads the next line from the file opened by openFile
+     * @return the next line from the file opened by openFile
+     */
     public String readNextLine() {
+        if (this.scanner == null) {
+            return null;
+        }
         return this.scanner.nextLine();
     }
 

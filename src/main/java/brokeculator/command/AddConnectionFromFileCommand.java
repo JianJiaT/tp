@@ -9,7 +9,11 @@ public class AddConnectionFromFileCommand extends Command {
     public AddConnectionFromFileCommand(String fileString) {
         this.fileString = fileString;
     }
-
+    
+    /**
+     * Builds a connection between an event and an expense represented by the file string
+     * @param dashboard the dashboard that contains the data integrity manager that will build the connection
+     */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         try {

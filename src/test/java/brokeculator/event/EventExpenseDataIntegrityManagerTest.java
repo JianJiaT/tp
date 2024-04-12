@@ -30,7 +30,7 @@ class EventExpenseDataIntegrityManagerTest {
     @Test
     void addExpenseToEvent_validExpenseAndEvent_eventContainsExpense() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        assertTrue(event1.containsExpense(expense1));
+        assertTrue(event1.hasExpense(expense1));
     }
 
     @Test
@@ -43,14 +43,14 @@ class EventExpenseDataIntegrityManagerTest {
     void addExpenseToEvent_multipleExpenses_eventContainsAllExpenses() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
         EventExpenseDataIntegrityManager.buildConnection(expense2, event1);
-        assertTrue(event1.containsExpense(expense1) && event1.containsExpense(expense2));
+        assertTrue(event1.hasExpense(expense1) && event1.hasExpense(expense2));
     }
 
     @Test
     void removeConnectionFromOwningEvent_validExpenseAndEvent_eventDoesNotContainExpense() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
-        assertFalse(event1.containsExpense(expense1));
+        assertFalse(event1.hasExpense(expense1));
     }
 
     @Test
@@ -66,21 +66,21 @@ class EventExpenseDataIntegrityManagerTest {
         EventExpenseDataIntegrityManager.buildConnection(expense2, event1);
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense2);
-        assertFalse(event1.containsExpense(expense1) && event1.containsExpense(expense2));
+        assertFalse(event1.hasExpense(expense1) && event1.hasExpense(expense2));
     }
 
     @Test
     void addExpenseToEvent_expenseAddedToNewEvent_oldEventDoesNotContainExpense() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
         EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
-        assertFalse(event1.containsExpense(expense1));
+        assertFalse(event1.hasExpense(expense1));
     }
 
     @Test
     void addExpenseToEvent_expenseAddedToNewEvent_newEventContainsExpense() {
         EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
         EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
-        assertTrue(event2.containsExpense(expense1));
+        assertTrue(event2.hasExpense(expense1));
     }
 
     @Test
@@ -107,7 +107,7 @@ class EventExpenseDataIntegrityManagerTest {
 
         try {
             manager.loadConnectionFromStringRepresentation(originalStringRepresentation);
-            assertTrue(event1.containsExpense(expense1));
+            assertTrue(event1.hasExpense(expense1));
         } catch (Exception e) {
             fail();
         }

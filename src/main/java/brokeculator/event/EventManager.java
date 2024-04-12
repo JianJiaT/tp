@@ -1,8 +1,5 @@
 package brokeculator.event;
-
 import java.util.ArrayList;
-
-import brokeculator.frontend.UI;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 
@@ -47,19 +44,26 @@ public class EventManager {
         events.remove(idx - 1);
     }
 
-    public void printEvents(UI ui) {
+    /**
+     * Returns a string representation of all events in the event manager for printing
+     * @return String representation of all events in the event manager
+     */
+    public String getEventsPrintString() {
         if (events.isEmpty()) {
-            ui.prettyPrint("No events found");
-            return;
+            return "No events found";
         }
         StringBuilder sb = new StringBuilder();
-        for (int idx = 0; idx < events.size(); idx++) {
-            sb.append(idx + 1).append(". ").append(events.get(idx));
+        for (int i = 0; i < events.size(); i++) {
+            sb.append(i + 1).append(". ").append(events.get(i));
             sb.append(System.lineSeparator());
         }
-        ui.prettyPrint(sb.toString());
+        return sb.toString();
     }
 
+    /**
+     * Returns a string representation of all events in the event manager for saving
+     * @return String representation of all events in the event manager
+     */
     public String getEventsStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         for (Event event : events) {
