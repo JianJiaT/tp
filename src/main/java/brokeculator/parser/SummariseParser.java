@@ -44,10 +44,10 @@ public class SummariseParser {
             try {
                 startDate = startDateString.isBlank() ? null : DateParser.parseDate(startDateString);
             } catch (DateTimeParseException e) {
-                if (e.getMessage().contains("Invalid date")) {
-                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
-                } else {
+                if (e.getMessage().contains("at index")) {
                     return new InvalidCommand("Invalid start date format. Please enter date in the format DD-MM-YYYY");
+                } else {
+                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
                 }
             }
         }
@@ -58,10 +58,10 @@ public class SummariseParser {
             try {
                 endDate = endDateString.isBlank() ? null : DateParser.parseDate(endDateString);
             } catch (DateTimeParseException e) {
-                if (e.getMessage().contains("Invalid date")) {
-                    return new InvalidCommand("Invalid end date. The date you entered does not exist");
+                if (e.getMessage().contains("at index")) {
+                    return new InvalidCommand("Invalid start date format. Please enter date in the format DD-MM-YYYY");
                 } else {
-                    return new InvalidCommand("Invalid end date format. Please enter date in the format DD-MM-YYYY");
+                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
                 }
             }
         }
