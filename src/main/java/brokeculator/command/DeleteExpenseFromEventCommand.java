@@ -1,7 +1,6 @@
 package brokeculator.command;
 
 import brokeculator.dashboard.Dashboard;
-import brokeculator.event.Event;
 import brokeculator.event.EventExpenseDataIntegrityManager;
 import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
@@ -29,13 +28,10 @@ public class DeleteExpenseFromEventCommand extends Command {
             return;
         }
         Expense expense = dashboard.getExpenseManager().getExpense(expenseIdx);
-        Event owningEvent = expense.getOwningEvent();
-
-        if (owningEvent == null) {
+        if (!expense.hasOwningEvent()) {
             ui.prettyPrint("Expense does not belong to any event");
             return;
         }
-
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense);
         ui.prettyPrint("Expense removed from event successfully");
     }
