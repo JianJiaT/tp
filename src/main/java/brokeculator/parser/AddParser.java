@@ -68,7 +68,11 @@ public class AddParser {
         } catch (NumberFormatException e) {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
         } catch (DateTimeParseException e) {
-            return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
+            if (e.getMessage().contains("Invalid date")) {
+                return new InvalidCommand("Invalid date. The date you entered does not exist");
+            } else {
+                return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
+            }
         }
     }
 
