@@ -39,24 +39,8 @@ public class AddParser {
                 expenseCategory = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[CATEGORY_INDEX]);
                 expenseCategory = expenseCategory.isBlank() ? null : expenseCategory;
             }
-            boolean isDescriptionEmpty = expenseDescription.isBlank();
-            boolean isDateStringEmpty = expenseDateString.isBlank();
-            boolean isAmountStringEmpty = expenseAmountAsString.isBlank();
-            boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
-
-            String inputFieldsErrorMessage = "";
-            if (isDescriptionEmpty) {
-                inputFieldsErrorMessage += "Description cannot be empty. ";
-            }
-            if (isDateStringEmpty) {
-                inputFieldsErrorMessage += "Date cannot be empty. ";
-            }
-            if (isAmountStringEmpty) {
-                inputFieldsErrorMessage += "Amount cannot be empty. ";
-            } else if (!isAmountNumeric) {
-                inputFieldsErrorMessage += "Amount must be 0 or 2 decimal places, up to 7 digits long"
-                        + " (excluding decimal places)";
-            }
+            String inputFieldsErrorMessage =
+                    craftErrorMessage(expenseDescription, expenseDateString, expenseAmountAsString);
             if (!inputFieldsErrorMessage.isBlank()) {
                 return new InvalidCommand(inputFieldsErrorMessage);
             }
@@ -77,14 +61,35 @@ public class AddParser {
     }
 
     /**
-     * Checks whether any of the mandatory fields is empty
-     * @param expenseDescription Expense description
-     * @param expenseDate Expense date
-     * @param expenseAmountAsString Expense amount
-     * @return True if any of the mandatory fields is empty, false otherwise
+     * Returns an error message if user input is invalid, otherwise returns an empty string
+     * The input is invalid if any of the mandatory fields is empty or if the amount is not numeric
+     * @param expenseDescription Description of the expense
+     * @param expenseDateString Date of the expense
+     * @param expenseAmountAsString Amount of the expense as a String
+     * 
+     * @return Error message if user input is invalid, otherwise an empty string
      */
-    private static boolean isFieldsEmpty(String expenseDescription, String expenseDate, String expenseAmountAsString) {
-        return expenseDescription.isBlank() || expenseDate.isBlank() || expenseAmountAsString.isBlank();
+    private static String craftErrorMessage
+    (String expenseDescription, String expenseDateString, String expenseAmountAsString) {
+        boolean isDescriptionEmpty = expenseDescription.isBlank();
+        boolean isDateStringEmpty = expenseDateString.isBlank();
+        boolean isAmountStringEmpty = expenseAmountAsString.isBlank();
+        boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
+
+        String inputFieldsErrorMessage = "";
+        if (isDescriptionEmpty) {
+            inputFieldsErrorMessage += "Description cannot be empty. ";
+        }
+        if (isDateStringEmpty) {
+            inputFieldsErrorMessage += "Date cannot be empty. ";
+        }
+        if (isAmountStringEmpty) {
+            inputFieldsErrorMessage += "Amount cannot be empty. ";
+        } else if (!isAmountNumeric) {
+            inputFieldsErrorMessage += "Amount must be 0 or 2 decimal places, up to 7 digits long"
+                    + " (excluding decimal places)";
+        }
+        return inputFieldsErrorMessage;
     }
 
     /**
