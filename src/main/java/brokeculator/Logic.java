@@ -8,29 +8,30 @@ import brokeculator.storage.parsing.GeneralFileParser;
 import brokeculator.storage.parsing.SaveableType;
 import brokeculator.parser.GeneralInputParser;
 
-
 //@@author yeozhishen
 public class Logic {
     private final Dashboard dashboard;
-    public Logic(Dashboard dashboard) {
+    private final UI ui;
+    public Logic(Dashboard dashboard, UI ui) {
         this.dashboard = dashboard;
+        this .ui = ui;
     }
     public void run() {
         loadFiles();
         saveFiles();
-        UI.greetUser();
+        ui.greetUser();
         while (true) {
             try {
-                String userInput = UI.getUserInput();
+                String userInput = ui.getUserInput();
                 assert userInput != null;
                 Command command = GeneralInputParser.getCommandFromUserInput(userInput);
                 assert command != null : "command should not be null";
-                command.execute(dashboard);
+                command.execute(dashboard, ui);
                 saveFiles();
             } catch (BrokeculatorException b) {
-                UI.prettyPrint("Brokeculator error occurred. " + b.getMessage());
+                ui.prettyPrint("Brokeculator error occurred. " + b.getMessage());
             } catch (Exception e) {
-                UI.prettyPrint("Oops, your command is not recognized!. ");
+                ui.prettyPrint("Oops, your command is not recognized!. ");
             }
         }
     }
@@ -44,13 +45,13 @@ public class Logic {
     private void loadFile(SaveableType saveableType) {
         boolean isFileErrorFree = dashboard.getFileManager().openFile(saveableType);
         if (!isFileErrorFree) {
-            UI.println("continuing without file");
+            ui.println("continuing without file");
             return;
         }
         while (dashboard.getFileManager().hasNextLine()) {
             String line = dashboard.getFileManager().readNextLine();
             Command loadCommand = GeneralFileParser.getCommandFromFileInput(line);
-            loadCommand.execute(dashboard);
+            loadCommand.execute(dashboard, ui);
         }
     }
     private void saveFiles() {
@@ -64,7 +65,7 @@ public class Logic {
             String expenseListToSave = dashboard.getExpenseManager().getExpensesStringRepresentation();
             dashboard.getFileManager().saveExpenses(expenseListToSave);
         } catch (Exception e) {
-            UI.prettyPrint("file save error occurred" + e.getMessage());
+            ui.prettyPrint("file save error occurred" + e.getMessage());
         }
     }
     private void saveCategoriesToFile() {
@@ -72,7 +73,7 @@ public class Logic {
             String categoryListToSave = Category.getCategoriesStringRepresentation();
             dashboard.getFileManager().saveCategories(categoryListToSave);
         } catch (Exception e) {
-            UI.prettyPrint("file save error occurred" + e.getMessage());
+            ui.prettyPrint("file save error occurred" + e.getMessage());
         }
     }
     private void saveEventsToFile() {
@@ -80,7 +81,7 @@ public class Logic {
             String eventListToSave = dashboard.getEventManager().getEventsStringRepresentation();
             dashboard.getFileManager().saveEvents(eventListToSave);
         } catch (Exception e) {
-            UI.prettyPrint("file save error occurred" + e.getMessage());
+            ui.prettyPrint("file save error occurred" + e.getMessage());
         }
     }
     private void saveConnectionsToFile() {
@@ -88,7 +89,7 @@ public class Logic {
             String connectionListToSave = dashboard.getDataIntegrityManager().getConnectionsStringRepresentation();
             dashboard.getFileManager().saveConnections(connectionListToSave);
         } catch (Exception e) {
-            UI.prettyPrint("file save error occurred" + e.getMessage());
+            ui.prettyPrint("file save error occurred" + e.getMessage());
         }
     }
 

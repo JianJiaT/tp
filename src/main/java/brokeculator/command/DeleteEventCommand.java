@@ -12,18 +12,18 @@ public class DeleteEventCommand extends Command {
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isValidEventIdx = dashboard.getEventManager().isEventIdxValid(idx);
         if (!isValidEventIdx) {
-            UI.prettyPrint("Invalid event index");
+            ui.prettyPrint("Invalid event index");
             return;
         }
         Event event = dashboard.getEventManager().getEvent(idx);
         if (event.hasExpenses()) {
-            UI.prettyPrint("Event has expenses. Please remove expenses before deleting event");
+            ui.prettyPrint("Event has expenses. Please remove expenses before deleting event");
             return;
         }
         dashboard.getEventManager().removeEvent(idx);
-        UI.prettyPrint("Event deleted");
+        ui.prettyPrint("Event deleted");
     }
 }

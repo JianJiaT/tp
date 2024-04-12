@@ -15,13 +15,13 @@ public class ListCommand extends Command {
      * @param dashboard The dashboard that contains the expense manager from which expenses will be listed
      */
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isListEmpty = dashboard.getExpenseManager().getNumberOfExpensesTracked() == 0;
         if (isListEmpty) {
-            UI.prettyPrint("You have no added expenses!");
+            ui.prettyPrint("You have no added expenses!");
             return;
         }
         String expensesListString = dashboard.getExpenseManager().getExpensesListString(0, amountToList);
-        UI.prettyPrint(expensesListString);
+        ui.prettyPrint(expensesListString);
     }
 }

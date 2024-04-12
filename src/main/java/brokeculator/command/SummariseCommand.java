@@ -28,10 +28,10 @@ public class SummariseCommand extends Command {
      * @param dashboard The dashboard that contains the expense manager from which expenses will be summarised
      */
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         double summary = dashboard
                 .getExpenseManager()
-                .summariseExpenses(name, startDate, endDate, category, beginIndex, endIndex);
-        UI.prettyPrint("The total is $" + String.format("%.2f", summary));
+                .summariseExpenses(name, startDate, endDate, category, beginIndex, endIndex, ui);
+        ui.prettyPrint("The total is $" + String.format("%.2f", summary));
     }
 }

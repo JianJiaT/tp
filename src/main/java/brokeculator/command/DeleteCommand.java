@@ -17,15 +17,15 @@ public class DeleteCommand extends Command {
      * @param dashboard The dashboard that contains the expense manager from which an expense will be deleted
      */
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isValidExpenseIndex = dashboard.getExpenseManager().isExpenseIndexValid(indexToDelete);
         if (!isValidExpenseIndex) {
-            UI.prettyPrint("Invalid expense index provided");
+            ui.prettyPrint("Invalid expense index provided");
             return;
         }
         Expense expense = dashboard.getExpenseManager().getExpense(indexToDelete);
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense);
         dashboard.getExpenseManager().delete(indexToDelete);
-        UI.prettyPrint("Deleted expense at index " + indexToDelete);
+        ui.prettyPrint("Deleted expense at index " + indexToDelete);
     }
 }

@@ -4,6 +4,7 @@ import brokeculator.dashboard.Dashboard;
 import brokeculator.event.EventExpenseDataIntegrityManager;
 import brokeculator.event.EventManager;
 import brokeculator.expense.ExpenseManager;
+import brokeculator.frontend.UI;
 import brokeculator.storage.FileManager;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,8 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CategoryTest {
     Dashboard dashboard;
     CategoryTest() {
+        UI ui = new UI();
         ExpenseManager expenseManager = new ExpenseManager();
-        FileManager fileManager = new FileManager();
+        FileManager fileManager = new FileManager(ui);
         EventManager eventManager = EventManager.getInstance();
         EventExpenseDataIntegrityManager dataIntegrityManager
                 = new EventExpenseDataIntegrityManager(eventManager, expenseManager);

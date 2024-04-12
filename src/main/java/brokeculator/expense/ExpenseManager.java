@@ -86,9 +86,9 @@ public class ExpenseManager {
      * @return A summary of the expenses in the form of the sum of the expenses' amounts
      */
     public double summariseExpenses(String description, LocalDate startDate, LocalDate endDate, String category,
-                                    int beginIndex, int endIndex) {
+                                    int beginIndex, int endIndex, UI ui) {
         if (beginIndex > expenses.size()) {
-            UI.prettyPrint("Nothing to summarise!");
+            ui.prettyPrint("Nothing to summarise!");
             return(0);
         }
 
@@ -101,14 +101,14 @@ public class ExpenseManager {
         }
 
         if (expensesToSummarise.isEmpty()) {
-            UI.prettyPrint("Nothing to summarise!");
+            ui.prettyPrint("Nothing to summarise!");
         } else {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < expensesToSummarise.size(); i++) {
                 sb.append(i + 1).append(". ").append(expensesToSummarise.get(i)).append(System.lineSeparator());
             }
             String summarisedExpensesListString = String.valueOf(sb);
-            UI.prettyPrint(summarisedExpensesListString);
+            ui.prettyPrint(summarisedExpensesListString);
         }
 
         return total;

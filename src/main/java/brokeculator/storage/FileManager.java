@@ -23,12 +23,14 @@ public class FileManager {
 
     private Scanner scanner = null;
     private boolean hasFileErrors;
+    private final UI ui;
 
-    public FileManager() {
+    public FileManager(UI ui) {
         this.dataFile = new File(DEFAULT_DATA_FILE_PATH);
         this.categoryFile = new File(DEFAULT_CATEGORY_FILE_PATH);
         this.eventFile = new File(DEFAULT_EVENT_FILE_PATH);
         this.connectionFile = new File(DEFAULT_CONNECTION_FILE_PATH);
+        this.ui = ui;
         try {
             if (!this.dataFile.exists()) {
                 createFile(this.dataFile);
@@ -50,13 +52,13 @@ public class FileManager {
 
             this.hasFileErrors = false;
         } catch (Exception e) {
-            printDataLossWarning(); 
+            printDataLossWarning();
             this.hasFileErrors = true;
         }
     }
 
     private void printDataLossWarning() {
-        UI.println("Errors! Your data will not be saved");
+        ui.println("Errors! Your data will not be saved");
     }
 
     private boolean openFile(File file) {
