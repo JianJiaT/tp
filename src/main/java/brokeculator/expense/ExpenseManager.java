@@ -16,10 +16,6 @@ public class ExpenseManager {
         expenses = new ArrayList<>();
     }
 
-    public ExpenseManager(ArrayList<Expense> expenses) {
-        this.expenses = expenses;
-    }
-
     /**
      * Adds an expense
      * @param expense The expense to add
