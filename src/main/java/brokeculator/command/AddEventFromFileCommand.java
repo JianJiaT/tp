@@ -12,12 +12,12 @@ public class AddEventFromFileCommand extends Command{
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         try {
             Event event = Event.getEventFromFile(this.fileString);
             dashboard.getEventManager().addEvent(event);
         } catch (Exception e) {
-            UI.prettyPrint(fileString + " is not a valid event entry");
+            ui.prettyPrint(fileString + " is not a valid event entry");
         }
     }
 }

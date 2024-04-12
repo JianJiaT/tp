@@ -1,6 +1,7 @@
 package brokeculator.expense;
 
 import brokeculator.enumerators.Category;
+import brokeculator.frontend.UI;
 import brokeculator.storage.parsing.FileKeyword;
 import brokeculator.storage.parsing.SaveableType;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExpenseManagerTest {
+    UI ui = new UI();
     LocalDate date1 = LocalDate.of(2024, 1, 1);
     LocalDate date2 = LocalDate.of(2024, 2, 1);
     LocalDate date3 = LocalDate.of(2024, 3, 1);
@@ -59,7 +61,7 @@ public class ExpenseManagerTest {
         double expectedTotal = 0.0;
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
     @Test
     void summariseExpenses_summariseNoArguments_expectedTotal() {
@@ -77,7 +79,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
 
     @Test
@@ -96,7 +98,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                null, 3, -1));
+                null, 3, -1, ui));
     }
 
     @Test
@@ -112,7 +114,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense3);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                null, 0, 2));
+                null, 0, 2, ui));
     }
 
     @Test
@@ -131,7 +133,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                null, 2, 4));
+                null, 2, 4, ui));
     }
 
     @Test
@@ -150,7 +152,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses("pasta", null, null,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
 
     @Test
@@ -169,7 +171,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, date4, null,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
 
     @Test
@@ -188,7 +190,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, date3,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
 
     @Test
@@ -207,7 +209,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, date2, date4,
-                null, 0, -1));
+                null, 0, -1, ui));
     }
 
     @Test
@@ -226,7 +228,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, null, null,
-                "entertainment", 0, -1));
+                "entertainment", 0, -1, ui));
     }
 
     @Test
@@ -245,7 +247,7 @@ public class ExpenseManagerTest {
         expenseManager.add(expense6);
 
         assertEquals(expectedTotal, expenseManager.summariseExpenses(null, date1, date3,
-                null, 1, 4));
+                null, 1, 4, ui));
     }
 
     @Test

@@ -8,8 +8,8 @@ public class GeneralInputParser {
         Command commandToExecute;
         try {
             String commandKeyword = userInput.split(" ")[0];
-            commandKeyword = commandKeyword.toLowerCase();
-            switch (commandKeyword.trim()) {
+            String normalizedKeyword = commandKeyword.toLowerCase().trim();
+            switch (normalizedKeyword) {
             case "add":
                 commandToExecute = AddParser.parseInput(userInput);
                 break;
