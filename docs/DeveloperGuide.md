@@ -25,6 +25,92 @@
 The UML diagram below shows the main relationships between the classes in the Brokeculator application.
 ![img.png](images/architecture.png)
 
+The manager classes of the application are:
+- `UI` class: This class is responsible for interacting with the user. It prints messages to the user and reads input from the user.
+- `Logic` class: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
+- `ExpenseManager` class: This class is responsible for storing and managing the expenses.
+- `EventManager` class: This class is responsible for storing and managing the events.
+- `EventExpenseDataIntegrityManager` class: This class is responsible for managing circular dependencies between events and expenses.
+- `Dashboard` class: This class is responsible for storing the managers classes of the application and providing access to them.
+- `Category` class: This class is responsible for storing the categories of expenses.
+- `FileManager` class: This class is responsible for reading and writing data to files.
+
+The code snippet below shows the instantiation of the manager classes in the main method of the application:
+```java
+    public static void main(String[] args) {
+        UI ui = new UI();
+        ExpenseManager expenseManager = new ExpenseManager();
+        FileManager fileManager = new FileManager(ui);
+        EventManager eventManager = EventManager.getInstance();
+        EventExpenseDataIntegrityManager dataIntegrityManager
+                = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
+        Dashboard dashboard
+                = new Dashboard(expenseManager, fileManager, eventManager, dataIntegrityManager);
+        Logic driverLogic = new Logic(dashboard, ui);
+        Category.setDashboard(dashboard);
+        driverLogic.run();
+    }
+```
+
+There are three main classes that store the data of the application:
+- `Expense` class: This class is responsible for storing the details of an expense.
+- `Event` class: This class is responsible for storing the details of an event.
+- `Category` class: This class is responsible for storing the categories of expenses.
+
+There are several supporting classes that facilitate the interaction between the user and the application:
+- `GeneralInputParser` class: This class does the initial parsing of the user input and directs it to the appropriate parser.
+- `GeneralFileParser` class: This class parses the data in the files to recreate the expense and event objects.
+- `Command` class: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
+
+The following code snippet shows how the GeneralInputParser class is used to parse the user input:
+```java
+    public static Command getCommandFromUserInput(String userInput) {
+        Command commandToExecute;
+        try {
+            String commandKeyword = userInput.split(" ")[0];
+            String normalizedKeyword = commandKeyword.toLowerCase().trim();
+            switch (normalizedKeyword) {
+            case "add":
+                commandToExecute = AddParser.parseInput(userInput);
+                break;
+            case "delete":
+                commandToExecute = DeleteParser.parseInput(userInput);
+                break;
+            // Other cases omitted for brevity
+            default:
+                commandToExecute = new HelpCommand();
+            }
+        } catch (Exception e) {
+            commandToExecute =  new HelpCommand();
+        }
+        return commandToExecute;
+    }
+```
+
+The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
+```java
+    public static Command getCommandFromFileInput(String fileString) {
+
+        SaveableType saveableType = FileKeyword.getSaveableType(fileString);
+        if (saveableType == null) {
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
+        switch (saveableType) {
+        case EXPENSE:
+            return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
+        case CATEGORY:
+            return new AddCategoryFromFileCommand(fileStringWithoutKeyword);
+        case EVENT:
+            return new AddEventFromFileCommand(fileStringWithoutKeyword);
+        case CONNECTION:
+            return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
+        default:
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+    }
+```
+
 ### Category feature
 **Implementation** <br>
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
