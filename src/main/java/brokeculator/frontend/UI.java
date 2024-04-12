@@ -42,5 +42,4 @@ public class UI {
     public void println(String message) {
         terminalHandler.println(message);
     }
-
 }
