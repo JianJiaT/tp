@@ -25,7 +25,7 @@
 The UML diagram below shows the main relationships between the classes in the Brokeculator application.
 ![img.png](images/architecture.png)
 
-### Category feature
+# Category feature
 **Implementation** <br>
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
@@ -157,12 +157,155 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
+2. **Performance**: The application should be able to handle user input without significant lag
+3. **Reliability**: The application should be able to handle user input without crashing
+4. **Usability**: The application should be easy to use for users familiar with CLI applications, instructions should be clear,
+and what the application carried out based on user input should be clear to the user
+
 
 ## Glossary
 
-* *glossary item* - Definition
+* *mainstream OS* - Windows, Linux, MacOS
 
 ## Instructions for manual testing
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
+# Testing loading of data
+All data files should reside in the data folder, in the directory that the user has launched the application from.
+The following are to be done in sequence to test reliability of loading data:
+
+**Loading of category data** <br>
+In the data folder, create a file named `category.txt` and populate it with the following data:
+```dtd
+--category--CAT3
+--category--CAT2
+--category--CAT1
+```
+
+**Loading of expense data** <br>
+In the data folder, create a file named `data.txt` and populate it with the following data:
+```dtd
+--expense--|__EXPENSE_DESCRIPTION__|:test1|__EXPENSE_DATE__|:12-12-2024|__EXPENSE_AMOUNT__|:16.00
+--expense--|__EXPENSE_DESCRIPTION__|:test2|__EXPENSE_DATE__|:12-12-2024|__EXPENSE_AMOUNT__|:20.00|__EXPENSE_CATEGORY__|:CAT1
+--expense--|__EXPENSE_DESCRIPTION__|:test3|__EXPENSE_DATE__|:12-01-2024|__EXPENSE_AMOUNT__|:100.00|__EXPENSE_CATEGORY__|:CAT3
+```
+
+**Loading of event data** <br>
+In the data folder, create a file named `event.txt` and populate it with the following data:
+```dtd
+--event--|__EVENT_NAME__|:eventtest|__EVENT_DESCRIPTION__|:test 1
+--event--|__EVENT_NAME__|:eventtest2|__EVENT_DESCRIPTION__|:test 2
+--event--|__EVENT_NAME__|:eventtest3|__EVENT_DESCRIPTION__|:test 3
+```
+
+**Loading of event connections data** <br>
+In the data folder, create a file named `connection.txt` and populate it with the following data:
+```dtd
+--connection--|__EXPENSE__|:1|__EVENT__|:1
+--connection--|__EXPENSE__|:2|__EVENT__|:2
+```
+
+Start the application by running the `Brokeculator.jar` file in the same directory as the data file. 
+The application should load the data from the files and the user should see the following:
+```dtd
+------------------------------------
+Hello! I'm Brokeculator!
+If this is your first time using me, type 'help' to see what I can do for you.
+------------------------------------
+    ->
+```
+
+# Testing of viewing expenses
+The user should be able to view the expenses by typing `list` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+# Testing of viewing categories
+The user should be able to view the categories by typing `category list` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+# Testing of viewing events
+The user should be able to view the events by typing `listEvents` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+------------------------------------
+```
+
+# Testing of viewing expenses in events
+The user should be able to view the expenses in the first event by typing `viewEvent /i 1` and pressing enter. The user should see the following:
+```dtd
+eventtest (test 1)
+Event has 1 expenses:
+test1 $16.00 (Thursday, 12 December 2024)
+```
+The user should be able to view the expenses in the second event by typing `viewEvent /i 2` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+eventtest2 (test 2)
+Event has 1 expenses:
+test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+------------------------------------
+```
+The user should be able to view the expenses in the third event by typing `viewEvent /i 3` and pressing enter. The user should see
+that there are no expenses in the event:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has no expenses
+------------------------------------
+```
+
+# Basic testing of summarising expenses
+The user should be able to summarise all the expenses by typing `summarise` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+------------------------------------
+The total is $136.00
+------------------------------------
+```
+The user can view the expenses on 12 Decmber 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+------------------------------------
+------------------------------------
+The total is $36.00
+------------------------------------
+```
+The user can view the expenses with descriptions starting with a 3 in it by typing `summarise /n 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+------------------------------------
+The total is $100.00
+------------------------------------
+```
+The rest of the summarise command options can be tested in a similar manner, by following the user guide.
+# Testing of cycling through command history
+The user should be able to navigate through the command history by pressing the up and down arrow keys. The user should be able to see the previous command by pressing the up arrow key and the next command entered by pressing the down arrow key.
+
+# Other commands
+The other commands can be tested by following the user guide and entering the commands as specified in the user guide.
