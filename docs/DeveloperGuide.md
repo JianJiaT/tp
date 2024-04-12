@@ -16,23 +16,21 @@
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design & implementation
-
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
-
-### Architecture
+## Architecture
 
 The UML diagram below shows the main relationships between the classes in the Brokeculator application.
 ![img.png](images/architecture.png)
 
+## Design 
+
 The manager classes of the application are:
-- `UI` class: This class is responsible for interacting with the user. It prints messages to the user and reads input from the user.
-- `Logic` class: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
-- `ExpenseManager` class: This class is responsible for storing and managing the expenses.
-- `EventManager` class: This class is responsible for storing and managing the events.
-- `EventExpenseDataIntegrityManager` class: This class is responsible for managing circular dependencies between events and expenses.
-- `Dashboard` class: This class is responsible for storing the managers classes of the application and providing access to them.
-- `Category` class: This class is responsible for storing the categories of expenses.
+- `UI`: This class is responsible for interacting with the user. It prints messages to the user and reads input from the user.
+- `Logic`: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
+- `ExpenseManager`: This class is responsible for storing and managing the expenses.
+- `EventManager`: This class is responsible for storing and managing the events.
+- `EventExpenseDataIntegrityManager`: This class is responsible for managing circular dependencies between events and expenses.
+- `Dashboard`: This class is responsible for storing the managers classes of the application and providing access to them.
+- `Category`: This class is responsible for storing the categories of expenses.
 - `FileManager` class: This class is responsible for reading and writing data to files.
 
 The code snippet below shows the instantiation of the manager classes in the main method of the application:
@@ -53,14 +51,14 @@ The code snippet below shows the instantiation of the manager classes in the mai
 ```
 
 There are three main classes that store the data of the application:
-- `Expense` class: This class is responsible for storing the details of an expense.
-- `Event` class: This class is responsible for storing the details of an event.
-- `Category` class: This class is responsible for storing the categories of expenses.
+- `Expense`: This class is responsible for storing the details of an expense.
+- `Event`: This class is responsible for storing the details of an event.
+- `Category`: This class is responsible for storing the categories of expenses.
 
 There are several supporting classes that facilitate the interaction between the user and the application:
-- `GeneralInputParser` class: This class does the initial parsing of the user input and directs it to the appropriate parser.
-- `GeneralFileParser` class: This class parses the data in the files to recreate the expense and event objects.
-- `Command` class: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
+- `GeneralInputParser`: This class does the initial parsing of the user input and directs it to the appropriate parser.
+- `GeneralFileParser`: This class parses the data in the files to recreate the expense and event objects.
+- `Command`: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
 
 The following code snippet shows how the GeneralInputParser class is used to parse the user input:
 ```java
@@ -111,7 +109,23 @@ The following code snippet shows how the GeneralFileParser class is used to pars
     }
 ```
 
-### Category feature
+To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
+![img.png](images/overview.png)
+
+Without loss of generality, the high-level execution flow of the application is as follows:
+1. The user enters a command in the CLI
+2. The `UI` class reads the user input and passes it to the `Logic` class
+3. The `Logic` class uses the `GeneralInputParser` class to parse the user input 
+4. The `GeneralInputParser` class directs the user input to the appropriate parser class
+5. The parser class constructs a command object from the user input.
+6. The `Logic` class executes the command object
+7. The command object interacts with the relevant manager classes via the dashboard to perform the desired operation
+8. The `UI` class prints feedback, if any, to the user
+
+## Implementation
+This section describes the implementation details of selected features of the Brokeculator application.
+
+### Category
 **Implementation** <br>
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
@@ -151,7 +165,7 @@ In addition, at program initialisation, the function `setDashboard(dashboard: Da
 is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
-# Summarising expenses
+### Summarising expenses
 **Implementation** <br>
 The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
 The `SummariseParser` class is responsible for constructing a `SummariseCommand` object from valid user input, which upon
@@ -178,7 +192,7 @@ the expenses stored in the `ExpenseManager` object according to the user's speci
 by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
-# Event feature
+### Event 
 **Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
