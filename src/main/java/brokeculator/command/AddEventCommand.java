@@ -17,9 +17,9 @@ public class AddEventCommand extends Command {
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         Event event = new Event(eventName, eventDescription);
         dashboard.getEventManager().addEvent(event);
-        UI.prettyPrint("Event added successfully");
+        ui.prettyPrint("Event added successfully");
     }
 }

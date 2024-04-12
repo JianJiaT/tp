@@ -68,19 +68,12 @@ public class AddParser {
         } catch (NumberFormatException e) {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
         } catch (DateTimeParseException e) {
-            return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
+            if (e.getMessage().contains("Invalid date")) {
+                return new InvalidCommand("Invalid date. The date you entered does not exist");
+            } else {
+                return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
+            }
         }
-    }
-
-    /**
-     * Checks whether any of the mandatory fields is empty
-     * @param expenseDescription Expense description
-     * @param expenseDate Expense date
-     * @param expenseAmountAsString Expense amount
-     * @return True if any of the mandatory fields is empty, false otherwise
-     */
-    private static boolean isFieldsEmpty(String expenseDescription, String expenseDate, String expenseAmountAsString) {
-        return expenseDescription.isBlank() || expenseDate.isBlank() || expenseAmountAsString.isBlank();
     }
 
     /**

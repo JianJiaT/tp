@@ -14,42 +14,42 @@ public class CategoryCommand extends Command {
     private String value;
     public CategoryCommand(String subcommand) {
         this.subcommand = subcommand;
-    };
+    }
     public CategoryCommand(String subcommand, String categoryString) {
         this.subcommand = subcommand;
         this.value = categoryString;
-    };
+    }
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         switch (subcommand) {
         case ADD_SUBCOMMAND:
-            addCategory(value.toUpperCase());
+            addCategory(value.toUpperCase(), ui);
             break;
         case DELETE_SUBCOMMAND:
-            deleteCategory(value.toUpperCase());
+            deleteCategory(value.toUpperCase(), ui);
             break;
         case LIST_SUBCOMMAND:
-            listCategories();
+            listCategories(ui);
             break;
         default:
             break;
         }
     }
-    private void addCategory(String value) {
+    private void addCategory(String value, UI ui) {
         String feedback = Category.addCategory(value);
-        UI.prettyPrint(feedback);
+        ui.prettyPrint(feedback);
     }
-    private void deleteCategory(String value) {
+    private void deleteCategory(String value, UI ui) {
         String feedback = Category.removeCategory(value);
-        UI.prettyPrint(feedback);
+        ui.prettyPrint(feedback);
     }
-    private void listCategories() {
+    private void listCategories(UI ui) {
         ArrayList<String> categoryList = Category.getCategoryList();
         if (categoryList.isEmpty()) {
-            UI.prettyPrint("No categories found");
+            ui.prettyPrint("No categories found");
             return;
         }
         String categoryListSting = Category.getCategoryListString();
-        UI.prettyPrint("Categories:" + System.lineSeparator() + categoryListSting);
+        ui.prettyPrint("Categories:" + System.lineSeparator() + categoryListSting);
     }
 }

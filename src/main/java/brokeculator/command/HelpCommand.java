@@ -36,7 +36,7 @@ public class HelpCommand extends Command {
             + "\t2. [/w word] are optional arguments";
 
     @Override
-    public void execute(Dashboard dashboard) {
-        UI.prettyPrint(HELP_MESSAGE);
+    public void execute(Dashboard dashboard, UI ui) {
+        ui.prettyPrint(HELP_MESSAGE);
     }
 }

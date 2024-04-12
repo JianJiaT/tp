@@ -88,9 +88,6 @@ public class Expense implements Saveable {
         return category;
     }
 
-    public boolean hasOwningEvent() {
-        return owningEvent != null;
-    }
     public Event getOwningEvent() {
         return owningEvent;
     }

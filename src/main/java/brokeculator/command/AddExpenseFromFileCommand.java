@@ -12,12 +12,12 @@ public class AddExpenseFromFileCommand extends Command{
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         try {
             Expense expense = Expense.getExpenseFromFile(this.fileString);
             dashboard.getExpenseManager().add(expense);
         } catch (Exception e) {
-            UI.println(e.toString());
+            ui.println(e.toString());
         }
     }
 }

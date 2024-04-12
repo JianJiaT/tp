@@ -15,21 +15,21 @@ public class DeleteExpenseFromEventCommand extends Command {
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isValidExpenseIdx = dashboard.getExpenseManager().isExpenseIndexValid(expenseIdx);
         if (!isValidExpenseIdx) {
-            UI.prettyPrint("Indexes provided are invalid");
+            ui.prettyPrint("Indexes provided are invalid");
             return;
         }
         Expense expense = dashboard.getExpenseManager().getExpense(expenseIdx);
         Event owningEvent = expense.getOwningEvent();
 
         if (owningEvent == null) {
-            UI.prettyPrint("Expense does not belong to any event");
+            ui.prettyPrint("Expense does not belong to any event");
             return;
         }
 
         EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense);
-        UI.prettyPrint("Expense removed from event successfully");
+        ui.prettyPrint("Expense removed from event successfully");
     }
 }

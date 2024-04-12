@@ -18,11 +18,11 @@ public class AddExpenseToEventCommand extends Command {
     }
     
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isValidExpenseIdx = dashboard.getExpenseManager().isExpenseIndexValid(expenseIdx);
         boolean isValidEventIdx = dashboard.getEventManager().isEventIdxValid(eventIdx);
         if (!isValidExpenseIdx || !isValidEventIdx) {
-            UI.prettyPrint(ErrorMessages.INVALID_INDEX);
+            ui.prettyPrint(ErrorMessages.INVALID_INDEX);
             return;
         }
 
@@ -33,15 +33,15 @@ public class AddExpenseToEventCommand extends Command {
 
         boolean isExpensedOwnedByEvent = newOwningEvent.containsExpense(expense);
         if (isExpensedOwnedByEvent) {
-            UI.prettyPrint("Expense already belongs to the event");
+            ui.prettyPrint("Expense already belongs to the event");
             return;
         }
 
         Event originalOwningEvent = expense.getOwningEvent();
         if (originalOwningEvent != null) {
-            UI.prettyPrint("Expense belonged to another event. Moving it to the new event.");
+            ui.prettyPrint("Expense belonged to another event. Moving it to the new event.");
         }
         EventExpenseDataIntegrityManager.buildConnection(expense, newOwningEvent);
-        UI.prettyPrint("Expense added to event successfully");
+        ui.prettyPrint("Expense added to event successfully");
     }
 }

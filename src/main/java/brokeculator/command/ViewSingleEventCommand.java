@@ -11,10 +11,10 @@ public class ViewSingleEventCommand extends Command {
         this.eventIndex = eventIndex;
     }
     @Override
-    public void execute(Dashboard dashboard) {
+    public void execute(Dashboard dashboard, UI ui) {
         boolean isValidEventIndex = dashboard.getEventManager().isEventIdxValid(eventIndex);
         if (!isValidEventIndex) {
-            UI.prettyPrint("Invalid event index provided");
+            ui.prettyPrint("Invalid event index provided");
             return;
         }
         Event event = dashboard.getEventManager().getEvent(eventIndex);
@@ -24,7 +24,7 @@ public class ViewSingleEventCommand extends Command {
         if (expenseCount == 0) {
             String string = event + System.lineSeparator()
                     + "Event has no expenses";
-            UI.prettyPrint(string);
+            ui.prettyPrint(string);
             return;
         }
 
@@ -32,6 +32,6 @@ public class ViewSingleEventCommand extends Command {
                 + "Event has " + expenseCount + " expenses:"
                 + System.lineSeparator()
                 + event.listExpenses();
-        UI.prettyPrint(string);
+        ui.prettyPrint(string);
     }
 }

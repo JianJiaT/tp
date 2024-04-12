@@ -98,10 +98,10 @@ The event feature aims to group expenses happening on specific occasions togethe
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
 The `EventManager` class is responsible for aggregate operations on the events.
 
-The UMl diagram below shows the main relationships between the classes in the event feature (some methods are omitted) </br>
+The UMl diagram below shows the main relationships between the classes in the event feature (some methods are omitted) <br>
 ![img.png](images/Event_class.png)
 
-The following sequence diagrams show how a user input is processed to add the events: </br>
+The following sequence diagrams show how a user input is processed to add the events: <br>
 
 ![img.png](images/addEventCommand.png) <br>
 ![img.png](images/executeAddEventCommand.png)
@@ -116,7 +116,7 @@ The following sequence diagrams show how a user input is processed to add the ev
 
 Details such as accessing the EventManager via the central dashboard and handling of exceptions using invalid commands are omitted for brevity.
 
-The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object </br>
+The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
 ![img.png](images/executeAddExpenseToEventCommand.png)
 

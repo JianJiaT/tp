@@ -10,7 +10,7 @@ public class InvalidCommand extends Command {
     }
 
     @Override
-    public void execute(Dashboard dashboard) {
-        UI.prettyPrint(errorMessage);
+    public void execute(Dashboard dashboard, UI ui) {
+        ui.prettyPrint(errorMessage);
     }
 }

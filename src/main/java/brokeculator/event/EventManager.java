@@ -47,9 +47,9 @@ public class EventManager {
         events.remove(idx - 1);
     }
 
-    public void printEvents() {
+    public void printEvents(UI ui) {
         if (events.isEmpty()) {
-            UI.prettyPrint("No events found");
+            ui.prettyPrint("No events found");
             return;
         }
         StringBuilder sb = new StringBuilder();
@@ -57,7 +57,7 @@ public class EventManager {
             sb.append(idx + 1).append(". ").append(events.get(idx));
             sb.append(System.lineSeparator());
         }
-        UI.prettyPrint(sb.toString());
+        ui.prettyPrint(sb.toString());
     }
 
     public String getEventsStringRepresentation() {
