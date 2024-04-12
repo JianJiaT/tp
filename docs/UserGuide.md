@@ -363,8 +363,8 @@ to the dependent objects will be made ie) the category of the expense will be se
     * Add event `event /n EVENT_NAME /d DESCRIPTION`
     * List events `listEvents`
     * Delete event `deleteEvent /i INDEX`
-    * Add expense to event `addExpenseToEvent /exi EXPENSE_INDEX /evi EVENT_INDEX `
-    * delete expense from event `deleteExpenseFromEvent /i EXPENSE_INDEX_FROM_LIST_COMMAND`
+    * Add expense to event `addExEv /exi EXPENSE_INDEX /evi EVENT_INDEX `
+    * delete expense from event `delExEv /i EXPENSE_INDEX_FROM_LIST_COMMAND`
     * List expenses in event `viewEvent /i INDEX`
 
 

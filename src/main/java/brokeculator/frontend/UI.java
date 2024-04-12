@@ -43,7 +43,4 @@ public class UI {
         terminalHandler.println(message);
     }
 
-    public void print(String message) {
-        terminalHandler.print(message);
-    }
 }

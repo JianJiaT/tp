@@ -6,6 +6,7 @@ participant ":Category" as category
 participant ":FileManager" as fileManager
 participant ":GeneralFileParser" as generalFileParser
 participant ":Logic" as logic
+participant ":AddCategoryFromFileCommand" as AddCategoryFromFileCommand
 
 
 logic -> logic: loadFile(SavableType.CATEGORY)
@@ -42,6 +43,7 @@ deactivate fileManager
             deactivate
             AddCategoryFromFileCommand -[dashed]-> logic
             deactivate AddCategoryFromFileCommand
+            destroy AddCategoryFromFileCommand
             logic -> fileManager : getNextLine();
             activate fileManager
             fileManager -[dashed]-> logic : hasNextLine:boolean

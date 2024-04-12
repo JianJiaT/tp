@@ -89,7 +89,7 @@ public class Expense implements Saveable {
     }
 
     public boolean hasOwningEvent() {
-        return owningEvent != null;
+        return this.owningEvent != null;
     }
     public Event getOwningEvent() {
         return owningEvent;
@@ -116,6 +116,13 @@ public class Expense implements Saveable {
         return stringRepresentation;
     }
 
+    /**
+     * Returns an Expense object from a string representation.
+     * The string representation should be obtained from the getStringRepresentation method.
+     * @param stringRepresentation the string representation of the expense.
+     * @return an Expense object from a string representation.
+     * @throws Exception if the string representation is invalid.
+     */
     public static Expense getExpenseFromFile(String stringRepresentation) throws Exception {
         String[] expenseDetails = OrderParser.parseOrder(stringRepresentation, Expense.SAVING_KEYWORDS);
         assert expenseDetails.length == 4;
