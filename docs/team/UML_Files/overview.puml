@@ -1,0 +1,65 @@
+@startuml
+skinparam Style strictuml
+
+participant ":Logic" as Logic
+participant "u:UI" as UI
+participant GeneralInputParser <<class>> 
+participant AddParser <<class>>
+
+
+Logic -> UI : getUserInput()
+activate UI
+UI --> Logic : userInput
+deactivate UI 
+
+Logic -> GeneralInputParser : getCommandFromUserInput(userInput)
+activate GeneralInputParser
+GeneralInputParser -> AddParser : parseInput(userInput)
+activate AddParser
+
+
+
+create "expense:Expense" as Expense
+AddParser -> Expense : new()
+activate Expense
+Expense --> AddParser : expense
+deactivate Expense
+
+create "x:AddCommand" as AddCommand
+AddParser -> AddCommand : new(expense)
+activate AddCommand
+
+AddCommand --> AddParser : x
+deactivate AddCommand
+
+participant "d:Dashboard" as Dashboard
+participant "m:ExpenseManager" as ExpenseManager
+
+AddParser --> GeneralInputParser : x
+deactivate AddParser
+
+GeneralInputParser --> Logic : x
+deactivate GeneralInputParser
+
+Logic -> AddCommand : execute(d, u)
+activate AddCommand
+
+AddCommand -> Dashboard : getExpenseManager()
+activate Dashboard
+Dashboard --> AddCommand : m
+deactivate Dashboard
+
+AddCommand -> ExpenseManager : add(expense)
+activate ExpenseManager
+ExpenseManager --> AddCommand : feedback : String
+deactivate ExpenseManager
+
+AddCommand -> UI : prettyPrint(feedback)
+activate UI
+UI --> AddCommand :
+deactivate UI
+
+AddCommand --> Logic :
+destroy AddCommand
+
+@enduml

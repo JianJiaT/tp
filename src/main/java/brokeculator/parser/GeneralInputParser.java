@@ -49,7 +49,7 @@ public class GeneralInputParser {
             default:
                 commandToExecute = new HelpCommand();
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             commandToExecute =  new HelpCommand();
         }
         return commandToExecute;

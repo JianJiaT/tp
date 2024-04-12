@@ -1,9 +1,12 @@
 # Developer Guide
 
 * [Acknowledgements](#acknowledgements)
-* [Design & implementation](#design--implementation)
-  * [Architecture](#architecture)
-  * [Category feature](#category-feature)
+* [Architecture](#architecture)
+* [Design](#design)
+* [Implementation](#implementation)
+  * [Category](#category)
+  * [Summarising expenses](#summarising-expenses)
+  * [Event](#event)
 * [Product scope](#product-scope)
   * [Target user profile](#target-user-profile)
   * [Value proposition](#value-proposition)
@@ -16,16 +19,116 @@
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design & implementation
-
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
-
-### Architecture
+## Architecture
 
 The UML diagram below shows the main relationships between the classes in the Brokeculator application.
 ![img.png](images/architecture.png)
 
-# Category feature
+## Design 
+
+The manager classes of the application are:
+- `UI`: This class is responsible for interacting with the user. It prints messages to the user and reads input from the user.
+- `Logic`: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
+- `ExpenseManager`: This class is responsible for storing and managing the expenses.
+- `EventManager`: This class is responsible for storing and managing the events.
+- `EventExpenseDataIntegrityManager`: This class is responsible for managing circular dependencies between events and expenses.
+- `Dashboard`: This class is responsible for storing the managers classes of the application and providing access to them.
+- `Category`: This class is responsible for storing the categories of expenses.
+- `FileManager` class: This class is responsible for reading and writing data to files.
+
+The code snippet below shows the instantiation of the manager classes in the main method of the application:
+```java
+    public static void main(String[] args) {
+        UI ui = new UI();
+        ExpenseManager expenseManager = new ExpenseManager();
+        FileManager fileManager = new FileManager(ui);
+        EventManager eventManager = EventManager.getInstance();
+        EventExpenseDataIntegrityManager dataIntegrityManager
+                = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
+        Dashboard dashboard
+                = new Dashboard(expenseManager, fileManager, eventManager, dataIntegrityManager);
+        Logic driverLogic = new Logic(dashboard, ui);
+        Category.setDashboard(dashboard);
+        driverLogic.run();
+    }
+```
+
+There are three main classes that store the data of the application:
+- `Expense`: This class is responsible for storing the details of an expense.
+- `Event`: This class is responsible for storing the details of an event.
+- `Category`: This class is responsible for storing the categories of expenses.
+
+There are several supporting classes that facilitate the interaction between the user and the application:
+- `GeneralInputParser`: This class does the initial parsing of the user input and directs it to the appropriate parser.
+- `GeneralFileParser`: This class parses the data in the files to recreate the expense and event objects.
+- `Command`: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
+
+The following code snippet shows how the GeneralInputParser class is used to parse the user input:
+```java
+    public static Command getCommandFromUserInput(String userInput) {
+        Command commandToExecute;
+        try {
+            String commandKeyword = userInput.split(" ")[0];
+            String normalizedKeyword = commandKeyword.toLowerCase().trim();
+            switch (normalizedKeyword) {
+            case "add":
+                commandToExecute = AddParser.parseInput(userInput);
+                break;
+            case "delete":
+                commandToExecute = DeleteParser.parseInput(userInput);
+                break;
+            // Other cases omitted for brevity
+            default:
+                commandToExecute = new HelpCommand();
+            }
+        } catch (Exception e) {
+            commandToExecute =  new HelpCommand();
+        }
+        return commandToExecute;
+    }
+```
+
+The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
+```java
+    public static Command getCommandFromFileInput(String fileString) {
+
+        SaveableType saveableType = FileKeyword.getSaveableType(fileString);
+        if (saveableType == null) {
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
+        switch (saveableType) {
+        case EXPENSE:
+            return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
+        case CATEGORY:
+            return new AddCategoryFromFileCommand(fileStringWithoutKeyword);
+        case EVENT:
+            return new AddEventFromFileCommand(fileStringWithoutKeyword);
+        case CONNECTION:
+            return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
+        default:
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+    }
+```
+
+To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
+![img.png](images/overview.png)
+
+Without loss of generality, the high-level execution flow of the application is as follows:
+1. The user enters a command in the CLI
+2. The `UI` class reads the user input and passes it to the `Logic` class
+3. The `Logic` class uses the `GeneralInputParser` class to parse the user input 
+4. The `GeneralInputParser` class directs the user input to the appropriate parser class
+5. The parser class constructs a command object from the user input.
+6. The `Logic` class executes the command object
+7. The command object interacts with the relevant manager classes via the dashboard to perform the desired operation
+8. The `UI` class prints feedback, if any, to the user
+
+## Implementation
+This section describes the implementation details of selected features of the Brokeculator application.
+
+### Category
 **Implementation** <br>
 The category feature is mainly facilitated by the `Category` class. The `Category` class is responsible for storing the names of the categories present in expenses. 
 In order for the user to be able to add expenses with a category, the category must be added using the `addCategory` method. 
@@ -65,7 +168,7 @@ In addition, at program initialisation, the function `setDashboard(dashboard: Da
 is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
-# Summarising expenses
+### Summarising expenses
 **Implementation** <br>
 The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
 The `SummariseParser` class is responsible for constructing a `SummariseCommand` object from valid user input, which upon
@@ -92,7 +195,7 @@ the expenses stored in the `ExpenseManager` object according to the user's speci
 by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
-# Event feature
+### Event 
 **Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
@@ -178,7 +281,7 @@ and what the application carried out based on user input should be clear to the 
 
 This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
 
-# Testing loading of data
+### Testing loading of data
 
 All data files should reside in the data folder, in the directory that the user has launched the application from.
 The following are to be done in sequence to test reliability of loading data:
@@ -224,7 +327,7 @@ If this is your first time using me, type 'help' to see what I can do for you.
     ->
 ```
 
-# Testing of viewing expenses
+### Testing of viewing expenses
 
 The user should be able to view the expenses by typing `list` and pressing enter. The user should see the following:
 ```dtd
@@ -235,7 +338,7 @@ The user should be able to view the expenses by typing `list` and pressing enter
 ------------------------------------
 ```
 
-# Testing of viewing categories
+### Testing of viewing categories
 
 The user should be able to view the categories by typing `category list` and pressing enter. The user should see the following:
 ```dtd
@@ -247,7 +350,7 @@ Categories:
 ------------------------------------
 ```
 
-# Testing of viewing events
+### Testing of viewing events
 
 The user should be able to view the events by typing `listEvents` and pressing enter. The user should see the following:
 ```dtd
@@ -258,7 +361,7 @@ The user should be able to view the events by typing `listEvents` and pressing e
 ------------------------------------
 ```
 
-# Testing of viewing expenses in events
+### Testing of viewing expenses in events
 
 The user should be able to view the expenses in the first event by typing `viewEvent /i 1` and pressing enter. The user should see the following:
 ```dtd
@@ -283,7 +386,7 @@ Event has no expenses
 ------------------------------------
 ```
 
-# Basic testing of summarising expenses
+### Basic testing of summarising expenses
 
 The user should be able to summarise all the expenses by typing `summarise` and pressing enter. The user should see the following:
 ```dtd
@@ -317,11 +420,11 @@ The total is $100.00
 ```
 The rest of the summarise command options can be tested in a similar manner, by following the user guide.
 
-# Testing of cycling through command history
+### Testing of cycling through command history
 
 The user should be able to navigate through the command history by pressing the up and down arrow keys. The user should be able to see the previous command by pressing the up arrow key and the next command entered by pressing the down arrow key.
 
-# Testing of Adding an expense
+### Testing of Adding an expense
 
 The user should be able to add an expense by typing `add /n test4 /d 11-12-2024 /a 50.00 /c CAT2` and pressing enter. The user should see the following:
 ```dtd
@@ -339,7 +442,7 @@ upon typing `list` and pressing enter, the user should see the following:
 ------------------------------------
 ```
 
-# Testing of Deleting an expense
+### Testing of Deleting an expense
 
 The user should be able to delete an expense by typing `delete /i 4` and pressing enter. The user should see the following:
 ```dtd
@@ -356,7 +459,7 @@ upon typing `list` and pressing enter, the user should see the following:
 ------------------------------------
 ```
 
-# Testing of Adding an event
+### Testing of Adding an event
 
 The user should be able to add an event by typing `event /n eventtest4 /d test 4` and pressing enter. The user should see the following:
 ```dtd
@@ -374,7 +477,7 @@ upon typing `listEvents` and pressing enter, the user should see the following:
 ------------------------------------
 ```
 
-# Testing of Deleting an event
+### Testing of Deleting an event
 
 The user should be able to delete an event by typing `deleteEvent /i 4` and pressing enter. The user should see the following:
 ```dtd
@@ -391,7 +494,7 @@ upon typing `listEvents` and pressing enter, the user should see the following:
 ------------------------------------
 ```
 
-# Testing of Adding an expense to an event
+### Testing of Adding an expense to an event
 
 The user should be able to add an expense to an event by typing `addExEv /exi 3 /evi 3` and pressing enter. The user should see the following:
 ```dtd
@@ -408,7 +511,7 @@ test3 $100.00 (Friday, 12 January 2024) [CAT3]
 ------------------------------------
 ```
 
-# Testing of Deleting an expense from an event
+### Testing of Deleting an expense from an event
 
 The user should be able to delete an expense from an event by typing `delExEv /i 3` and pressing enter. The user should see the following:
 ```dtd
@@ -424,7 +527,7 @@ Event has no expenses
 ------------------------------------
 ```
 
-# Testing of adding a category
+### Testing of adding a category
 
 The user should be able to add a category by typing `category add CAT4` and pressing enter. The user should see the following:
 ```dtd
@@ -443,7 +546,7 @@ Categories:
 ------------------------------------
 ```
 
-# Testing of deleting a category
+### Testing of deleting a category
 
 The user should be able to delete a category by typing `category delete CAT4` and pressing enter. The user should see
 the following:
@@ -462,6 +565,6 @@ Categories:
 ------------------------------------
 ```
 
-# Manual testing to get full coverage
+## Manual testing to get full coverage
 The above tests are not exhaustive and are meant to be a guide to test the application. 
 To conduct more tests, the user should refer to the user guide and test all the commands and options available in the application.
