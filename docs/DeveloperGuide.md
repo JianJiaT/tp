@@ -1,9 +1,12 @@
 # Developer Guide
 
 * [Acknowledgements](#acknowledgements)
-* [Design & implementation](#design--implementation)
-  * [Architecture](#architecture)
-  * [Category feature](#category-feature)
+* [Architecture](#architecture)
+* [Design](#design)
+* [Implementation](#implementation)
+  * [Category](#category)
+  * [Summarising expenses](#summarising-expenses)
+  * [Event](#event)
 * [Product scope](#product-scope)
   * [Target user profile](#target-user-profile)
   * [Value proposition](#value-proposition)
@@ -233,10 +236,16 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 ### Target user profile
 
 This project is designed to cater to the needs of university students who encounter the challenge of managing a myriad of expenses across various categories.
-
+university students also do not have an extreme amount of expenses and a large budget to track, so having a simple CLI application to track expenses would be sufficient,
+rather than a large scale application with a database management system.
 ### Value proposition
 
 Brokeculator is a CLI application designed for university students to log and view their expenses. 
+As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
+valuable resource for university students. The application also allows for the categorization of expenses,
+and classification of expenses into events, which is useful for students who need to track their spending habits.
+The application also allows for the import and export of data from a CSV file, which is useful for students who use multiple devices,
+but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
 ## User Stories
@@ -245,7 +254,7 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 | v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |
 | v1.0 | student | view the expenses I have logged | know how much I have spent |
 | v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |
-| v1.0 | student | have the ability to add expenses | ------- |
+| v1.0 | student | have the ability to add expenses | ------------------ |
 | v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |
 | v1.0 | student who cares about privacy | track expenses offline | retain my privacy |
 | v2.0 | university student | retrieve spending based on time periods | track important spending days |
@@ -257,12 +266,305 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
+2. **Performance**: The application should be able to handle user input without significant lag
+3. **Reliability**: The application should be able to handle user input without crashing
+4. **Usability**: The application should be easy to use for users familiar with CLI applications, instructions should be clear,
+and what the application carried out based on user input should be clear to the user
+
 
 ## Glossary
 
-* *glossary item* - Definition
+* *mainstream OS* - Windows, Linux, MacOS
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
+
+### Testing loading of data
+
+All data files should reside in the data folder, in the directory that the user has launched the application from.
+The following are to be done in sequence to test reliability of loading data:
+
+**Loading of category data** <br>
+In the data folder, create a file named `category.txt` and populate it with the following data:
+```dtd
+--category--CAT3
+--category--CAT2
+--category--CAT1
+```
+
+**Loading of expense data** <br>
+In the data folder, create a file named `data.txt` and populate it with the following data:
+```dtd
+--expense--|__EXPENSE_DESCRIPTION__|:test1|__EXPENSE_DATE__|:12-12-2024|__EXPENSE_AMOUNT__|:16.00
+--expense--|__EXPENSE_DESCRIPTION__|:test2|__EXPENSE_DATE__|:12-12-2024|__EXPENSE_AMOUNT__|:20.00|__EXPENSE_CATEGORY__|:CAT1
+--expense--|__EXPENSE_DESCRIPTION__|:test3|__EXPENSE_DATE__|:12-01-2024|__EXPENSE_AMOUNT__|:100.00|__EXPENSE_CATEGORY__|:CAT3
+```
+
+**Loading of event data** <br>
+In the data folder, create a file named `event.txt` and populate it with the following data:
+```dtd
+--event--|__EVENT_NAME__|:eventtest|__EVENT_DESCRIPTION__|:test 1
+--event--|__EVENT_NAME__|:eventtest2|__EVENT_DESCRIPTION__|:test 2
+--event--|__EVENT_NAME__|:eventtest3|__EVENT_DESCRIPTION__|:test 3
+```
+
+**Loading of event connections data** <br>
+In the data folder, create a file named `connection.txt` and populate it with the following data:
+```dtd
+--connection--|__EXPENSE__|:1|__EVENT__|:1
+--connection--|__EXPENSE__|:2|__EVENT__|:2
+```
+
+Start the application by running the `Brokeculator.jar` file in the same directory as the data file. 
+The application should load the data from the files and the user should see the following:
+```dtd
+------------------------------------
+Hello! I'm Brokeculator!
+If this is your first time using me, type 'help' to see what I can do for you.
+------------------------------------
+    ->
+```
+
+### Testing of viewing expenses
+
+The user should be able to view the expenses by typing `list` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+### Testing of viewing categories
+
+The user should be able to view the categories by typing `category list` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+### Testing of viewing events
+
+The user should be able to view the events by typing `listEvents` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+------------------------------------
+```
+
+### Testing of viewing expenses in events
+
+The user should be able to view the expenses in the first event by typing `viewEvent /i 1` and pressing enter. The user should see the following:
+```dtd
+eventtest (test 1)
+Event has 1 expenses:
+test1 $16.00 (Thursday, 12 December 2024)
+```
+The user should be able to view the expenses in the second event by typing `viewEvent /i 2` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+eventtest2 (test 2)
+Event has 1 expenses:
+test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+------------------------------------
+```
+The user should be able to view the expenses in the third event by typing `viewEvent /i 3` and pressing enter. The user should see
+that there are no expenses in the event:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has no expenses
+------------------------------------
+```
+
+### Basic testing of summarising expenses
+
+The user should be able to summarise all the expenses by typing `summarise` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+------------------------------------
+The total is $136.00
+------------------------------------
+```
+The user can view the expenses on 12 Decmber 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+------------------------------------
+------------------------------------
+The total is $36.00
+------------------------------------
+```
+The user can view the expenses with descriptions starting with a 3 in it by typing `summarise /n 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+1. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+------------------------------------
+The total is $100.00
+------------------------------------
+```
+The rest of the summarise command options can be tested in a similar manner, by following the user guide.
+
+### Testing of cycling through command history
+
+The user should be able to navigate through the command history by pressing the up and down arrow keys. The user should be able to see the previous command by pressing the up arrow key and the next command entered by pressing the down arrow key.
+
+### Testing of Adding an expense
+
+The user should be able to add an expense by typing `add /n test4 /d 11-12-2024 /a 50.00 /c CAT2` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Added expense: test4 $50.00 (Wednesday, 11 December 2024) [CAT2]
+------------------------------------
+```
+upon typing `list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+4. test4 $50.00 (Wednesday, 11 December 2024) [CAT2]
+------------------------------------
+```
+
+### Testing of Deleting an expense
+
+The user should be able to delete an expense by typing `delete /i 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Deleted expense at index 4
+------------------------------------
+```
+upon typing `list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+### Testing of Adding an event
+
+The user should be able to add an event by typing `event /n eventtest4 /d test 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Event added successfully
+------------------------------------
+```
+upon typing `listEvents` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+4. eventtest4 (test 4)
+------------------------------------
+```
+
+### Testing of Deleting an event
+
+The user should be able to delete an event by typing `deleteEvent /i 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Event deleted
+------------------------------------
+```
+upon typing `listEvents` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+------------------------------------
+```
+
+### Testing of Adding an expense to an event
+
+The user should be able to add an expense to an event by typing `addExEv /exi 3 /evi 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Expense added to event successfully
+------------------------------------
+```
+upon typing `viewEvent /i 3` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has 1 expenses:
+test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+### Testing of Deleting an expense from an event
+
+The user should be able to delete an expense from an event by typing `delExEv /i 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Expense removed from event successfully
+------------------------------------
+```
+upon typing `viewEvent /i 3` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has no expenses
+------------------------------------
+```
+
+### Testing of adding a category
+
+The user should be able to add a category by typing `category add CAT4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Category added: CAT4
+------------------------------------
+```
+upon typing `category list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT4
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+### Testing of deleting a category
+
+The user should be able to delete a category by typing `category delete CAT4` and pressing enter. The user should see
+the following:
+```dtd
+------------------------------------
+Category removed: CAT4
+------------------------------------
+```
+upon typing `category list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+## Manual testing to get full coverage
+The above tests are not exhaustive and are meant to be a guide to test the application. 
+To conduct more tests, the user should refer to the user guide and test all the commands and options available in the application.

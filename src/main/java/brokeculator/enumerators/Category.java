@@ -27,6 +27,11 @@ public class Category {
         Category.isDashboardSet = true;
         Category.dashboard = dashboard;
     }
+    /**
+     * Adds a category to the list of categories
+     * @param category Category string to be added
+     * @return String representation of the result of adding the category
+     */
     public static String addCategory(String category) {
         category = category.toUpperCase();
         if (categories.contains(category)) {
@@ -35,9 +40,18 @@ public class Category {
         categories.add(category);
         return "Category added: " + category;
     }
+    /**
+     * Returns a list of all categories
+     * @return List of all categories
+     */
     public static ArrayList<String> getCategoryList() {
         return new ArrayList<>(categories);
     }
+    /**
+     * Checks if a category is valid
+     * @param category Category string to be checked
+     * @return boolean, true if category is valid, false otherwise
+     */
     public static boolean isValidCategory(String category) {
         return categories.contains(category);
     }
@@ -52,6 +66,11 @@ public class Category {
         categories.remove(category);
         return "Category removed: " + category;
     }
+    /**
+     * Checks if a category is used in any expense
+     * @param category Category string to be checked
+     * @return boolean, true if category is used in any expense, false otherwise
+     */
     private static boolean isCategoryUsed(String category) {
         assert dashboard != null : "Dashboard should not be null";
         ArrayList<Expense> expenseList = dashboard.getExpenseManager().listExpenses(LIST_ALL_EXPENSES);
