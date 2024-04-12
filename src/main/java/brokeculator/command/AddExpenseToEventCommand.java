@@ -41,7 +41,7 @@ public class AddExpenseToEventCommand extends Command {
 
         assert newOwningEvent != null && expense != null : "Event or Expense is null";
 
-        boolean isExpensedOwnedByEvent = newOwningEvent.containsExpense(expense);
+        boolean isExpensedOwnedByEvent = newOwningEvent.hasExpense(expense);
         if (isExpensedOwnedByEvent) {
             ui.prettyPrint("Expense already belongs to the event");
             return;
