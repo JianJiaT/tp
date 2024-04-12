@@ -10,6 +10,14 @@ public class ViewSingleEventCommand extends Command {
     public ViewSingleEventCommand(int eventIndex) {
         this.eventIndex = eventIndex;
     }
+
+    /**
+     * Prints the details of a single event
+     * 
+     * If the event index is invalid, an error message will be printed
+     * If the event has no expenses, a message will be printed
+     * @param dashboard the dashboard that contains the event manager
+     */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         boolean isValidEventIndex = dashboard.getEventManager().isEventIdxValid(eventIndex);

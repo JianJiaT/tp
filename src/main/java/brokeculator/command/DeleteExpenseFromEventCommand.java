@@ -14,6 +14,13 @@ public class DeleteExpenseFromEventCommand extends Command {
         this.expenseIdx = expenseIdx;
     }
 
+    /**
+     * Removes the connection between an expense and an event
+     * 
+     * If the expense index is invalid, an error message will be printed
+     * If the expense does not belong to any event, an error message will be printed
+     * @param dashboard the dashboard that contains the data integrity manager that will remove the connection
+     */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         boolean isValidExpenseIdx = dashboard.getExpenseManager().isExpenseIndexValid(expenseIdx);
