@@ -8,6 +8,7 @@ import java.time.format.ResolverStyle;
  * Class to parse Strings to Dates
  */
 public class DateParser {
+    // when using ResolverStyle.STRICT 'u' ensures the year is interpreted consistently rather than 'y'
     public static final DateTimeFormatter DATE_FORMATTER =
             DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
 
