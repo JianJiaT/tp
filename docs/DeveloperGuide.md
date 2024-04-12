@@ -133,10 +133,16 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 ### Target user profile
 
 This project is designed to cater to the needs of university students who encounter the challenge of managing a myriad of expenses across various categories.
-
+university students also do not have an extreme amount of expenses and a large budget to track, so having a simple CLI application to track expenses would be sufficient,
+rather than a large scale application with a database management system.
 ### Value proposition
 
 Brokeculator is a CLI application designed for university students to log and view their expenses. 
+As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
+valuable resource for university students. The application also allows for the categorization of expenses,
+and classification of expenses into events, which is useful for students who need to track their spending habits.
+The application also allows for the import and export of data from a CSV file, which is useful for students who use multiple devices,
+but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
 ## User Stories
