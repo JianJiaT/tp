@@ -77,17 +77,6 @@ public class AddParser {
     }
 
     /**
-     * Checks whether any of the mandatory fields is empty
-     * @param expenseDescription Expense description
-     * @param expenseDate Expense date
-     * @param expenseAmountAsString Expense amount
-     * @return True if any of the mandatory fields is empty, false otherwise
-     */
-    private static boolean isFieldsEmpty(String expenseDescription, String expenseDate, String expenseAmountAsString) {
-        return expenseDescription.isBlank() || expenseDate.isBlank() || expenseAmountAsString.isBlank();
-    }
-
-    /**
      * Checks whether all the mandatory fields are present
      * @param userInput User input
      * @return True if all mandatory fields are present, false otherwise
