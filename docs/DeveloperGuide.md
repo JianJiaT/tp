@@ -170,9 +170,10 @@ and what the application carried out based on user input should be clear to the 
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
+
 # Testing loading of data
+
 All data files should reside in the data folder, in the directory that the user has launched the application from.
 The following are to be done in sequence to test reliability of loading data:
 
@@ -218,6 +219,7 @@ If this is your first time using me, type 'help' to see what I can do for you.
 ```
 
 # Testing of viewing expenses
+
 The user should be able to view the expenses by typing `list` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
@@ -228,6 +230,7 @@ The user should be able to view the expenses by typing `list` and pressing enter
 ```
 
 # Testing of viewing categories
+
 The user should be able to view the categories by typing `category list` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
@@ -239,6 +242,7 @@ Categories:
 ```
 
 # Testing of viewing events
+
 The user should be able to view the events by typing `listEvents` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
@@ -249,6 +253,7 @@ The user should be able to view the events by typing `listEvents` and pressing e
 ```
 
 # Testing of viewing expenses in events
+
 The user should be able to view the expenses in the first event by typing `viewEvent /i 1` and pressing enter. The user should see the following:
 ```dtd
 eventtest (test 1)
@@ -273,6 +278,7 @@ Event has no expenses
 ```
 
 # Basic testing of summarising expenses
+
 The user should be able to summarise all the expenses by typing `summarise` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
@@ -304,8 +310,152 @@ The total is $100.00
 ------------------------------------
 ```
 The rest of the summarise command options can be tested in a similar manner, by following the user guide.
+
 # Testing of cycling through command history
+
 The user should be able to navigate through the command history by pressing the up and down arrow keys. The user should be able to see the previous command by pressing the up arrow key and the next command entered by pressing the down arrow key.
 
-# Other commands
-The other commands can be tested by following the user guide and entering the commands as specified in the user guide.
+# Testing of Adding an expense
+
+The user should be able to add an expense by typing `add /n test4 /d 11-12-2024 /a 50.00 /c CAT2` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Added expense: test4 $50.00 (Wednesday, 11 December 2024) [CAT2]
+------------------------------------
+```
+upon typing `list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+4. test4 $50.00 (Wednesday, 11 December 2024) [CAT2]
+------------------------------------
+```
+
+# Testing of Deleting an expense
+
+The user should be able to delete an expense by typing `delete /i 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Deleted expense at index 4
+------------------------------------
+```
+upon typing `list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. test1 $16.00 (Thursday, 12 December 2024)
+2. test2 $20.00 (Thursday, 12 December 2024) [CAT1]
+3. test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+# Testing of Adding an event
+
+The user should be able to add an event by typing `event /n eventtest4 /d test 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Event added successfully
+------------------------------------
+```
+upon typing `listEvents` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+4. eventtest4 (test 4)
+------------------------------------
+```
+
+# Testing of Deleting an event
+
+The user should be able to delete an event by typing `deleteEvent /i 4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Event deleted
+------------------------------------
+```
+upon typing `listEvents` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+1. eventtest (test 1)
+2. eventtest2 (test 2)
+3. eventtest3 (test 3)
+------------------------------------
+```
+
+# Testing of Adding an expense to an event
+
+The user should be able to add an expense to an event by typing `addExEv /exi 3 /evi 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Expense added to event successfully
+------------------------------------
+```
+upon typing `viewEvent /i 3` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has 1 expenses:
+test3 $100.00 (Friday, 12 January 2024) [CAT3]
+------------------------------------
+```
+
+# Testing of Deleting an expense from an event
+
+The user should be able to delete an expense from an event by typing `delExEv /i 3` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Expense removed from event successfully
+------------------------------------
+```
+upon typing `viewEvent /i 3` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+eventtest3 (test 3)
+Event has no expenses
+------------------------------------
+```
+
+# Testing of adding a category
+
+The user should be able to add a category by typing `category add CAT4` and pressing enter. The user should see the following:
+```dtd
+------------------------------------
+Category added: CAT4
+------------------------------------
+```
+upon typing `category list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT4
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+# Testing of deleting a category
+
+The user should be able to delete a category by typing `category delete CAT4` and pressing enter. The user should see
+the following:
+```dtd
+------------------------------------
+Category removed: CAT4
+------------------------------------
+```
+upon typing `category list` and pressing enter, the user should see the following:
+```dtd
+------------------------------------
+Categories:
+- CAT3
+- CAT2
+- CAT1
+------------------------------------
+```
+
+# Manual testing to get full coverage
+The above tests are not exhaustive and are meant to be a guide to test the application. 
+To conduct more tests, the user should refer to the user guide and test all the commands and options available in the application.
