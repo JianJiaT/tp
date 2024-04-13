@@ -9,10 +9,11 @@ import brokeculator.enumerators.CommandErrorMessages;
 public class DeleteParser {
 
     /**
-     * Returns a DeleteCommand specifying which expenses to delete if user input is valid, otherwise
-     * returns an InvalidCommand with relevant error message
-     * @param userInput User input
-     * @return DeleteCommand if user input is valid, InvalidCommand otherwise
+     * Returns a DeleteCommand specifying which expenses to delete if user input is valid,
+     * otherwise returns an InvalidCommand with relevant error message.
+     *
+     * @param userInput User input.
+     * @return DeleteCommand if user input is valid, InvalidCommand otherwise.
      */
     public static Command parseInput(String userInput) {
         String[] userInputAsArray = userInput.trim().split("\\s+");

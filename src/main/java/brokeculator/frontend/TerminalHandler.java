@@ -11,9 +11,13 @@ public class TerminalHandler {
     private Terminal terminal;
     private LineReader lineReader;
 
+    /**
+     * Creates a terminal and lineReader to handle user input and output with extended features.
+     */
     public TerminalHandler() {
+        System.setProperty("org.jline.terminal.exec.redirectPipeCreationMode", "native");
         try {
-            terminal = TerminalBuilder.builder().system(true).build();
+            terminal = TerminalBuilder.builder().system(true).dumb(true).build();
             lineReader = LineReaderBuilder.builder().terminal(terminal).build();
         } catch (Exception e) {
             Logger logger = Logger.getLogger(TerminalHandler.class.getName());
@@ -22,15 +26,31 @@ public class TerminalHandler {
         }
     }
 
+    /**
+     * Reads a line of input from the user.
+     *
+     * @param prompt the prompt to display to the user.
+     * @return the line of input from the user.
+     */
     public String readLine(String prompt) {
         return lineReader.readLine(prompt);
     }
 
+    /**
+     * Prints a message to the terminal.
+     *
+     * @param message the message to print.
+     */
     public void print(String message) {
         terminal.writer().print(message);
         terminal.flush();
     }
 
+    /**
+     * Prints a message to the terminal followed by a newline.
+     *
+     * @param message the message to print.
+     */
     public void println(String message) {
         terminal.writer().println(message);
         terminal.flush();

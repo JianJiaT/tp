@@ -12,8 +12,7 @@ public class EventManager {
     }
 
     /**
-     * Returns the singleton instance of EventManager
-     * @return Singleton instance of EventManager
+     * Returns the singleton instance of EventManager.
      */
     public static EventManager getInstance() {
         if (EventManager.eventManager == null) {
@@ -45,8 +44,7 @@ public class EventManager {
     }
 
     /**
-     * Returns a string representation of all events in the event manager for printing
-     * @return String representation of all events in the event manager
+     * Returns a string representation of all events in the event manager for printing.
      */
     public String getEventsPrintString() {
         if (events.isEmpty()) {
@@ -61,8 +59,7 @@ public class EventManager {
     }
 
     /**
-     * Returns a string representation of all events in the event manager for saving
-     * @return String representation of all events in the event manager
+     * Returns a string representation of all events in the event manager for saving.
      */
     public String getEventsStringRepresentation() {
         StringBuilder sb = new StringBuilder();

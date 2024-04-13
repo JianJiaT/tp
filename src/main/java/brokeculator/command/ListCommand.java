@@ -11,8 +11,9 @@ public class ListCommand extends Command {
     }
 
     /**
-     * Lists expenses and prints out the list
-     * @param dashboard The dashboard that contains the expense manager from which expenses will be listed
+     * Lists expenses and prints out the list.
+     *
+     * @param dashboard The dashboard that contains the expense manager from which expenses will be listed.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {

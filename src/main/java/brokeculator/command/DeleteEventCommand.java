@@ -12,11 +12,12 @@ public class DeleteEventCommand extends Command {
     }
 
     /**
-     * Deletes an event from the dashboard's event manager
-     * 
-     * If the event index is invalid, an error message will be printed
-     * If the event has expenses, the event will not be deleted
-     * @param dashboard the dashboard that contains the event manager
+     * Deletes an event from the dashboard's event manager.
+     * <p>
+     * If the event index is invalid, an error message will be printed.
+     * If the event has expenses, the event will not be deleted.
+     *
+     * @param dashboard the dashboard that contains the event manager.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {

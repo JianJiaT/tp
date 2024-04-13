@@ -13,9 +13,10 @@ public class EventParser {
     };
 
     /**
-     * Parses the user input to identify the event name and description
-     * @param userInput User input
-     * @return InvalidCommand if the input is invalid, AddEventCommand otherwise
+     * Parses the user input to identify the event name and description.
+     *
+     * @param userInput User input.
+     * @return InvalidCommand if the input is invalid, AddEventCommand otherwise.
      */
     public static Command parseInput(String userInput) {
         String[] userInputs;
