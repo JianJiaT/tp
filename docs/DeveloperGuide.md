@@ -184,12 +184,30 @@ The event feature aims to group expenses happening on specific occasions togethe
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
 The `EventManager` class is responsible for aggregate operations on the events.
 
-The UMl diagram below shows the main relationships between the classes in the event feature (some methods are omitted) <br>
+The UMl diagram below shows the relationships between the classes in the event feature 
+(irrelevant methods are omitted) <br>
 ![img.png](images/Event_class.png)
 
-The following sequence diagrams show how a user input is processed to add the events: <br>
+The `EventExpenseManager` class mainly interacts with the `EventManager` and `ExpenseManager` classes 
+via the `getExpense` and `getEvent` methods, 
+which are used to retrieve event and expense objects at specific indexes. 
+The connection between events and expenses should be managed through the `EventExpenseManager` class, 
+which handles complexities such as circular dependencies between events and expenses.
 
+Notably, the `EventExpenseManager` class also implements the following operations:
+- `getConnectionsStringRepresentation()` Returns a string representation of all the connections between events and expenses for saving purposes
+- `loadConnection(stringRepresentation : String)` Loads the connections between events and expenses from a string representation retrieved from the data file
+
+It is possible to represent the connections between events and expenses using a dedicated `Connection` class. 
+However, as the connections are frequently accessed and modified, 
+it is more efficient to store the information directly in the expense and event objects.
+
+The following sequence diagram show how a (valid) user input is processed by the `GeneralInputParser`
+to create an `AddEventCommand`: <br>
 ![img.png](images/addEventCommand.png) <br>
+
+This sequence diagram shows how an `AddEventCommand` is then executed to create an `Event` and 
+add it to the `EventManager`
 ![img.png](images/executeAddEventCommand.png)
 
 **User input event main parsing sequence**
@@ -199,8 +217,6 @@ The following sequence diagrams show how a user input is processed to add the ev
 4. When executed, the `AddEventCommand` object creates an `Event` object with the event name and description
 5. The `AddEventCommand` object calls the `addEvent` method in the `EventManager` class to add the event created in step 4
 6. Feedback is given to the user via the UI
-
-Details such as accessing the EventManager via the central dashboard and handling of exceptions using invalid commands are omitted for brevity.
 
 The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
@@ -212,7 +228,7 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 3. The event and expense objects are retrieved based on the indexes
 4. If the expense already exists in the event, a feedback message is returned to the user
 5. The original owning event of the expense is retrieved 
-6. If the expense has an owning event, the expense is removed from the owning event
+6. If the expense has an owning event, the expense is removed from the owning event. Note that this owning event is different from the event the expense is being added to, else the command execution would have been terminated in step 4
 7. The expense is added to the new event, and its owning event is updated
 
 ## Product scope
