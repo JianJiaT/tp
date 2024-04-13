@@ -2,9 +2,9 @@
 skinparam Style strictuml
 box Category Load Logic
 
-participant ":Category" as category
+participant "<<class>>\nCategory" as category
 participant ":FileManager" as fileManager
-participant ":GeneralFileParser" as generalFileParser
+participant "<<class>>\nGeneralFileParser" as generalFileParser
 participant ":Logic" as logic
 participant ":AddCategoryFromFileCommand" as AddCategoryFromFileCommand
 
