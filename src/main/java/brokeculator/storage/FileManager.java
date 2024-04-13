@@ -91,8 +91,8 @@ public class FileManager {
     /**
      * Opens a file based on the SaveableType and returns true if no errors are encountered.
      *
-     * @param saveableType the type of file to open
-     * @return true if no errors are encountered
+     * @param saveableType the type of file to open.
+     * @return true if no errors are encountered.
      */
     public boolean openFile(SaveableType saveableType) {
         switch (saveableType) {

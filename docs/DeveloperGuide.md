@@ -260,34 +260,9 @@ public class TerminalHandler {
 }
 ```
 
-**Input Processing**\
-The `UI`'s `getUserInput` method utilizes `TerminalHandler`'s `readLine` method to capture user input. This method continuously prompts the user until a non-blank input is received, ensuring that commands are intentionally executed.
-
-```java
-public String getUserInput() throws BrokeculatorException {
-    try {
-        String userInput;
-        do {
-            userInput = terminalHandler.readLine(PROMPT);
-        } while (userInput.isBlank());
-        return userInput;
-    } catch (Exception e) {
-        throw new BrokeculatorException("Error reading user input.");
-    }
-}
-```
-
-**Output Formatting and Display**\
-The `UI` class provides methods for formatting and displaying messages to the user. The `prettyPrint` method is a key example, formatting a given message with a standard decoration and printing it to the terminal. This method, along with print and println, delegates to TerminalHandler's corresponding methods to actually write the message to the terminal.
-
-```java
-public void prettyPrint(String message) {
-    terminalHandler.println(prettify(message.trim(), STRING_DECORATION, STRING_DECORATION));
-}
-```
-
-**History Feature**
-The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by `JLine`. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
+**JLine Features**
+1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
+2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
 
 ## Product scope
 ### Target user profile
