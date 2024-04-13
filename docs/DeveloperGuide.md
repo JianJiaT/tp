@@ -31,27 +31,10 @@ The manager classes of the application are:
 - `Logic`: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
 - `ExpenseManager`: This class is responsible for storing and managing the expenses.
 - `EventManager`: This class is responsible for storing and managing the events.
-- `EventExpenseDataIntegrityManager`: This class is responsible for managing circular dependencies between events and expenses.
+- `EventExpenseManager`: This class is responsible for managing circular dependencies between events and expenses.
 - `Dashboard`: This class is responsible for storing the managers classes of the application and providing access to them.
 - `Category`: This class is responsible for storing the categories of expenses.
 - `FileManager` class: This class is responsible for reading and writing data to files.
-
-The code snippet below shows the instantiation of the manager classes in the main method of the application:
-```java
-    public static void main(String[] args) {
-        UI ui = new UI();
-        ExpenseManager expenseManager = new ExpenseManager();
-        FileManager fileManager = new FileManager(ui);
-        EventManager eventManager = EventManager.getInstance();
-        EventExpenseDataIntegrityManager dataIntegrityManager
-                = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
-        Dashboard dashboard
-                = new Dashboard(expenseManager, fileManager, eventManager, dataIntegrityManager);
-        Logic driverLogic = new Logic(dashboard, ui);
-        Category.setDashboard(dashboard);
-        driverLogic.run();
-    }
-```
 
 There are three main classes that store the data of the application:
 - `Expense`: This class is responsible for storing the details of an expense.
@@ -63,7 +46,7 @@ There are several supporting classes that facilitate the interaction between the
 - `GeneralFileParser`: This class parses the data in the files to recreate the expense and event objects.
 - `Command`: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
 
-The following code snippet shows how the GeneralInputParser class is used to parse the user input:
+The following code snippet shows how the `GeneralInputParser` class is used to parse the user input:
 ```java
     public static Command getCommandFromUserInput(String userInput) {
         Command commandToExecute;
