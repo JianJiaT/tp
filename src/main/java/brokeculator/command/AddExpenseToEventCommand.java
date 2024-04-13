@@ -3,7 +3,7 @@ package brokeculator.command;
 import brokeculator.dashboard.Dashboard;
 import brokeculator.errors.ErrorMessages;
 import brokeculator.event.Event;
-import brokeculator.event.EventExpenseDataIntegrityManager;
+import brokeculator.event.EventExpenseManager;
 import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
 
@@ -51,7 +51,7 @@ public class AddExpenseToEventCommand extends Command {
         if (originalOwningEvent != null) {
             ui.prettyPrint("Expense belonged to another event. Moving it to the new event.");
         }
-        EventExpenseDataIntegrityManager.buildConnection(expense, newOwningEvent);
+        EventExpenseManager.buildConnection(expense, newOwningEvent);
         ui.prettyPrint("Expense added to event successfully");
     }
 }

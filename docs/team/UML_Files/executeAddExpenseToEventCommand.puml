@@ -7,10 +7,10 @@ participant ":ExpenseManager" as ExpenseManager
 participant ":EventManager" as EventManager
 participant "newOwningEvent:Event" as noe
 participant "expense:Expense" as Expense
-participant "dataManager:EventExpenseDataIntegrityManager" as dataManager
+participant "m:EventExpenseManager" as dataManager
 
 
-Logic -> Command: execute(dashboard)
+Logic -> Command: execute()
 activate Command
 
 Command -> ExpenseManager: isExpenseIndexValid(expenseIdx : int)
@@ -25,7 +25,7 @@ deactivate EventManager
 
 opt !isValidExpenseIndex || !isValidEventIndex
     note right of Command
-        Invalid indexes. Return immediately.
+        Invalid indexes. Print feedback.
     end note
     Command --> Logic: 
 end
@@ -42,12 +42,12 @@ deactivate EventManager
 
 Command -> noe : containsExpense(expense)
 activate noe
-noe --> Command: isExpenseOwnedByEvent : bool
+noe --> Command: isExpenseOwnedByEvent : boolean
 deactivate noe
 
 opt isExpenseOwnedByEvent
     note right of Command
-        No further action required. Return immediately.
+        No further action required. Print feedback.
     end note
     Command --> Logic:
 end

@@ -1,7 +1,7 @@
 package brokeculator.command;
 
 import brokeculator.dashboard.Dashboard;
-import brokeculator.event.EventExpenseDataIntegrityManager;
+import brokeculator.event.EventExpenseManager;
 import brokeculator.expense.Expense;
 import brokeculator.frontend.UI;
 
@@ -33,7 +33,7 @@ public class DeleteExpenseFromEventCommand extends Command {
             ui.prettyPrint("Expense does not belong to any event");
             return;
         }
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense);
         ui.prettyPrint("Expense removed from event successfully");
     }
 }

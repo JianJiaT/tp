@@ -2,22 +2,31 @@
 skinparam Style strictuml
 
 participant ":Logic" AS Logic
-participant ":AddEventCommand" AS AddEventCommand 
-participant ":EventManager" AS EventManager
-participant UI <<class>>
+participant ":AddEventCommand" AS AddEventCommand
 
-Logic -> AddEventCommand : execute(dashboard)
+Logic -> AddEventCommand : execute(d, u)
 activate AddEventCommand
-create "x:Event" as Event 
+
+create "e:Event" as Event
 AddEventCommand -> Event: new Event(eventName, eventDescription)
 activate Event
-Event --> AddEventCommand : x
+Event --> AddEventCommand : e
 deactivate Event
 
-AddEventCommand -> EventManager : addEvent(x)
+participant "d:Dashboard" AS Dashboard
+participant "m:EventManager" AS EventManager
+
+AddEventCommand -> Dashboard : getEventManager()
+activate Dashboard
+Dashboard --> AddEventCommand : m
+deactivate Dashboard
+
+AddEventCommand -> EventManager : addEvent(e)
 activate EventManager
 EventManager --> AddEventCommand
 deactivate EventManager
+
+participant "u:UI" AS UI
 
 AddEventCommand -> UI : prettyPrint("Event added successfully")
 activate UI

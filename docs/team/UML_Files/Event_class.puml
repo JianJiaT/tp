@@ -6,7 +6,7 @@ skinparam classAttributeIconSize 0
 class Event {
     - eventName: String
     - eventDescription: String
-    + containsExpense(expense : Expense) : boolean
+    + hasExpense(expense : Expense) : boolean
     + addExpense(expense : Expense) : void
     + removeExpense(expense : Expense) : void
     + listExpenses() : String
@@ -16,7 +16,10 @@ class EventManager {
     + addEvent(event : Event) : void
     + getEvent(idx : int) : Event
     + removeEvent(idx : int) : void
-    + printEvents() : void
+    + getEventsPrintString() : String
+}
+
+class ExpenseManager {
 }
 
 class Expense {
@@ -25,7 +28,18 @@ class Expense {
     + removeOwningEvent() : void
 }
 
-Expense "*" <--> "owningEvent 1" Event
-EventManager "1" -> "*"Event
+class EventExpenseManager {
+    + {static} buildConnection(expense : Expense, event : Event) : void
+    + {static} removeConnectionFromOwningEvent (expense : Expense) : void
+    + getConnectionsStringRepresentation() : String
+    + loadConnection(stringRepresentation : String) : void
+}
+
+Expense "*" <---> "owningEvent 1" Event
+EventManager "1" ---> "*"Event
+ExpenseManager "1" --> "*"Expense
+
+EventExpenseManager "1" --> "1"EventManager
+EventExpenseManager "1"-> "1"ExpenseManager
 
 @enduml

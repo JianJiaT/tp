@@ -10,14 +10,14 @@ public class FileKeyword {
     );
 
     /**
-     * Formats the string representation of a saveable object with the keyword.
+     * Formats the string representation of a saveable object with the keyword
      *
-     * @param saveableType Type of the saveable object.
-     * @param originalStringRepresentation Original string representation of the saveable object.
-     * @return Formatted string representation with the keyword.
+     * @param saveableType Type of the saveable object
+     * @param stringRepresentation Original string representation of the saveable object
+     * @return Formatted string representation with the keyword
      */
-    public static String formatWithKeyword(SaveableType saveableType, String originalStringRepresentation) {
-        return FILE_KEYWORDS.get(saveableType) + originalStringRepresentation;
+    public static String formatWithKeyword(SaveableType saveableType, String stringRepresentation) {
+        return FILE_KEYWORDS.get(saveableType) + stringRepresentation;
     }
 
     /**

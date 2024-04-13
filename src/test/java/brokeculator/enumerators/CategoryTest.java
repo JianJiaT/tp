@@ -1,7 +1,7 @@
 package brokeculator.enumerators;
 
 import brokeculator.dashboard.Dashboard;
-import brokeculator.event.EventExpenseDataIntegrityManager;
+import brokeculator.event.EventExpenseManager;
 import brokeculator.event.EventManager;
 import brokeculator.expense.ExpenseManager;
 import brokeculator.frontend.UI;
@@ -16,9 +16,9 @@ public class CategoryTest {
         ExpenseManager expenseManager = new ExpenseManager();
         FileManager fileManager = new FileManager(ui);
         EventManager eventManager = EventManager.getInstance();
-        EventExpenseDataIntegrityManager dataIntegrityManager
-                = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
-        this.dashboard = new Dashboard(expenseManager, fileManager, eventManager, dataIntegrityManager);
+        EventExpenseManager eventExpenseManager
+                = new EventExpenseManager(eventManager, expenseManager);
+        this.dashboard = new Dashboard(expenseManager, fileManager, eventManager, eventExpenseManager);
         Category.setDashboard(dashboard);
     }
     @Test

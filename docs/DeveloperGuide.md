@@ -7,6 +7,7 @@
   * [Category](#category)
   * [Summarising expenses](#summarising-expenses)
   * [Event](#event)
+  * [Storage](#storage)
 * [Product scope](#product-scope)
   * [Target user profile](#target-user-profile)
   * [Value proposition](#value-proposition)
@@ -31,27 +32,10 @@ The manager classes of the application are:
 - `Logic`: This class coordinates the interaction between the `UI` and back-end classes. It processes user input into commands and executes them.
 - `ExpenseManager`: This class is responsible for storing and managing the expenses.
 - `EventManager`: This class is responsible for storing and managing the events.
-- `EventExpenseDataIntegrityManager`: This class is responsible for managing circular dependencies between events and expenses.
+- `EventExpenseManager`: This class is responsible for managing circular dependencies between events and expenses.
 - `Dashboard`: This class is responsible for storing the managers classes of the application and providing access to them.
 - `Category`: This class is responsible for storing the categories of expenses.
 - `FileManager` class: This class is responsible for reading and writing data to files.
-
-The code snippet below shows the instantiation of the manager classes in the main method of the application:
-```java
-    public static void main(String[] args) {
-        UI ui = new UI();
-        ExpenseManager expenseManager = new ExpenseManager();
-        FileManager fileManager = new FileManager(ui);
-        EventManager eventManager = EventManager.getInstance();
-        EventExpenseDataIntegrityManager dataIntegrityManager
-                = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
-        Dashboard dashboard
-                = new Dashboard(expenseManager, fileManager, eventManager, dataIntegrityManager);
-        Logic driverLogic = new Logic(dashboard, ui);
-        Category.setDashboard(dashboard);
-        driverLogic.run();
-    }
-```
 
 There are three main classes that store the data of the application:
 - `Expense`: This class is responsible for storing the details of an expense.
@@ -63,7 +47,7 @@ There are several supporting classes that facilitate the interaction between the
 - `GeneralFileParser`: This class parses the data in the files to recreate the expense and event objects.
 - `Command`: This is an abstract class that represents a command that can be executed by the application. The commands are produced by the parser classes.
 
-The following code snippet shows how the GeneralInputParser class is used to parse the user input:
+The following code snippet shows how the `GeneralInputParser` class is used to parse the user input:
 ```java
     public static Command getCommandFromUserInput(String userInput) {
         Command commandToExecute;
@@ -88,29 +72,7 @@ The following code snippet shows how the GeneralInputParser class is used to par
     }
 ```
 
-The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
-```java
-    public static Command getCommandFromFileInput(String fileString) {
 
-        SaveableType saveableType = FileKeyword.getSaveableType(fileString);
-        if (saveableType == null) {
-            return new InvalidCommand("Corrupted entry: " + fileString);
-        }
-        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
-        switch (saveableType) {
-        case EXPENSE:
-            return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
-        case CATEGORY:
-            return new AddCategoryFromFileCommand(fileStringWithoutKeyword);
-        case EVENT:
-            return new AddEventFromFileCommand(fileStringWithoutKeyword);
-        case CONNECTION:
-            return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
-        default:
-            return new InvalidCommand("Corrupted entry: " + fileString);
-        }
-    }
-```
 
 To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
 ![img.png](images/overview.png)
@@ -201,12 +163,30 @@ The event feature aims to group expenses happening on specific occasions togethe
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
 The `EventManager` class is responsible for aggregate operations on the events.
 
-The UML diagram below shows the main relationships between the classes in the event feature (some methods are omitted) <br>
+The UMl diagram below shows the relationships between the classes in the event feature 
+(irrelevant methods are omitted) <br>
 ![img.png](images/Event_class.png)
 
-The following sequence diagrams show how a user input is processed to add the events: <br>
+The `EventExpenseManager` class mainly interacts with the `EventManager` and `ExpenseManager` classes 
+via the `getExpense` and `getEvent` methods, 
+which are used to retrieve event and expense objects at specific indexes. 
+The connection between events and expenses should be managed through the `EventExpenseManager` class, 
+which handles complexities such as circular dependencies between events and expenses.
 
+Notably, the `EventExpenseManager` class also implements the following operations:
+- `getConnectionsStringRepresentation()` Returns a string representation of all the connections between events and expenses for saving purposes
+- `loadConnection(stringRepresentation : String)` Loads the connections between events and expenses from a string representation retrieved from the data file
+
+It is possible to represent the connections between events and expenses using a dedicated `Connection` class. 
+However, as the connections are frequently accessed and modified, 
+it is more efficient to store the information directly in the expense and event objects.
+
+The following sequence diagram show how a (valid) user input is processed by the `GeneralInputParser`
+to create an `AddEventCommand`: <br>
 ![img.png](images/addEventCommand.png) <br>
+
+This sequence diagram shows how an `AddEventCommand` is then executed to create an `Event` and 
+add it to the `EventManager`
 ![img.png](images/executeAddEventCommand.png)
 
 **User input event main parsing sequence**
@@ -216,8 +196,6 @@ The following sequence diagrams show how a user input is processed to add the ev
 4. When executed, the `AddEventCommand` object creates an `Event` object with the event name and description
 5. The `AddEventCommand` object calls the `addEvent` method in the `EventManager` class to add the event created in step 4
 6. Feedback is given to the user via the UI
-
-Details such as accessing the EventManager via the central dashboard and handling of exceptions using invalid commands are omitted for brevity.
 
 The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
@@ -229,8 +207,55 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 3. The event and expense objects are retrieved based on the indexes
 4. If the expense already exists in the event, a feedback message is returned to the user
 5. The original owning event of the expense is retrieved 
-6. If the expense has an owning event, the expense is removed from the owning event
+6. If the expense has an owning event, the expense is removed from the owning event. Note that this owning event is different from the event the expense is being added to, else the command execution would have been terminated in step 4
 7. The expense is added to the new event, and its owning event is updated
+
+### Storage
+The saving of data is managed by `FileKeyword`, `GeneralFileParser` and `FileManager`. The `FileKeyword` class is responsible for identifying the type of data stored in a file, the `GeneralFileParser` class invokes the appropriate parser based on the type of data, and the `FileManager` class reads and writes data to files.
+
+How other classes interact with `FileManager` to extract commands from file contents have been elaborated on in [Category](#category).
+This section will focus on the representation of data in the files, how data is formatted and stored, and eventually retrieved from the files.
+
+There are four types of data that can be stored in the files, represented by the `SaveableType` enumeration class: <br>
+![img.png](images/saveableType.png)
+
+The `FileKeyword` class implements the following operations:
+- `formatWithKeyword(SaveableType saveableType, String stringRepresentation)` Formats the data with the appropriate keyword
+- `getSaveableType(String fileString)` Returns the `SaveableType` of the data stored in the file
+- `removeKeyword(String fileString)` Returns the data in the file without the keyword
+
+Without loss of generality, we will explain how data is stored in the files using the `Expense` class as an example.
+1. The `Expense` class has a `getStringRepresentation()` method that returns a string representation of the expense object
+2. When `Logic` class wants to save the expense object to a file, it calls the getExpensesStringRepresentation() method of the `ExpenseManager` class, which returns a string representation of all the expenses formatted with the `SaveableType.EXPENSE` keyword
+3. The `FileManager` class writes the string representation to the file
+4. When the application is started, the `GeneralFileParser` class reads the string representation from the file and deciphers the `SaveableType` using the `FileKeyword` class
+5. The `GeneralFileParser` class then removes the keyword using the `FileKeyword` class and creates an `AddExpenseFromFileCommand` object with the original string representation as a parameter
+6. The `AddExpenseFromFileCommand` object is executed, and the string representation is passed to the `Expens` class to create the `Expense` object
+
+The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
+```java
+    public static Command getCommandFromFileInput(String fileString) {
+
+        SaveableType saveableType = FileKeyword.getSaveableType(fileString);
+        if (saveableType == null) {
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
+        switch (saveableType) {
+        case EXPENSE:
+            return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
+        case CATEGORY:
+            return new AddCategoryFromFileCommand(fileStringWithoutKeyword);
+        case EVENT:
+            return new AddEventFromFileCommand(fileStringWithoutKeyword);
+        case CONNECTION:
+            return new AddConnectionFromFileCommand(fileStringWithoutKeyword);
+        default:
+            return new InvalidCommand("Corrupted entry: " + fileString);
+        }
+    }
+```
+Any data stored in the files should be registered with the `FileKeyword` class to ensure that the data can be correctly identified and parsed. It is worth mentioning that the `FileKeyword` does not modify the original data, but only returns a formatted string with the keyword.
 
 ### UI
 **Implementation**\
@@ -263,6 +288,7 @@ public class TerminalHandler {
 **JLine Features**
 1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
 2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
+
 
 ## Product scope
 ### Target user profile

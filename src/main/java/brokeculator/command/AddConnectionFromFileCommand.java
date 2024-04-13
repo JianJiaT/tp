@@ -18,7 +18,7 @@ public class AddConnectionFromFileCommand extends Command {
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         try {
-            dashboard.getDataIntegrityManager().loadConnectionFromStringRepresentation(fileString);
+            dashboard.getDataIntegrityManager().loadConnection(fileString);
         } catch (Exception e) {
             ui.prettyPrint(fileString + " is not a valid connection entry");
         }
