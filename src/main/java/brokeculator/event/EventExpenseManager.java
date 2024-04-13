@@ -9,7 +9,7 @@ import brokeculator.storage.parsing.SaveableType;
 
 import java.util.ArrayList;
 
-public class EventExpenseDataIntegrityManager {
+public class EventExpenseManager {
 
     private static final Keyword EXPENSE_KEYWORD = new Keyword("|__EXPENSE__|:", "expense", false);
     private static final Keyword EVENT_KEYWORD = new Keyword("|__EVENT__|:", "event", false);
@@ -18,7 +18,7 @@ public class EventExpenseDataIntegrityManager {
     private final EventManager eventManager;
     private final ExpenseManager expenseManager;
 
-    public EventExpenseDataIntegrityManager(EventManager eventManager, ExpenseManager expenseManager) {
+    public EventExpenseManager(EventManager eventManager, ExpenseManager expenseManager) {
         this.eventManager = eventManager;
         this.expenseManager = expenseManager;
     }
@@ -76,11 +76,11 @@ public class EventExpenseDataIntegrityManager {
 
     /**
      * Loads connection between expenses and events from a string representation
-     * @param connectionStringRepresentation String representation of a connection 
+     * @param stringRepresentation String representation of a connection
      * @throws Exception If an invalid connection is detected
      */
-    public void loadConnectionFromStringRepresentation(String connectionStringRepresentation) throws Exception {
-        String[] connectionDetails = OrderParser.parseOrder(connectionStringRepresentation, CONNECTION_KEYWORDS);
+    public void loadConnection(String stringRepresentation) throws Exception {
+        String[] connectionDetails = OrderParser.parseOrder(stringRepresentation, CONNECTION_KEYWORDS);
         int expenseIndex = Integer.parseInt(connectionDetails[0]);
         int eventIndex = Integer.parseInt(connectionDetails[1]);
         Expense expense = expenseManager.getExpense(expenseIndex);

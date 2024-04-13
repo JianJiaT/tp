@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-class EventExpenseDataIntegrityManagerTest {
+class EventExpenseManagerTest {
     LocalDate date = LocalDate.now();
     Expense expense1 = new Expense("ex1", 1, date, null);
     Expense expense2 = new Expense("ex2", 2, date, null);
@@ -25,68 +25,68 @@ class EventExpenseDataIntegrityManagerTest {
 
     EventManager eventManager = EventManager.getInstance();
     ExpenseManager expenseManager = new ExpenseManager();
-    EventExpenseDataIntegrityManager manager = new EventExpenseDataIntegrityManager(eventManager, expenseManager);
+    EventExpenseManager manager = new EventExpenseManager(eventManager, expenseManager);
 
     @Test
     void addExpenseToEvent_validExpenseAndEvent_eventContainsExpense() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event1);
         assertTrue(event1.hasExpense(expense1));
     }
 
     @Test
     void addExpenseToEvent_validExpenseAndEvent_expenseConnectedToEvent() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event1);
         assertSame(expense1.getOwningEvent(), event1);
     }
 
     @Test
     void addExpenseToEvent_multipleExpenses_eventContainsAllExpenses() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.buildConnection(expense2, event1);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense2, event1);
         assertTrue(event1.hasExpense(expense1) && event1.hasExpense(expense2));
     }
 
     @Test
     void removeConnectionFromOwningEvent_validExpenseAndEvent_eventDoesNotContainExpense() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense1);
         assertFalse(event1.hasExpense(expense1));
     }
 
     @Test
     void removeConnectionFromOwningEvent_validExpenseAndEvent_expenseNotConnectedToEvent() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense1);
         assertNull(expense1.getOwningEvent());
     }
 
     @Test
     void removeConnectionFromOwningEvent_multipleExpenses_eventDoesNotContainAnyExpenses() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.buildConnection(expense2, event1);
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense2);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense2, event1);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense1);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense2);
         assertFalse(event1.hasExpense(expense1) && event1.hasExpense(expense2));
     }
 
     @Test
     void addExpenseToEvent_expenseAddedToNewEvent_oldEventDoesNotContainExpense() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event2);
         assertFalse(event1.hasExpense(expense1));
     }
 
     @Test
     void addExpenseToEvent_expenseAddedToNewEvent_newEventContainsExpense() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event2);
         assertTrue(event2.hasExpense(expense1));
     }
 
     @Test
     void addExpenseToEvent_expenseAddedToNewEvent_expenseConnectedToNewEvent() {
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event2);
+        EventExpenseManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event2);
         assertSame(expense1.getOwningEvent(), event2);
     }
 
@@ -99,14 +99,14 @@ class EventExpenseDataIntegrityManagerTest {
     void loadConnectionFromStringRepresentation_singleConnection_connectionRebuilt() {
         eventManager.addEvent(event1);
         expenseManager.add(expense1);
-        EventExpenseDataIntegrityManager.buildConnection(expense1, event1);
+        EventExpenseManager.buildConnection(expense1, event1);
 
         String stringRepresentation = manager.getConnectionsStringRepresentation();
-        EventExpenseDataIntegrityManager.removeConnectionFromOwningEvent(expense1);
+        EventExpenseManager.removeConnectionFromOwningEvent(expense1);
         String originalStringRepresentation = FileKeyword.removeKeyword(stringRepresentation);
 
         try {
-            manager.loadConnectionFromStringRepresentation(originalStringRepresentation);
+            manager.loadConnection(originalStringRepresentation);
             assertTrue(event1.hasExpense(expense1));
         } catch (Exception e) {
             fail();
@@ -116,6 +116,6 @@ class EventExpenseDataIntegrityManagerTest {
     @Test
     void loadConnectionFromStringRepresentation_invalidConnection_exceptionThrown() {
         String invalidConnection = "some random connection string";
-        assertThrows(Exception.class, () -> manager.loadConnectionFromStringRepresentation(invalidConnection));
+        assertThrows(Exception.class, () -> manager.loadConnection(invalidConnection));
     }
 }
