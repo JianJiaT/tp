@@ -13,17 +13,19 @@ public class CategoryCommand extends Command {
     private String subcommand;
     private String value;
     /**
-     * Creates a new CategoryCommand with the specified subcommand, this constructor is for the list subcommand
-     * @param subcommand the subcommand to execute
+     * Creates a new CategoryCommand with the specified subcommand, this constructor is for the list subcommand.
+     *
+     * @param subcommand the subcommand to execute.
      */
     public CategoryCommand(String subcommand) {
         this.subcommand = subcommand;
     }
     /**
      * Creates a new CategoryCommand with the specified subcommand and category string,
-     * this constructor is for the add and delete subcommands
-     * @param subcommand the subcommand to execute
-     * @param categoryString the category string to execute the subcommand on
+     * this constructor is for the add and delete subcommands.
+     *
+     * @param subcommand the subcommand to execute.
+     * @param categoryString the category string to execute the subcommand on.
      */
     public CategoryCommand(String subcommand, String categoryString) {
         this.subcommand = subcommand;

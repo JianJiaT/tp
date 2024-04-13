@@ -26,20 +26,20 @@ public class Event implements Saveable {
     }
 
     /**
-     * Checks if the event has a particular expense
+     * Checks if the event has a particular expense.
      * 
-     * @param expense the expense to check for
-     * @return true if the event has the expense, false otherwise
+     * @param expense the expense to check for.
+     * @return true if the event has the expense, false otherwise.
      */
     public boolean hasExpense(Expense expense) {
         return expenses.contains(expense);
     }
 
     /**
-     * Adds an expense to the event
-     * 
-     * If the event already has the expense, the expense will not be added
-     * @param expense the expense to add
+     * Adds an expense to the event.
+     * If the event already has the expense, the expense will not be added.
+     *
+     * @param expense the expense to add.
      */
     public void addExpense(Expense expense) {
         if (hasExpense(expense)) {
@@ -49,26 +49,26 @@ public class Event implements Saveable {
     }
 
     /**
-     * Checks if the event has any expenses
-     * @return true if the event has expenses, false otherwise
+     * Checks if the event has any expenses.
+     *
+     * @return true if the event has expenses, false otherwise.
      */
     public boolean hasExpenses() {
         return expenses.size() > 0;
     }
 
     /**
-     * Removes an expense from the event
-     * 
-     * If the event does not have the expense, the expense will not be removed
-     * @param expense the expense to remove
+     * Removes an expense from the event.
+     * If the event does not have the expense, the expense will not be removed.
+     *
+     * @param expense the expense to remove.
      */
     public void removeExpense(Expense expense) {
         expenses.remove(expense);
     }
 
     /**
-     * Returns the number of expenses in the event
-     * @return the number of expenses in the event
+     * Returns the number of expenses in the event.
      */
     public int getExpenseCount() {
         return expenses.size();
@@ -80,8 +80,7 @@ public class Event implements Saveable {
     }
 
     /**
-     * Returns a string representation of all expenses in the event for printing
-     * @return String representation of all expenses in the event for printing
+     * Returns a string representation of all expenses in the event for printing.
      */
     public String listExpenses() {
         StringBuilder sb = new StringBuilder();
@@ -92,10 +91,10 @@ public class Event implements Saveable {
     }
 
     /**
-     * Returns a string representation of the event details for saving
-     * Expense details will be processed separately
+     * Returns a string representation of the event details for saving.
+     * Expense details will be processed separately.
      * 
-     * @return String representation of the event details for saving
+     * @return String representation of the event details for saving.
      */
     @Override
     public String getStringRepresentation() {
@@ -103,12 +102,12 @@ public class Event implements Saveable {
     }
 
     /**
-     * Returns an Event object from a string representation
-     * The string representation should be obtained from the getStringRepresentation method
+     * Returns an Event object from a string representation.
+     * The string representation should be obtained from the getStringRepresentation method.
      * 
-     * @param stringRepresentation the string representation of the event
-     * @return Event object created from the string representation
-     * @throws Exception if the string representation is invalid
+     * @param stringRepresentation the string representation of the event.
+     * @return Event object created from the string representation.
+     * @throws Exception if the string representation is invalid.
      */
     public static Event getEventFromFile(String stringRepresentation) throws Exception {
         String[] eventDetails = OrderParser.parseOrder(stringRepresentation, Event.SAVING_KEYWORDS);

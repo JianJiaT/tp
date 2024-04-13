@@ -12,9 +12,10 @@ public class AddEventFromFileCommand extends Command{
     }
 
     /**
-     * Creates an event from the file string
-     * Adds the event to the dashboard's event manager
-     * @param dashboard the dashboard that contains the event manager
+     * Creates an event from the file string.
+     * Adds the event to the dashboard's event manager.
+     *
+     * @param dashboard the dashboard that contains the event manager.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {

@@ -1,5 +1,22 @@
 # User Guide
 
+* [Introduction](#introduction)
+* [Quick Start](#quick-start)
+* [Features](#features)
+    * [1. Handling categories: category](#1-handling-categories-category)
+    * [2. Adding expenses: add](#2-adding-expenses-add)
+    * [3. Deleting expenses: delete](#3-deleting-expenses-delete)
+    * [4. Listing expenses: list](#4-listing-expenses-list)
+    * [5. Summarising expenses: summarise](#5-summarising-expenses-summarise)
+    * [6. Adding events: event](#6-adding-events-event)
+    * [7. Viewing events: listEvents](#7-viewing-events-listevents)
+    * [8. Deleting events: deleteEvent](#8-deleting-events-deleteevent)
+    * [9. Adding expenses to events: addExEv](#9-adding-expenses-to-events-addexev)
+    * [10. Deleting expenses from events: delExEv](#10-deleting-expenses-from-events-delexev)
+    * [11. Viewing expenses in events: viewEvent](#11-viewing-expenses-in-events-viewevent)
+* [FAQ](#faq)
+* [Command Summary](#command-summary)
+
 ## Introduction
 
 Brokeculator is a CLI application designed for university students to log and view their
@@ -15,8 +32,8 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 5. Refer to the Features section below for details of each command
 
 ## Features
-1. Words in UPPER_CASE are parameters
-2. Parameters in square brackets are optional parameters
+1. Users can use the `up` and `down` arrow keys to navigate through the command history
+2. Users can use the `left` and `right` arrow keys to navigate through the command line
 
 ## Commands
 1. [Handling categories: category](#1-handling-categories-category)
@@ -31,7 +48,11 @@ experienced CLI users, they can enter their expenses faster compared to GUI appl
 10. [Deleting expenses from events: delExEv](#10-deleting-expenses-from-events-delexev)
 11. [Viewing expenses in events: viewEvent](#11-viewing-expenses-in-events-viewevent)
 
-> NOTE : The commands are case insensitive
+> **NOTE**
+> 1. The commands are case-insensitive
+> 2. The DATE format is `dd-MM-yyyy`
+> 3. Words in `UPPER_CASE` are parameters to be supplied by the user
+> 4. Parameters in square brackets are optional
 
 <div style="page-break-after: always;"></div>
 

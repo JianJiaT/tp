@@ -17,8 +17,9 @@ public class Category {
     private static boolean isDashboardSet = false;
     private static Set<String> categories = new HashSet<>();
     /**
-     * Sets the dashboard for the Category class
-     * @param dashboard Dashboard to be set
+     * Sets the dashboard for the Category class.
+     *
+     * @param dashboard Dashboard to be set.
      */
     public static void setDashboard(Dashboard dashboard) {
         if (isDashboardSet) {
@@ -28,9 +29,10 @@ public class Category {
         Category.dashboard = dashboard;
     }
     /**
-     * Adds a category to the list of categories
-     * @param category Category string to be added
-     * @return String representation of the result of adding the category
+     * Adds a category to the list of categories.
+     *
+     * @param category Category string to be added.
+     * @return String representation of the result of adding the category.
      */
     public static String addCategory(String category) {
         category = category.toUpperCase();
@@ -41,16 +43,16 @@ public class Category {
         return "Category added: " + category;
     }
     /**
-     * Returns a list of all categories
-     * @return List of all categories
+     * Returns a list of all categories.
      */
     public static ArrayList<String> getCategoryList() {
         return new ArrayList<>(categories);
     }
     /**
-     * Checks if a category is valid
-     * @param category Category string to be checked
-     * @return boolean, true if category is valid, false otherwise
+     * Checks if a category is valid.
+     *
+     * @param category Category string to be checked.
+     * @return boolean, true if category is valid, false otherwise.
      */
     public static boolean isValidCategory(String category) {
         return categories.contains(category);
@@ -67,9 +69,10 @@ public class Category {
         return "Category removed: " + category;
     }
     /**
-     * Checks if a category is used in any expense
-     * @param category Category string to be checked
-     * @return boolean, true if category is used in any expense, false otherwise
+     * Checks if a category is used in any expense.
+     *
+     * @param category Category string to be checked.
+     * @return boolean, true if category is used in any expense, false otherwise.
      */
     private static boolean isCategoryUsed(String category) {
         assert dashboard != null : "Dashboard should not be null";
@@ -85,8 +88,7 @@ public class Category {
         return false;
     }
     /**
-     * Returns a string representation of all categories, appended with a dash for each category
-     * @return String representation of all categories
+     * Returns a string representation of all categories, appended with a dash for each category.
      */
     public static String getCategoryListString() {
         StringBuilder sb = new StringBuilder();
@@ -96,8 +98,7 @@ public class Category {
         return sb.toString();
     }
     /**
-     * Returns a string representation of all categories, formatted for saving
-     * @return String representation of all categories, formatted for saving
+     * Returns a string representation of all categories, formatted for saving.
      */
     public static String getCategoriesStringRepresentation() {
         StringBuilder sb = new StringBuilder();

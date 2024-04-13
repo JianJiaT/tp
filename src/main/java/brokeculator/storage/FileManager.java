@@ -89,9 +89,10 @@ public class FileManager {
         }
     }
     /**
-     * Opens a file based on the SaveableType and returns true if no errors are encountered
-     * @param saveableType
-     * @return true if no errors are encountered
+     * Opens a file based on the SaveableType and returns true if no errors are encountered.
+     *
+     * @param saveableType the type of file to open.
+     * @return true if no errors are encountered.
      */
     public boolean openFile(SaveableType saveableType) {
         switch (saveableType) {
@@ -134,9 +135,10 @@ public class FileManager {
     }
 
     /**
-     * Returns true if there is another line to read
-     * Reads from the file opened by openFile
-     * @return true if there is another line to read, false otherwise
+     * Returns true if there is another line to read.
+     * Reads from the file opened by openFile.
+     *
+     * @return true if there is another line to read, false otherwise.
      */
     public boolean hasNextLine() {
         if (this.scanner == null) {
@@ -146,8 +148,7 @@ public class FileManager {
     }
 
     /**
-     * Reads the next line from the file opened by openFile
-     * @return the next line from the file opened by openFile
+     * Returns the next line from the file opened by openFile.
      */
     public String readNextLine() {
         if (this.scanner == null) {

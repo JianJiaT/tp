@@ -1,8 +1,8 @@
 # Developer Guide
 
 * [Acknowledgements](#acknowledgements)
-* [Architecture](#architecture)
 * [Design](#design)
+  * [Architecture](#architecture)
 * [Implementation](#implementation)
   * [Category](#category)
   * [Summarising expenses](#summarising-expenses)
@@ -17,14 +17,14 @@
 
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* [JLine](https://github.com/jline/jline3)
 
-## Architecture
+## Design
 
-The UML diagram below shows the main relationships between the classes in the Brokeculator application.
-![img.png](images/architecture.png)
-
-## Design 
+### Architecture
+![img.png](images/architecture.png)\
+The **Architecture Diagram** given above explains the high-level design of the App.\
+Given below is a quick overview of main components and how they interact with each other.
 
 The manager classes of the application are:
 - `UI`: This class is responsible for interacting with the user. It prints messages to the user and reads input from the user.
@@ -195,13 +195,13 @@ the expenses stored in the `ExpenseManager` object according to the user's speci
 by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
-### Event 
+### Event
 **Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
 The `Event` class stores the details of the event and the list of expenses that are associated with the event.
 The `EventManager` class is responsible for aggregate operations on the events.
 
-The UMl diagram below shows the main relationships between the classes in the event feature (some methods are omitted) <br>
+The UML diagram below shows the main relationships between the classes in the event feature (some methods are omitted) <br>
 ![img.png](images/Event_class.png)
 
 The following sequence diagrams show how a user input is processed to add the events: <br>
@@ -232,6 +232,38 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 6. If the expense has an owning event, the expense is removed from the owning event
 7. The expense is added to the new event, and its owning event is updated
 
+### UI
+**Implementation**\
+The `UI` component of Brokeculator is designed to handle all user interactions for the application. The following section details the technical implementation of the `UI` module.
+
+The `UI` class encapsulates the user interface logic of the application. It relies on the TerminalHandler class, which provides a layer of abstraction over the JLine library, to handle the specifics of terminal input and output.
+
+**Terminal Handling**\
+The TerminalHandler class is responsible for initializing and managing the terminal environment. TerminalHandler creates a Terminal object using JLine's TerminalBuilder, which is configured to support system-specific terminal features. It also instantiates a LineReader object, which is central to input operations, providing history support and sophisticated input processing, such as tab completion and masking.
+
+```java
+public class TerminalHandler {
+    private Terminal terminal;
+    private LineReader lineReader;
+
+    public TerminalHandler() {
+        try {
+            terminal = TerminalBuilder.builder().system(true).build();
+            lineReader = LineReaderBuilder.builder().terminal(terminal).build();
+        } catch (Exception e) {
+            Logger logger = Logger.getLogger(TerminalHandler.class.getName());
+            logger.severe("Error creating terminal: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+    // ... readLine, print, and println methods ...
+}
+```
+
+**JLine Features**
+1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
+2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
+
 ## Product scope
 ### Target user profile
 
@@ -250,19 +282,19 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 
 ## User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|
-| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |
-| v1.0 | student | view the expenses I have logged | know how much I have spent |
-| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |
-| v1.0 | student | have the ability to add expenses | ------------------ |
-| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |
-| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |
-| v2.0 | university student | retrieve spending based on time periods | track important spending days |
-| v2.0 | new user | see instructions on how to use the CLI commands| understand how to use the application |
-| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately|
-| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |
-| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |
-| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized|
+|Version| As a ... | I want to ... | So that I can ...|\
+| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |\
+| v1.0 | student | view the expenses I have logged | know how much I have spent |\
+| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |\
+| v1.0 | student | have the ability to add expenses | ------------------ |\
+| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |\
+| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |\
+| v2.0 | university student | retrieve spending based on time periods | track important spending days |\
+| v2.0 | new user | see instructions on how to use the CLI commands| understand how to use the application |\
+| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately |\
+| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |\
+| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
+| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
 
 ## Non-Functional Requirements
 
