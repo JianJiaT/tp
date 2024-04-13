@@ -59,6 +59,7 @@ else InvalidCommand
     activate InvalidCommand
     InvalidCommand -> InvalidCommand : printErrorMessage()
     activate InvalidCommand
+    InvalidCommand -[dashed]-> InvalidCommand
     deactivate InvalidCommand
     InvalidCommand -[dashed]-> logic
     destroy InvalidCommand
