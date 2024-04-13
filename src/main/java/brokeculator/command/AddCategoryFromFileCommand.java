@@ -10,9 +10,10 @@ public class AddCategoryFromFileCommand extends Command {
         this.fileString = fileString;
     }
     /**
-     * Adds a category to the list of categories, converting it to uppercase
-     * @param dashboard the dashboard that contains the category manager
-     * @param ui the user interface that will display the feedback
+     * Adds a category to the list of categories, converting it to uppercase.
+     *
+     * @param dashboard the dashboard that contains the category manager.
+     * @param ui the user interface that will display the feedback.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {

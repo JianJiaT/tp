@@ -13,8 +13,9 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Deletes an expense and prints out an acknowledgement
-     * @param dashboard The dashboard that contains the expense manager from which an expense will be deleted
+     * Deletes an expense and prints out an acknowledgement.
+     *
+     * @param dashboard The dashboard that contains the expense manager from which an expense will be deleted.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {

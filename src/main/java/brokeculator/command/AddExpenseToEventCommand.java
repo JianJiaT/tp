@@ -18,14 +18,14 @@ public class AddExpenseToEventCommand extends Command {
     }
     
     /**
-     * Creates a connection between an expense and an event represented by their indices
+     * Creates a connection between an expense and an event represented by their indices.
+     * <p>
+     * If the expense index or event index is invalid, prints an error message and returns.
+     * If the expense is already owned by the event, prints a message and returns.
+     * If the expense was previously owned by another event, prints a message to inform the user.
+     * Removes the expense from the previous event if it was owned by one, and adds it to the new event.
      * 
-     * If the expense index or event index is invalid, prints an error message and returns
-     * If the expense is already owned by the event, prints a message and returns
-     * If the expense was previously owned by another event, prints a message to inform the user
-     * Removes the expense from the previous event if it was owned by one, and adds it to the new event
-     * 
-     * @param dashboard the dashboard that contains the data integrity manager that will build the connection
+     * @param dashboard the dashboard that contains the data integrity manager that will build the connection.
      */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
