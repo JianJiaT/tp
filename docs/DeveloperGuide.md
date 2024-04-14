@@ -230,7 +230,7 @@ Without loss of generality, we will explain how data is stored in the files usin
 3. The `FileManager` class writes the string representation to the file
 4. When the application is started, the `GeneralFileParser` class reads the string representation from the file and deciphers the `SaveableType` using the `FileKeyword` class
 5. The `GeneralFileParser` class then removes the keyword using the `FileKeyword` class and creates an `AddExpenseFromFileCommand` object with the original string representation as a parameter
-6. The `AddExpenseFromFileCommand` object is executed, and the string representation is passed to the `Expens` class to create the `Expense` object
+6. The `AddExpenseFromFileCommand` object is executed, and the string representation is passed to the `Expense` class to create the `Expense` object
 
 The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
 ```java
@@ -240,7 +240,8 @@ The following code snippet shows how the GeneralFileParser class is used to pars
         if (saveableType == null) {
             return new InvalidCommand("Corrupted entry: " + fileString);
         }
-        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
+        String fileStringWithoutKeyword = 
+                FileKeyword.removeKeyword(fileString);
         switch (saveableType) {
         case EXPENSE:
             return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
@@ -309,7 +310,7 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 ## User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|\
-| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |\
+| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | manage my expenses based on my budgets |\
 | v1.0 | student | view the expenses I have logged | know how much I have spent |\
 | v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |\
 | v1.0 | student | have the ability to add expenses | ------------------ |\
@@ -457,7 +458,7 @@ The user should be able to summarise all the expenses by typing `summarise` and 
 The total is $136.00
 ------------------------------------
 ```
-The user can view the expenses on 12 Decmber 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
+The user can view the expenses on 12 December 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
 1. test1 $16.00 (Thursday, 12 December 2024)
@@ -564,7 +565,8 @@ upon typing `viewEvent /i 3` and pressing enter, the user should see the followi
 ```dtd
 ------------------------------------
 eventtest3 (test 3)
-Event has 1 expenses:
+Event has 1 expenses. 
+Total amount spent = $100.00
 test3 $100.00 (Friday, 12 January 2024) [CAT3]
 ------------------------------------
 ```
