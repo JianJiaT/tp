@@ -37,8 +37,10 @@ public class ViewSingleEventCommand extends Command {
             return;
         }
 
+        double total = event.getTotalExpenses();
         String string = event + System.lineSeparator()
-                + "Event has " + expenseCount + " expenses:"
+                + "Event has " + expenseCount + " expenses. " + System.lineSeparator()
+                + "Total amount spent = $" + String.format("%.2f", total) + System.lineSeparator()
                 + System.lineSeparator()
                 + event.listExpenses();
         ui.prettyPrint(string);
