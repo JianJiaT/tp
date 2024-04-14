@@ -7,9 +7,9 @@ public class HelpCommand extends Command {
     private static final String HELP_MESSAGE = "Here are the commands you can use:" + System.lineSeparator()
             + "\t1. add /n <description> /d <date> /a <amount> [/c <category>] - adds an expense to the dashboard"
             + System.lineSeparator()
-            + "\t2. delete <index> - deletes an expense from the dashboard"
+            + "\t2. delete /i <index> - deletes an expense from the dashboard"
             + System.lineSeparator()
-            + "\t3. list [<amount to list>] - lists expenses in the dashboard"
+            + "\t3. list [/a <amount to list>] - lists expenses in the dashboard"
             + System.lineSeparator()
             + "\t4. summarise [/n <name>] [/start <start date>] [/end <end date>] [/c <category>] " +
             "[/from <start index>] [/to <end index>] " +
