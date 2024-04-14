@@ -20,6 +20,7 @@
 
 * [JLine](https://github.com/jline/jline3)
 
+<div style="page-break-after: always;"></div>
 ## Design
 
 ### Architecture
@@ -72,8 +73,7 @@ The following code snippet shows how the `GeneralInputParser` class is used to p
     }
 ```
 
-
-
+<div style="page-break-after: always;"></div>
 To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
 ![img.png](images/overview.png)
 
@@ -87,6 +87,7 @@ Without loss of generality, the high-level execution flow of the application is 
 7. The command object interacts with the relevant manager classes via the dashboard to perform the desired operation
 8. The `UI` class prints feedback, if any, to the user
 
+<div style="page-break-after: always;"></div>
 ## Implementation
 This section describes the implementation details of selected features of the Brokeculator application.
 
@@ -104,9 +105,12 @@ The `Category` class is supplemented by the following classes to interact with t
 - `CategoryCommand` This class is responsible for handling and executing the commands related to categories 
 - `CategoryParser` It is responsible for parsing the user input
 
+<div style="page-break-after: always;"></div>
 The UML diagram below shows the main relationships between the classes in the category feature.
 ![category_class.png](images/category_class.png)
 <br>
+
+<div style="page-break-after: always;"></div>
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
 ![category_parse_sequence.png](images/category_parse_sequence.png)
 <br>
@@ -130,6 +134,7 @@ In addition, at program initialisation, the function `setDashboard(dashboard: Da
 is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
+<div style="page-break-after: always;"></div>
 ### Summarising expenses
 **Implementation** <br>
 The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
@@ -157,6 +162,7 @@ the expenses stored in the `ExpenseManager` object according to the user's speci
 by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
+<div style="page-break-after: always;"></div>
 ### Event
 **Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
@@ -185,6 +191,7 @@ The following sequence diagram show how a (valid) user input is processed by the
 to create an `AddEventCommand`: <br>
 ![img.png](images/addEventCommand.png) <br>
 
+<div style="page-break-after: always;"></div>
 This sequence diagram shows how an `AddEventCommand` is then executed to create an `Event` and 
 add it to the `EventManager`
 ![img.png](images/executeAddEventCommand.png)
@@ -197,6 +204,7 @@ add it to the `EventManager`
 5. The `AddEventCommand` object calls the `addEvent` method in the `EventManager` class to add the event created in step 4
 6. Feedback is given to the user via the UI
 
+<div style="page-break-after: always;"></div>
 The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
 ![img.png](images/executeAddExpenseToEventCommand.png)
@@ -210,6 +218,7 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 6. If the expense has an owning event, the expense is removed from the owning event. Note that this owning event is different from the event the expense is being added to, else the command execution would have been terminated in step 4
 7. The expense is added to the new event, and its owning event is updated
 
+<div style="page-break-after: always;"></div>
 ### Storage
 The saving of data is managed by `FileKeyword`, `GeneralFileParser` and `FileManager`. The `FileKeyword` class is responsible for identifying the type of data stored in a file, the `GeneralFileParser` class invokes the appropriate parser based on the type of data, and the `FileManager` class reads and writes data to files.
 
@@ -258,6 +267,7 @@ The following code snippet shows how the GeneralFileParser class is used to pars
 ```
 Any data stored in the files should be registered with the `FileKeyword` class to ensure that the data can be correctly identified and parsed. It is worth mentioning that the `FileKeyword` does not modify the original data, but only returns a formatted string with the keyword.
 
+<div style="page-break-after: always;"></div>
 ### UI
 **Implementation**\
 The `UI` component of Brokeculator is designed to handle all user interactions for the application. The following section details the technical implementation of the `UI` module.
@@ -275,9 +285,11 @@ public class TerminalHandler {
     public TerminalHandler() {
         try {
             terminal = TerminalBuilder.builder().system(true).build();
-            lineReader = LineReaderBuilder.builder().terminal(terminal).build();
+            lineReader = LineReaderBuilder.builder()
+                    .terminal(terminal).build();
         } catch (Exception e) {
-            Logger logger = Logger.getLogger(TerminalHandler.class.getName());
+            Logger logger = 
+                    Logger.getLogger(TerminalHandler.class.getName());
             logger.severe("Error creating terminal: " + e.getMessage());
             System.exit(1);
         }
@@ -290,7 +302,7 @@ public class TerminalHandler {
 1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
 2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
 
-
+<div style="page-break-after: always;"></div>
 ## Product scope
 ### Target user profile
 
@@ -323,14 +335,19 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 | v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
 | v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
 
+<div style="page-break-after: always;"></div>
 ## Non-Functional Requirements
 
 1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
-2. **Performance**: The application should be able to handle user input without significant lag
-3. **Reliability**: The application should be able to handle user input without crashing
+2. **Performance**: The application should be able to handle any user input and provide feedback within 2 seconds
+3. **Reliability**: The application should be able to handle illegal user input without crashing, and provide feedback to the user
 4. **Usability**: The application should be easy to use for users familiar with CLI applications, instructions should be clear,
 and what the application carried out based on user input should be clear to the user
-
+5. **Volatility**: Since the application data is stored in txt files, there is a risk of users accidentally modifying the data. The application should be able to handle corrupted data files and provide feedback to the user
+6. **Persistence**: As users can terminate the application quickly via terminal commands at any time, the application should be able to save the data to the files before termination
+7. **Scalability**: The application should be able to handle up to 10000 expenses and events without crashing
+8. **Security**: The application should not request any personal information from the user, and the data should be stored locally in the user's device
+9. **Stability**: The application should be able to reject illegal user input such as invalid dates and negative amounts, and provide feedback to the user
 
 ## Glossary
 
