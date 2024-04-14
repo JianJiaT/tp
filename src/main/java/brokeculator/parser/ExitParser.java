@@ -9,7 +9,7 @@ public class ExitParser {
     private static final String INVALID_EXIT_COMMAND = "Invalid command. Please enter 'exit' to exit the program.";
     public static Command parseInput(String userInput) {
 
-        if (userInput.equals(EXIT_COMMAND)) {
+        if (userInput.equalsIgnoreCase(EXIT_COMMAND)) {
             return new ExitCommand();
         } else {
             return new InvalidCommand(INVALID_EXIT_COMMAND);
