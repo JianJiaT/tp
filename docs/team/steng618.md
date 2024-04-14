@@ -4,6 +4,7 @@
 Brokeculator is a CLI application designed for university students to log and view their
 expenses. It aims to tackle the challenge they face of managing a myriad of expenses across various categories. For
 experienced CLI users, they can enter their expenses faster compared to GUI applications 
+
 Code Contribution : [RepoSense](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=STeng618&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2024-02-23&tabOpen=true&tabType=authorship&tabAuthor=STeng618&tabRepo=AY2324S2-CS2113-F14-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 ### Features implemented
