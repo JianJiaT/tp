@@ -328,19 +328,20 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 
 ### User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|\
-| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |\
-| v1.0 | student | view the expenses I have logged | know how much I have spent |\
-| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |\
-| v1.0 | student | have the ability to add expenses | ------------------ |\
-| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |\
-| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |\
-| v2.0 | university student | retrieve spending based on time periods | track important spending days |\
-| v2.0 | new user | see instructions on how to use the CLI commands| understand how to use the application |\
-| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately |\
-| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |\
-| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
-| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
+| Version | As a...                         | I want to...                                                                                | So that I can...                               |
+|---------|---------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------|
+| v1.0    | student                         | see a basic summary of my expenses to see how much i have spent in total                    | ------------------                             |
+| v1.0    | student                         | view the expenses I have logged                                                             | know how much I have spent                     |
+| v1.0    | paranoid user                   | save my expenses into a file                                                                | backup locally via a file to prevent data loss |
+| v1.0    | student                         | have the ability to add expenses                                                            | ------------------                             |
+| v1.0    | student                         | have the ability to delete expenses                                                         | remedy my erroneous expenses                   |
+| v1.0    | student who cares about privacy | track expenses offline                                                                      | retain my privacy                              |
+| v2.0    | university student              | retrieve spending based on time periods                                                     | track important spending days                  |
+| v2.0    | new user                        | see instructions on how to use the CLI commands                                             | understand how to use the application          |
+| v2.0    | student                         | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately              |
+| v2.0    | student frequently using excel  | import/export existing data from spreadsheet/csv                                            | record existing information                    |
+| v2.0    | student                         | log expenses based on their categories                                                      | manage my spending habits within each category |
+| v2.0    | university committee member     | classify expenses in groups of events                                                       | check expenses of events organized             |
 
 ### Use Cases
 
