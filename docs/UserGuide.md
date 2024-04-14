@@ -377,12 +377,13 @@ to the dependent objects will be made ie) the category of the expense will be se
     * List categories `category list`
     * Delete category `category delete CATEGORY_NAME`
 2. **Expenses**:
-    * Add expense `add /n EXPENSE_NAME /d DATE a/AMOUNT c/CATEGORY`
-    * List expenses `list INDEX`
-    * Delete expense `delete INDEX`
-    * summarise expenses `summarise /n NAME /start START_DATE /end END_DATE /c CATEGORY /from BEGIN_INDEX /to END_INDEX`
+    * Add expense `add /n EXPENSE_NAME /d DATE /a AMOUNT [/c CATEGORY]`
+    * List expenses `list /a [AMOUNT_TO_LIST]`
+    * Delete expense `delete /i INDEX`
+    * summarise expenses `summarise [/n NAME] [/start START_DATE] [/end END_DATE]
+      [/c CATEGORY] [/from BEGIN_INDEX] [/to END_INDEX]`
 3. **Events**:
-    * Add event `event /n EVENT_NAME /d DESCRIPTION`
+    * Add event `event /n EVENT_NAME /d EVENT_DESCRIPTION`
     * List events `listEvents`
     * Delete event `deleteEvent /i INDEX`
     * Add expense to event `addExEv /exi EXPENSE_INDEX /evi EVENT_INDEX `
