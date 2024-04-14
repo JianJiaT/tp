@@ -247,7 +247,7 @@ in conjunction with `addExpenseToEvent` to add expenses to the event.
 `/d EVENT_DESCRIPTION` : Description of the event. <br>
 
 #### **_USAGE_**
-Example of usage: <br>
+Example of adding an event with name "birthday" and description "birthday party for bob" <br>
 ```dtd
 event /n birthday /d birthday party for bob
 ```
@@ -288,7 +288,7 @@ an event, you must first delete the expenses associated with the event using `de
 `/i INDEX` : Index of the event to be deleted. <br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of deleting an event at index 1 <br>
 ```dtd
 deleteEvent /i 1
 ```
@@ -306,7 +306,7 @@ Adds an expense to an event.
 `/evi EVENT_INDEX` : Index of the event to which the expense is to be added. <br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of adding expense at index 1 to the event at index 1 <br>
 ```dtd
 addExEv /exi 1 /evi 1
 ```
@@ -323,7 +323,7 @@ Deletes an expense from its associated event.
 `/i EXPENSE_INDEX` : Index of the expense to be deleted from its associated event<br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of deleting an expense at index 1 from its owning event: <br>
 ```dtd  
 delExEv /i 1
 ```
@@ -339,7 +339,7 @@ Displays the expenses associated with the event at the specified index.
 `/i EVENT_INDEX` : Index of the event whose expenses are to be displayed. <br>
 
 #### **_USAGE_**
-Examples of usage: <br>
+Example of viewing the event at index 1: <br>
 ```dtd
 viewEvent /i 1
 ```
@@ -347,7 +347,8 @@ output:
 ```dtd
 ------------------------------------
 Party Woohoo! (Bob's birthday)
-Event has 2 expenses:
+Event has 2 expenses.
+Total amount spent = $35.00
 Pizza $25.00 (Monday, 08 April 2024)
 Soda $10.00 (Monday, 08 April 2024)
 ------------------------------------
