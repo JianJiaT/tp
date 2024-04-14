@@ -8,13 +8,30 @@
   * [Summarising expenses](#summarising-expenses)
   * [Event](#event)
   * [Storage](#storage)
-* [Product scope](#product-scope)
-  * [Target user profile](#target-user-profile)
-  * [Value proposition](#value-proposition)
-* [User Stories](#user-stories)
-* [Non-Functional Requirements](#non-functional-requirements)
-* [Glossary](#glossary)
-* [Instructions for manual testing](#instructions-for-manual-testing)
+  * [UI](#ui)
+* [Appendix: Requirements](#appendix-requirements)
+  * [Product scope](#product-scope)
+  * [User Stories](#user-stories)
+  * [Use Cases](#use-cases)
+  * [Non-Functional Requirements](#non-functional-requirements)
+  * [Glossary](#glossary)
+* [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+  * [Testing loading of data](#testing-loading-of-data)
+  * [Testing of viewing expenses](#testing-of-viewing-expenses)
+  * [Testing of viewing categories](#testing-of-viewing-categories)
+  * [Testing of viewing events](#testing-of-viewing-events)
+  * [Testing of viewing expenses in events](#testing-of-viewing-expenses-in-events)
+  * [Basic testing of summarising expenses](#basic-testing-of-summarising-expenses)
+  * [Testing of cycling through command history](#testing-of-cycling-through-command-history)
+  * [Testing of adding an expense](#testing-of-adding-an-expense)
+  * [Testing of deleting an expense](#testing-of-deleting-an-expense)
+  * [Testing of adding an event](#testing-of-adding-an-event)
+  * [Testing of deleting an event](#testing-of-deleting-an-event)
+  * [Testing of adding an expense to an event](#testing-of-adding-an-expense-to-an-event)
+  * [Testing of deleting an expense from an event](#testing-of-deleting-an-expense-from-an-event)
+  * [Testing of adding a category](#testing-of-adding-a-category)
+  * [Testing of deleting a category](#testing-of-deleting-a-category)
+* [Manual testing to get full coverage](#manual-testing-to-get-full-coverage)
 
 ## Acknowledgements
 
@@ -111,6 +128,7 @@ The UML diagram below shows the main relationships between the classes in the ca
 <br>
 
 <div style="page-break-after: always;"></div>
+
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
 ![category_parse_sequence.png](images/category_parse_sequence.png)
 <br>
@@ -142,8 +160,8 @@ The `SummariseParser` class is responsible for constructing a `SummariseCommand`
 execution would call the `summariseExpenses` method of the application's `ExpenseManager` object to obtain a summary of the expenses
 currently tracked.
 
-The following sequence diagram shows how user input is parsed to produce a summary of expenses in accordance with user
-specifications:
+The following sequence diagram shows how user input (containing the keyword `summarise`) is parsed to produce a summary 
+of expenses in accordance with user specifications:
 
 ![img.png](images/summarise_sequence.png)
 
@@ -158,11 +176,12 @@ of the user input
 4. The `Logic` class calls the `execute(Dashboard dashboard)` method of the returned `Command` object
 5. Upon execution, a `SummariseCommand` object would retrieve a reference to the `ExpenseManager` object stored within the 
 `dashboard` and execute its `summariseExpenses` method, passing in its fields as parameters to the method call. This summarises
-the expenses stored in the `ExpenseManager` object according to the user's specifications. The summary is then printed 
-by the `UI` class to be viewed by the user
+the expenses stored in the `ExpenseManager` object according to the user's specifications. The list of summarised expenses 
+and the summary is then printed by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
 <div style="page-break-after: always;"></div>
+
 ### Event
 **Implementation** <br>
 The event feature aims to group expenses happening on specific occasions together. 
@@ -192,6 +211,7 @@ to create an `AddEventCommand`: <br>
 ![img.png](images/addEventCommand.png) <br>
 
 <div style="page-break-after: always;"></div>
+
 This sequence diagram shows how an `AddEventCommand` is then executed to create an `Event` and 
 add it to the `EventManager`
 ![img.png](images/executeAddEventCommand.png)
@@ -205,6 +225,7 @@ add it to the `EventManager`
 6. Feedback is given to the user via the UI
 
 <div style="page-break-after: always;"></div>
+
 The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
 ![img.png](images/executeAddExpenseToEventCommand.png)
@@ -219,6 +240,7 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 7. The expense is added to the new event, and its owning event is updated
 
 <div style="page-break-after: always;"></div>
+
 ### Storage
 The saving of data is managed by `FileKeyword`, `GeneralFileParser` and `FileManager`. The `FileKeyword` class is responsible for identifying the type of data stored in a file, the `GeneralFileParser` class invokes the appropriate parser based on the type of data, and the `FileManager` class reads and writes data to files.
 
@@ -268,6 +290,7 @@ The following code snippet shows how the GeneralFileParser class is used to pars
 Any data stored in the files should be registered with the `FileKeyword` class to ensure that the data can be correctly identified and parsed. It is worth mentioning that the `FileKeyword` does not modify the original data, but only returns a formatted string with the keyword.
 
 <div style="page-break-after: always;"></div>
+
 ### UI
 **Implementation**\
 The `UI` component of Brokeculator is designed to handle all user interactions for the application. The following section details the technical implementation of the `UI` module.
@@ -303,13 +326,18 @@ public class TerminalHandler {
 2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
 
 <div style="page-break-after: always;"></div>
-## Product scope
-### Target user profile
+
+## Appendix: Requirements
+
+### Product scope
+
+**Target user profile**
 
 This project is designed to cater to the needs of university students who encounter the challenge of managing a myriad of expenses across various categories.
 university students also do not have an extreme amount of expenses and a large budget to track, so having a simple CLI application to track expenses would be sufficient,
 rather than a large scale application with a database management system.
-### Value proposition
+
+**Value proposition**
 
 Brokeculator is a CLI application designed for university students to log and view their expenses. 
 As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
@@ -319,25 +347,218 @@ The application also allows for the import and export of data from a CSV file, w
 but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
-## User Stories
+<div style="page-break-after: always;"></div>
 
-|Version| As a ... | I want to ... | So that I can ...|\
-| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | manage my expenses based on my budgets |\
-| v1.0 | student | view the expenses I have logged | know how much I have spent |\
-| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |\
-| v1.0 | student | have the ability to add expenses | ------------------ |\
-| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |\
-| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |\
-| v2.0 | university student | retrieve spending based on time periods | track important spending days |\
-| v2.0 | new user | see instructions on how to use the CLI commands| understand how to use the application |\
-| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately |\
-| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |\
-| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
-| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
+### User Stories
+| Version | As a...                         | I want to...                                                                                | So that I can...                               |
+|---------|---------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------|
+| v1.0    | student                         | see a basic summary of my expenses to see how much i have spent in total                    | manage my expenses based on my budgets         |
+| v1.0    | student                         | view the expenses I have logged                                                             | know how much I have spent                     |
+| v1.0    | paranoid user                   | save my expenses into a file                                                                | backup locally via a file to prevent data loss |
+| v1.0    | student                         | have the ability to add expenses                                                            | ------------------                             |
+| v1.0    | student                         | have the ability to delete expenses                                                         | remedy my erroneous expenses                   |
+| v1.0    | student who cares about privacy | track expenses offline                                                                      | retain my privacy                              |
+| v2.0    | university student              | retrieve spending based on time periods                                                     | track important spending days                  |
+| v2.0    | new user                        | see instructions on how to use the CLI commands                                             | understand how to use the application          |
+| v2.0    | student                         | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately              |
+| v2.0    | student frequently using excel  | import/export existing data from spreadsheet/csv                                            | record existing information                    |
+| v2.0    | student                         | log expenses based on their categories                                                      | manage my spending habits within each category |
+| v2.0    | university committee member     | classify expenses in groups of events                                                       | check expenses of events organized             |
 
 <div style="page-break-after: always;"></div>
-## Non-Functional Requirements
 
+### Use Cases
+
+For all use cases below, the System is `Brokeculator` and the Actor is the `user`, unless specified otherwise.
+
+**Use case: Add a category**
+
+**MSS**
+1. User requests to add a category.
+2. Brokeculator adds the category and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The category already exists.
+  - 2a1. Brokeculator shows a category already exists message.
+  - **Use case ends.**
+- 2b. The input format is invalid.
+  - 2b1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List categories**
+
+**MSS**
+1. User requests to list categories.
+2. Brokeculator shows a list of categories.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no categories to list.
+  - 2a1. Brokeculator shows a message indicating no categories.
+  - **Use case ends.**
+
+**Use case: Delete a category**
+
+**MSS**
+1. User requests to delete a specific category.
+2. Brokeculator deletes the category and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The category does not exist.
+  - 2a1. Brokeculator shows a category does not exist message.
+  - **Use case ends.**
+- 2b. The category is associated with an expense.
+  - 2b1. Brokeculator shows a message indicating the category is associated with an expense.
+  - **Use case ends.**
+
+**Use case: Add an expense**
+
+**MSS**
+1. User requests to add an expense with necessary details.
+2. Brokeculator adds the expense and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified category does not exist.
+  - 2a1. Brokeculator shows a category does not exist message.
+  - **Use case ends.**
+- 2b. The input format is invalid.
+  - 2b1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List expenses**
+
+**MSS**
+1. User requests to list expenses starting from a specific index.
+2. Brokeculator shows a list of expenses from the index.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no expenses to list from the given index.
+  - 2a1. Brokeculator shows a message indicating the list is empty.
+  - **Use case ends.**
+
+**Use case: Delete an expense**
+
+**MSS**
+1. User requests to delete an expense by index.
+2. Brokeculator deletes the expense and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: Summarise expenses**
+
+**MSS**
+1. User requests to summarise expenses with specific criteria.
+2. Brokeculator calculates and shows the expense summary.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The input format is invalid.
+  - 2a1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: Add an event**
+
+**MSS**
+1. User requests to add an event with a name and description.
+2. Brokeculator adds the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The input format is invalid.
+  - 2a1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List events**
+
+**MSS**
+1. User requests to list events.
+2. Brokeculator shows a list of events.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no events to list.
+  - 2a1. Brokeculator shows a message indicating no events.
+  - **Use case ends.**
+
+**Use case: Delete an event**
+
+**MSS**
+1. User requests to delete an event by index.
+2. Brokeculator deletes the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: Add expense to event**
+
+**MSS**
+1. User requests to add an existing expense to an event using their respective indexes.
+2. Brokeculator adds the expense to the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified expense or event index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+- 2b. The expense is already associated with the event.
+  - 2b1. Brokeculator shows a message indicating the expense is already associated with the event.
+  - **Use case ends.**
+- 2c. The expense is associated with another event.
+  - 2c1. Brokeculator shows a message indicating the expense will be moved to the new event.
+  - **Use case ends.**
+
+**Use case: Delete expense from event**
+
+**MSS**
+1. User requests to delete an expense from an event using the expense index.
+2. Brokeculator deletes the expense from the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: List expenses in event**
+
+**MSS**
+1. User requests to view all expenses for a specific event by index.
+2. Brokeculator lists all expenses associated with the event.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+- 2b. There are no expenses for the given event.
+  - 2b1. Brokeculator shows a message indicating the event has no associated expenses.
+  - **Use case ends.**
+
+### Non-Functional Requirements
 1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
 2. **Performance**: The application should be able to handle any user input and provide feedback within 2 seconds
 3. **Reliability**: The application should be able to handle illegal user input without crashing, and provide feedback to the user
@@ -349,11 +570,13 @@ and what the application carried out based on user input should be clear to the 
 8. **Security**: The application should not request any personal information from the user, and the data should be stored locally in the user's device
 9. **Stability**: The application should be able to reject illegal user input such as invalid dates and negative amounts, and provide feedback to the user
 
-## Glossary
+### Glossary
 
 * *mainstream OS* - Windows, Linux, MacOS
 
-## Instructions for manual testing
+<div style="page-break-after: always;"></div>
+
+## Appendix: Instructions for manual testing
 
 This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
 

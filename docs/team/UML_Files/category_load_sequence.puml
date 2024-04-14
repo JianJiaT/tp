@@ -1,16 +1,17 @@
 @startuml
 skinparam Style strictuml
 box Category Load Logic
-
+participant ":Logic" as logic
 participant "<<class>>\nCategory" as category
 participant ":FileManager" as fileManager
 participant "<<class>>\nGeneralFileParser" as generalFileParser
-participant ":Logic" as logic
 participant ":AddCategoryFromFileCommand" as AddCategoryFromFileCommand
 
 activate logic
+
 logic -> logic: loadFile(SavableType.CATEGORY)
 activate logic
+
 logic -> fileManager: openCategoryFile()
 activate fileManager
 fileManager -[dashed]-> logic: hasFileErrors: boolean
@@ -51,8 +52,9 @@ deactivate fileManager
 
         end
     end
-
     logic -[dashed]-> logic
     deactivate logic
+
+
 end box
 @enduml
