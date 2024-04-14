@@ -13,20 +13,25 @@ The AddParser class is used to parse the user input for the add command.
 It returns an InValidCommandException if the user input is invalid, else it returns an AddCommand command.
 Main challenges faced was coming up with a way to dynamically parse the user input. 
 
-### 3. Added category class
+### 3. Added category class and corresponding commands/parsers
 The category class is used to store the categories that the user has added. It also handles the deletion of categories.
 This class also checks if the expense entered from files/commands has a valid category.
 Main challenges faced were a result of coordinating with the other classes to preserve data integrity
+The commands and parser serve as the interface for the user to interact with the category class.
 
 ## Enhancements implemented
 ### 1. Added dynamic parsing in AddParser
 The AddParser class now dynamically parses the user input to check if the desired option fields are entered by the user.
 The developer will just need to edit an array of options allowed and call a function in the class to retrieve the user entered option.
 
+### 2. Using regex to parse inputs relating to values
+Utilised regex to ensure that user inputs conformed with the desired option input,
+due to edge cases not being handled the corresponding parseDouble function.
+
 ## Contribution to team tasks
 - Setting up tooling such as github milestones and issues, github actions.
 - Maintaining issue tracker
-- Updating user docs not related to features
+- Updating user and developer docs not related to features
 
 ## Contributions to the User Guide
 Gave rough structure to the user guide and filled up details for features
