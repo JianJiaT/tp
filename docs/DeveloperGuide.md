@@ -350,6 +350,7 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 
 ### User Stories
 | Version   | As a...                         | I want to...                                                                                 | So that I can...                                 |
+|-----------|---------------------------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------|
 | v1.0      | student                         | see a basic summary of my expenses to see how much i have spent in total                     | manage my expenses based on my budgets           |
 | v1.0      | student                         | view the expenses I have logged                                                              | know how much I have spent                       |
 | v1.0      | paranoid user                   | save my expenses into a file                                                                 | backup locally via a file to prevent data loss   |
@@ -363,7 +364,6 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 | v2.0      | student                         | log expenses based on their categories                                                       | manage my spending habits within each category   |
 | v2.0      | university committee member     | classify expenses in groups of events                                                        | check expenses of events organized               |
 
-<div style="page-break-after: always;"></div>
 
 ### Use Cases
 
