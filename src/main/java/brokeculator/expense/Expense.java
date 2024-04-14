@@ -58,7 +58,6 @@ public class Expense implements Saveable {
 
     /**
      * Returns the description of the expense.
-     * @return the description of the expense.
      */
     public String getDescription() {
         return description;
@@ -66,7 +65,6 @@ public class Expense implements Saveable {
 
     /**
      * Returns the amount of the expense.
-     * @return the amount of the expense.
      */
     public double getAmount() {
         return amount;
@@ -74,7 +72,6 @@ public class Expense implements Saveable {
 
     /**
      * Returns the date of the expense.
-     * @return the date of the expense.
      */
     public LocalDate getDate() {
         return date;
@@ -82,12 +79,14 @@ public class Expense implements Saveable {
 
     /**
      * Returns the category of the expense.
-     * @return the category of the expense.
      */
     public String getCategory() {
         return category;
     }
 
+    public boolean hasOwningEvent() {
+        return this.owningEvent != null;
+    }
     public Event getOwningEvent() {
         return owningEvent;
     }
@@ -100,7 +99,6 @@ public class Expense implements Saveable {
 
     /**
      * Returns a string representation of the expense.
-     * @return a string representation of the expense.
      */
     public String getStringRepresentation() {
         String stringRepresentation =
@@ -113,6 +111,14 @@ public class Expense implements Saveable {
         return stringRepresentation;
     }
 
+    /**
+     * Returns an Expense object from a string representation.
+     * The string representation should be obtained from the getStringRepresentation method.
+     *
+     * @param stringRepresentation the string representation of the expense.
+     * @return an Expense object from a string representation.
+     * @throws Exception if the string representation is invalid.
+     */
     public static Expense getExpenseFromFile(String stringRepresentation) throws Exception {
         String[] expenseDetails = OrderParser.parseOrder(stringRepresentation, Expense.SAVING_KEYWORDS);
         assert expenseDetails.length == 4;
@@ -138,12 +144,22 @@ public class Expense implements Saveable {
             throw new Exception("Expense string: " + stringRepresentation + " is corrupted");
         }
     }
+
+    /**
+     * Returns true if the given string is a valid amount.
+     *
+     * @param expenseAmountAsString the string to check.
+     * @return true if the given string is a valid amount.
+     */
     private static boolean isAmountNumericString(String expenseAmountAsString) {
         Pattern pattern = Pattern.compile(AMOUNT_PATTERN, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(expenseAmountAsString);
         return matcher.find();
     }
 
+    /**
+     * Returns a string representation of the expense.
+     */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(EXPENSE_DATE_FORMAT, Locale.ENGLISH);

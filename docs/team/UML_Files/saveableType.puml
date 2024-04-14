@@ -1,0 +1,14 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+skinparam classAttributeIconSize 0
+
+hide empty methods
+enum SaveableType <<enumeration>> {
+    EXPENSE,
+    CATEGORY, 
+    EVENT, 
+    CONNECTION
+}
+
+@enduml

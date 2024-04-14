@@ -13,9 +13,10 @@ public class DeleteEventParser {
     };
 
     /**
-     * Parses the user input to identify the event index
-     * @param userInput User input
-     * @return InvalidCommand if the input is invalid, DeleteEventCommand otherwise
+     * Parses the user input to identify the event index.
+     *
+     * @param userInput User input.
+     * @return InvalidCommand if the input is invalid, DeleteEventCommand otherwise.
      */
     public static Command parseInput(String userInput) {
         String[] userInputs;

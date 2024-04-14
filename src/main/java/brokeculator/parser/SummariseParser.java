@@ -18,10 +18,11 @@ public class SummariseParser {
     private static final int TO_INDEX = 5;
 
     /**
-     * Returns a SummariseCommand containing instructions on how to summarise expenses if user input is valid, otherwise
-     * returns an InvalidCommand with relevant error message
-     * @param userInput User input
-     * @return SummariseCommand if user input is valid, InvalidCommand otherwise
+     * Returns a SummariseCommand containing instructions on how to summarise expenses if user input is valid,
+     * otherwise returns an InvalidCommand with relevant error message.
+     *
+     * @param userInput User input.
+     * @return SummariseCommand if user input is valid, InvalidCommand otherwise.
      */
     public static Command parseInput(String userInput) {
         String[] userInputAsArray = userInput.trim().split("\\s+");
@@ -44,10 +45,10 @@ public class SummariseParser {
             try {
                 startDate = startDateString.isBlank() ? null : DateParser.parseDate(startDateString);
             } catch (DateTimeParseException e) {
-                if (e.getMessage().contains("Invalid date")) {
-                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
-                } else {
+                if (e.getMessage().contains("at index")) {
                     return new InvalidCommand("Invalid start date format. Please enter date in the format DD-MM-YYYY");
+                } else {
+                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
                 }
             }
         }
@@ -58,10 +59,10 @@ public class SummariseParser {
             try {
                 endDate = endDateString.isBlank() ? null : DateParser.parseDate(endDateString);
             } catch (DateTimeParseException e) {
-                if (e.getMessage().contains("Invalid date")) {
-                    return new InvalidCommand("Invalid end date. The date you entered does not exist");
+                if (e.getMessage().contains("at index")) {
+                    return new InvalidCommand("Invalid start date format. Please enter date in the format DD-MM-YYYY");
                 } else {
-                    return new InvalidCommand("Invalid end date format. Please enter date in the format DD-MM-YYYY");
+                    return new InvalidCommand("Invalid start date. The date you entered does not exist");
                 }
             }
         }
@@ -107,10 +108,11 @@ public class SummariseParser {
     }
 
     /**
-     * Extracts a condition for summarising from user input as denoted by a keyword
-     * @param userInputArray User input as an array of Strings
-     * @param option The keyword that denotes which information to extract
-     * @return A condition for summarising expenses by
+     * Extracts a condition for summarising from user input as denoted by a keyword.
+     *
+     * @param userInputArray User input as an array of Strings.
+     * @param option The keyword that denotes which information to extract.
+     * @return A condition for summarising expenses by.
      */
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
@@ -131,9 +133,10 @@ public class SummariseParser {
     }
 
     /**
-     * Checks if a word is a keyword
-     * @param word The word to check
-     * @return True if the word is a keyword, false otherwise
+     * Checks if a word is a keyword.
+     *
+     * @param word The word to check.
+     * @return True if the word is a keyword, false otherwise.
      */
     private static boolean isWordOption(String word) {
         for (String option : SUMMARISE_COMMAND_OPTIONS) {
@@ -145,10 +148,11 @@ public class SummariseParser {
     }
 
     /**
-     * Returns the start index or end index depending on the keyword passed in
-     * @param userInputArray User input as an array of Strings
-     * @param currKeyword The keyword that determines whether the index is a start index or end index
-     * @return Start index or end index
+     * Returns the start index or end index depending on the keyword passed in.
+     *
+     * @param userInputArray User input as an array of Strings.
+     * @param currKeyword The keyword that determines whether the index is a start index or end index.
+     * @return Start index or end index.
      */
     private static int getIndex(String[] userInputArray, String currKeyword) {
         int index;

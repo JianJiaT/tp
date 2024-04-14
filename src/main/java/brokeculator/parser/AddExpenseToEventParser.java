@@ -14,9 +14,10 @@ public class AddExpenseToEventParser {
     };
 
     /**
-     * Parses the user input to identify the expense and event indexes
-     * @param userInput User input
-     * @return InvalidCommand if the input is invalid, AddExpenseToEventCommand otherwise
+     * Parses the user input to identify the expense and event indexes.
+     *
+     * @param userInput User input.
+     * @return InvalidCommand if the input is invalid, AddExpenseToEventCommand otherwise.
      */
     public static Command parseInput(String userInput) {
 

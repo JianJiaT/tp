@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
 /**
- * Class to parse Strings to Dates
+ * Class to parse Strings to Dates.
  */
 public class DateParser {
     // when using ResolverStyle.STRICT 'u' ensures the year is interpreted consistently rather than 'y'
@@ -13,9 +13,10 @@ public class DateParser {
             DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
 
     /**
-     * Parses a date string into a LocalDate object
-     * @param date Date string
-     * @return LocalDate object
+     * Parses a date string into a LocalDate object.
+     *
+     * @param date Date string.
+     * @return LocalDate object.
      */
     public static LocalDate parseDate(String date) {
         return LocalDate.parse(date, DATE_FORMATTER);

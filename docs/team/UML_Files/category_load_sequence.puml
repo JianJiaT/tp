@@ -2,10 +2,11 @@
 skinparam Style strictuml
 box Category Load Logic
 
-participant ":Category" as category
+participant "<<class>>\nCategory" as category
 participant ":FileManager" as fileManager
-participant ":GeneralFileParser" as generalFileParser
+participant "<<class>>\nGeneralFileParser" as generalFileParser
 participant ":Logic" as logic
+participant ":AddCategoryFromFileCommand" as AddCategoryFromFileCommand
 
 
 logic -> logic: loadFile(SavableType.CATEGORY)
@@ -42,6 +43,7 @@ deactivate fileManager
             deactivate
             AddCategoryFromFileCommand -[dashed]-> logic
             deactivate AddCategoryFromFileCommand
+            destroy AddCategoryFromFileCommand
             logic -> fileManager : getNextLine();
             activate fileManager
             fileManager -[dashed]-> logic : hasNextLine:boolean

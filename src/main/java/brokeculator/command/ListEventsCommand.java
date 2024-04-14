@@ -6,6 +6,7 @@ import brokeculator.frontend.UI;
 public class ListEventsCommand extends Command {
     @Override
     public void execute(Dashboard dashboard, UI ui) {
-        dashboard.getEventManager().printEvents(ui);
+        String eventsPrintString = dashboard.getEventManager().getEventsPrintString();
+        ui.prettyPrint(eventsPrintString);
     }
 }

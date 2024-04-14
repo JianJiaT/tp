@@ -1,6 +1,6 @@
 package brokeculator.dashboard;
 
-import brokeculator.event.EventExpenseDataIntegrityManager;
+import brokeculator.event.EventExpenseManager;
 import brokeculator.event.EventManager;
 import brokeculator.expense.ExpenseManager;
 import brokeculator.storage.FileManager;
@@ -10,10 +10,10 @@ public class Dashboard {
     private final ExpenseManager expenseManager;
     private final FileManager fileManager;
     private final EventManager eventManager;
-    private final EventExpenseDataIntegrityManager dataIntegrityManager;
+    private final EventExpenseManager dataIntegrityManager;
 
     public Dashboard(ExpenseManager expenseManager, FileManager fileManager,
-                     EventManager eventManager, EventExpenseDataIntegrityManager dataIntegrityManager) {
+                     EventManager eventManager, EventExpenseManager dataIntegrityManager) {
         this.expenseManager = expenseManager;
         this.fileManager = fileManager;
         this.eventManager = eventManager;
@@ -32,7 +32,7 @@ public class Dashboard {
         return eventManager;
     }
 
-    public EventExpenseDataIntegrityManager getDataIntegrityManager() {
+    public EventExpenseManager getDataIntegrityManager() {
         return dataIntegrityManager;
     }
 }

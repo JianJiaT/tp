@@ -20,10 +20,11 @@ public class AddParser {
     public static final String AMOUNT_PATTERN = "^\\d{1,7}(\\.\\d\\d)?$";
 
     /**
-     * Returns a AddCommand specifying the expense to add if user input is valid, otherwise
-     * returns an InvalidCommand with relevant error message
-     * @param userInput User input
-     * @return AddCommand if user input is valid, InvalidCommand otherwise
+     * Returns a AddCommand specifying the expense to add if user input is valid,
+     * otherwise returns an InvalidCommand with relevant error message.
+     *
+     * @param userInput User input.
+     * @return AddCommand if user input is valid, InvalidCommand otherwise.
      */
     public static Command parseInput(String userInput) {
         if(!isOptionsPresent(userInput) || !isOptionsAppearOnce(userInput)) {
@@ -39,24 +40,8 @@ public class AddParser {
                 expenseCategory = getOptionField(userInputAsArray, ADD_COMMAND_OPTIONS[CATEGORY_INDEX]);
                 expenseCategory = expenseCategory.isBlank() ? null : expenseCategory;
             }
-            boolean isDescriptionEmpty = expenseDescription.isBlank();
-            boolean isDateStringEmpty = expenseDateString.isBlank();
-            boolean isAmountStringEmpty = expenseAmountAsString.isBlank();
-            boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
-
-            String inputFieldsErrorMessage = "";
-            if (isDescriptionEmpty) {
-                inputFieldsErrorMessage += "Description cannot be empty. ";
-            }
-            if (isDateStringEmpty) {
-                inputFieldsErrorMessage += "Date cannot be empty. ";
-            }
-            if (isAmountStringEmpty) {
-                inputFieldsErrorMessage += "Amount cannot be empty. ";
-            } else if (!isAmountNumeric) {
-                inputFieldsErrorMessage += "Amount must be 0 or 2 decimal places, up to 7 digits long"
-                        + " (excluding decimal places)";
-            }
+            String inputFieldsErrorMessage =
+                    craftErrorMessage(expenseDescription, expenseDateString, expenseAmountAsString);
             if (!inputFieldsErrorMessage.isBlank()) {
                 return new InvalidCommand(inputFieldsErrorMessage);
             }
@@ -68,27 +53,61 @@ public class AddParser {
         } catch (NumberFormatException e) {
             return new InvalidCommand("Expense amount cannot be empty or non-numeric");
         } catch (DateTimeParseException e) {
-            if (e.getMessage().contains("Invalid date")) {
-                return new InvalidCommand("Invalid date. The date you entered does not exist");
-            } else {
+            if (e.getMessage().contains("at index")) {
                 return new InvalidCommand("Invalid date format. Please enter date in the format DD-MM-YYYY");
+            } else {
+                return new InvalidCommand("Invalid date. The date you entered does not exist");
             }
         }
     }
 
     /**
-     * Checks whether all the mandatory fields are present
-     * @param userInput User input
-     * @return True if all mandatory fields are present, false otherwise
+     * Returns an error message if user input is invalid, otherwise returns an empty string.
+     * The input is invalid if any of the mandatory fields is empty or if the amount is not numeric.
+     *
+     * @param expenseDescription Description of the expense.
+     * @param expenseDateString Date of the expense.
+     * @param expenseAmountAsString Amount of the expense as a String.
+     * @return Error message if user input is invalid, otherwise an empty string.
+     */
+    private static String craftErrorMessage
+    (String expenseDescription, String expenseDateString, String expenseAmountAsString) {
+        boolean isDescriptionEmpty = expenseDescription.isBlank();
+        boolean isDateStringEmpty = expenseDateString.isBlank();
+        boolean isAmountStringEmpty = expenseAmountAsString.isBlank();
+        boolean isAmountNumeric = isAmountNumericString(expenseAmountAsString);
+
+        String inputFieldsErrorMessage = "";
+        if (isDescriptionEmpty) {
+            inputFieldsErrorMessage += "Description cannot be empty. ";
+        }
+        if (isDateStringEmpty) {
+            inputFieldsErrorMessage += "Date cannot be empty. ";
+        }
+        if (isAmountStringEmpty) {
+            inputFieldsErrorMessage += "Amount cannot be empty. ";
+        } else if (!isAmountNumeric) {
+            inputFieldsErrorMessage += "Amount must be 0 or 2 decimal places, up to 7 digits long"
+                    + " (excluding decimal places)";
+        }
+        return inputFieldsErrorMessage;
+    }
+
+    /**
+     * Checks whether all the mandatory fields are present.
+     *
+     * @param userInput User input.
+     * @return True if all mandatory fields are present, false otherwise.
      */
     private static boolean isOptionsPresent(String userInput) {
         return userInput.contains(" /n ") && userInput.contains(" /d ") && userInput.contains(" /a ");
     }
 
     /**
-     * Checks whether expense amount is a number
-     * @param expenseAmountAsString Expense amount as a String
-     * @return True if expense amount is a number, false otherwise
+     * Checks whether expense amount is a number.
+     *
+     * @param expenseAmountAsString Expense amount as a String.
+     * @return True if expense amount is a number, false otherwise.
      */
     private static boolean isAmountNumericString(String expenseAmountAsString) {
         Pattern pattern = Pattern.compile(AMOUNT_PATTERN, Pattern.CASE_INSENSITIVE);
@@ -97,9 +116,10 @@ public class AddParser {
     }
 
     /**
-     * Checks whether the keywords are not repeated
-     * @param userInput User input
-     * @return True if the keywords are not repeated, false otherwise
+     * Checks whether the keywords are not repeated.
+     *
+     * @param userInput User input.
+     * @return True if the keywords are not repeated, false otherwise.
      */
     private static boolean isOptionsAppearOnce(String userInput) {
         for (String option : ADD_COMMAND_OPTIONS) {
@@ -111,10 +131,11 @@ public class AddParser {
     }
 
     /**
-     * Extracts a specification about the expense to add from user input as denoted by a keyword
-     * @param userInputArray User input as an array of Strings
-     * @param option The keyword that denotes which information to extract
-     * @return A specification about the expense to add
+     * Extracts a specification about the expense to add from user input as denoted by a keyword.
+     *
+     * @param userInputArray User input as an array of Strings.
+     * @param option The keyword that denotes which information to extract.
+     * @return A specification about the expense to add.
      */
     private static String getOptionField(String[] userInputArray, String option) {
         StringBuilder optionField = new StringBuilder();
@@ -135,9 +156,10 @@ public class AddParser {
     }
 
     /**
-     * Checks whether a word is a keyword
-     * @param word The word to check
-     * @return True if the word is a keyword, false otherwise
+     * Checks whether a word is a keyword.
+     *
+     * @param word The word to check.
+     * @return True if the word is a keyword, false otherwise.
      */
     private static boolean isWordOption(String word) {
         for (String option : ADD_COMMAND_OPTIONS) {

@@ -4,11 +4,11 @@ skinparam Style strictuml
 box Category Command Logic
 
 participant ":Logic   " as logic
-participant "<<class>>\n:CategoryParser" as CategoryParser
-participant ":Category" as Category
+participant "<<class>>\nCategoryParser" as CategoryParser
+participant "<<class>>\nCategory" as Category
 participant ":CategoryCommand" as CategoryCommand
 participant ":InvalidCommand" as InvalidCommand
-participant ":GeneralInputParser" as generalinputparser
+participant "<<class>>\nGeneralInputParser" as generalinputparser
 activate logic
 logic -> generalinputparser : getCommandFromUserInput(userInput:String)
 activate generalinputparser
@@ -59,6 +59,7 @@ else InvalidCommand
     activate InvalidCommand
     InvalidCommand -> InvalidCommand : printErrorMessage()
     activate InvalidCommand
+    InvalidCommand -[dashed]-> InvalidCommand
     deactivate InvalidCommand
     InvalidCommand -[dashed]-> logic
     destroy InvalidCommand

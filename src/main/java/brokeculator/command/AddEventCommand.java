@@ -16,6 +16,12 @@ public class AddEventCommand extends Command {
         this.eventDescription = eventDescription;
     }
 
+    /**
+     * Creates an event with the given name and description.
+     * Adds the event to the dashboard's event manager.
+     *
+     * @param dashboard the dashboard that contains the event manager.
+     */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         Event event = new Event(eventName, eventDescription);

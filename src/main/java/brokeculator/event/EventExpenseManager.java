@@ -9,7 +9,7 @@ import brokeculator.storage.parsing.SaveableType;
 
 import java.util.ArrayList;
 
-public class EventExpenseDataIntegrityManager {
+public class EventExpenseManager {
 
     private static final Keyword EXPENSE_KEYWORD = new Keyword("|__EXPENSE__|:", "expense", false);
     private static final Keyword EVENT_KEYWORD = new Keyword("|__EVENT__|:", "event", false);
@@ -18,15 +18,16 @@ public class EventExpenseDataIntegrityManager {
     private final EventManager eventManager;
     private final ExpenseManager expenseManager;
 
-    public EventExpenseDataIntegrityManager(EventManager eventManager, ExpenseManager expenseManager) {
+    public EventExpenseManager(EventManager eventManager, ExpenseManager expenseManager) {
         this.eventManager = eventManager;
         this.expenseManager = expenseManager;
     }
 
     /**
-     * Removes the connection between the expense and the event it belongs to
-     * If the expense does not belong to any event, nothing happens
-     * @param expense Expense to be removed from the event
+     * Removes the connection between the expense and the event it belongs to.
+     * If the expense does not belong to any event, nothing happens.
+     *
+     * @param expense Expense to be removed from the event.
      */
     public static void removeConnectionFromOwningEvent(Expense expense) {
         assert expense != null : "Expense cannot be null";
@@ -39,10 +40,11 @@ public class EventExpenseDataIntegrityManager {
     }
 
     /**
-     * Builds a connection between the expense and the event
-     * If the expense already belongs to an event, it is removed from that event
-     * @param expense Expense to be connected to the event
-     * @param event Event to which the expense is to be connected
+     * Builds a connection between the expense and the event.
+     * If the expense already belongs to an event, it is removed from that event.
+     *
+     * @param expense Expense to be connected to the event.
+     * @param event Event to which the expense is to be connected.
      */
     public static void buildConnection(Expense expense, Event event) {
         assert expense != null : "Expense cannot be null";
@@ -53,8 +55,7 @@ public class EventExpenseDataIntegrityManager {
     }
 
     /**
-     * Returns a string representation of all connections between expenses and events
-     * @return String representation of all connections between expenses and events
+     * Returns a string representation of all connections between expenses and events.
      */
     public String getConnectionsStringRepresentation() {
         StringBuilder sb = new StringBuilder();
@@ -76,11 +77,12 @@ public class EventExpenseDataIntegrityManager {
 
     /**
      * Loads connection between expenses and events from a string representation
-     * @param connectionStringRepresentation String representation of a connection 
+     *
+     * @param stringRepresentation String representation of a connection
      * @throws Exception If an invalid connection is detected
      */
-    public void loadConnectionFromStringRepresentation(String connectionStringRepresentation) throws Exception {
-        String[] connectionDetails = OrderParser.parseOrder(connectionStringRepresentation, CONNECTION_KEYWORDS);
+    public void loadConnection(String stringRepresentation) throws Exception {
+        String[] connectionDetails = OrderParser.parseOrder(stringRepresentation, CONNECTION_KEYWORDS);
         int expenseIndex = Integer.parseInt(connectionDetails[0]);
         int eventIndex = Integer.parseInt(connectionDetails[1]);
         Expense expense = expenseManager.getExpense(expenseIndex);

@@ -11,18 +11,20 @@ public class FileKeyword {
 
     /**
      * Formats the string representation of a saveable object with the keyword
+     *
      * @param saveableType Type of the saveable object
-     * @param originalStringRepresentation Original string representation of the saveable object
+     * @param stringRepresentation Original string representation of the saveable object
      * @return Formatted string representation with the keyword
      */
-    public static String formatWithKeyword(SaveableType saveableType, String originalStringRepresentation) {
-        return FILE_KEYWORDS.get(saveableType) + originalStringRepresentation;
+    public static String formatWithKeyword(SaveableType saveableType, String stringRepresentation) {
+        return FILE_KEYWORDS.get(saveableType) + stringRepresentation;
     }
 
     /**
-     * Gets the saveable type of the object from the file string
-     * @param fileString File string
-     * @return Saveable type of the object
+     * Gets the saveable type of the object from the file string.
+     *
+     * @param fileString File string.
+     * @return Saveable type of the object.
      */
     public static SaveableType getSaveableType(String fileString) {
         for (Map.Entry<SaveableType, String> entry : FILE_KEYWORDS.entrySet()) {
@@ -36,9 +38,10 @@ public class FileKeyword {
     }
 
     /**
-     * Removes the keyword from the file string
-     * @param fileString File string
-     * @return File string without the keyword
+     * Removes the keyword from the file string.
+     *
+     * @param fileString File string.
+     * @return File string without the keyword.
      */
     public static String removeKeyword(String fileString) {
         SaveableType saveableType = getSaveableType(fileString);

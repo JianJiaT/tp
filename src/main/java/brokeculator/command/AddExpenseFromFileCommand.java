@@ -11,6 +11,12 @@ public class AddExpenseFromFileCommand extends Command{
         this.fileString = fileString;
     }
 
+    /**
+     * Creates an expense from the file string.
+     * Adds the expense to the dashboard's expense manager.
+     *
+     * @param dashboard the dashboard that contains the expense manager.
+     */
     @Override
     public void execute(Dashboard dashboard, UI ui) {
         try {
