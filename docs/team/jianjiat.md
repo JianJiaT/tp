@@ -21,6 +21,7 @@ fulfill the functionality of adding, deleting, listing and summarising expenses
 ### 1. Enhanced expense summarising
 * Enhanced SummariseParser to dynamically parse user input to check if relevant parameters are present. This tackles the 
 challenge that all of the parameters for expense summarising are optional
+* Added the functionality of summarising expenses by expense description and category
 * Made expense summarising also print out the expenses that are summarised, not just the summary alone
 * Ensured that the expense summary is always printed in 2 decimal points
 
@@ -32,6 +33,9 @@ the help command
 
 ## Contributions to the Developer Guide
 * Added implementation details and sequence diagram for summarising expenses
+
+## Contributions to team-based tasks
+* Managed GitHub issues by assigning relevant labels and milestones to PRs and issues and relating PRs to relevant issues
 
 ## Contributions to Javadoc comments
 * Added Javadoc comments for expense adding, deleting, listing and summarising

@@ -20,13 +20,13 @@ of the program and calling the respective classes to handle the user input and c
 ### 2.AddParser
 The AddParser class is used to parse the user input for the add command. 
 It returns an InvalidCommandException if the user input is invalid, else it returns an AddCommand command.
-Main challenges faced was coming up with a way to dynamically parse the user input. 
+- Main challenges faced was coming up with a way to dynamically parse the user input. 
 
 ### 3. Added category class and corresponding commands/parsers
 The category class is used to store the categories that the user has added. It also handles the deletion of categories.
 This class also checks if the expense entered from files/commands has a valid category.
-Main challenges faced were a result of coordinating with the other classes to preserve data integrity
-The commands and parser serve as the interface for the user to interact with the category class.
+- Main challenges faced were a result of coordinating with the other classes to preserve data integrity
+- The commands and parser serve as the interface for the user to interact with the category class.
 
 ## Enhancements implemented
 ### 1. Added dynamic parsing in AddParser
@@ -43,17 +43,17 @@ due to edge cases not being handled the corresponding parseDouble function.
 ## Contribution to team tasks
 - Setting up tooling such as github milestones and issues, github actions.
 - Maintaining issue tracker
-- Updating user and developer docs not related to features
+- Updated user and developer docs not related to features
 
 ## Contributions to the User Guide 
-- Gave rough structure to the user guide and filled up details for the commands (refer to reposense)
+- Added structure to the user guide and filled up details for some commands (refer to reposense)
 - Added FAQ section to the user guide to avoid user confusion on file corruption issues
 - Added command summary section
 
 ## Contributions to the Developer Guide
-- Filled up the class and sequence diagrams for the category class
-- Set up instructions on manual testing
-- Filled up user stories component
+- Added the explanations, class and sequence diagrams for the category class
+- Added instructions on manual testing
+- Added user stories section
 
 <div style="page-break-after: always;"></div>
 
