@@ -137,8 +137,8 @@ The `SummariseParser` class is responsible for constructing a `SummariseCommand`
 execution would call the `summariseExpenses` method of the application's `ExpenseManager` object to obtain a summary of the expenses
 currently tracked.
 
-The following sequence diagram shows how user input is parsed to produce a summary of expenses in accordance with user
-specifications:
+The following sequence diagram shows how user input (containing the keyword `summarise`) is parsed to produce a summary 
+of expenses in accordance with user specifications:
 
 ![img.png](images/summarise_sequence.png)
 
@@ -153,8 +153,8 @@ of the user input
 4. The `Logic` class calls the `execute(Dashboard dashboard)` method of the returned `Command` object
 5. Upon execution, a `SummariseCommand` object would retrieve a reference to the `ExpenseManager` object stored within the 
 `dashboard` and execute its `summariseExpenses` method, passing in its fields as parameters to the method call. This summarises
-the expenses stored in the `ExpenseManager` object according to the user's specifications. The summary is then printed 
-by the `UI` class to be viewed by the user
+the expenses stored in the `ExpenseManager` object according to the user's specifications. The list of summarised expenses 
+and the summary is then printed by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
 
 ### Event
