@@ -5,8 +5,8 @@ Brokeculator is a CLI application designed for university students to log and vi
 expenses. It aims to tackle the challenge they face of managing a myriad of expenses across various categories.
 
 # Table of contents
-* [Summary of contributions](#Summary-of-contributions)
-* [Contributions to the Developer Guide (extracts)](#Contributions-to-the-developer-guide-extracts)
+* [Summary of contributions](#summary-of-contributions)
+* [Contributions to the Developer Guide (extracts)](#contributions-to-the-developer-guide-extracts)
 
 # Summary of contributions
 ## Code contributed 
