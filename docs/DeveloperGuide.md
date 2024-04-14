@@ -349,6 +349,7 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 <div style="page-break-after: always;"></div>
 
 ### User Stories
+
 | Version | As a... | I want to... | So that I can... |
 | v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | manage my expenses based on my budgets |
 | v1.0 | student | view the expenses I have logged | know how much I have spent |
