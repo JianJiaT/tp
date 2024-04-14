@@ -41,7 +41,7 @@
 ## Design
 
 ### Architecture
-![img.png](images/architecture.png)\
+![img.png](images/architecture.png)
 The **Architecture Diagram** given above explains the high-level design of the App.\
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -90,7 +90,6 @@ The following code snippet shows how the `GeneralInputParser` class is used to p
     }
 ```
 
-<div style="page-break-after: always;"></div>
 To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
 ![img.png](images/overview.png)
 
