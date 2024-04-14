@@ -15,8 +15,8 @@ public class Event implements Saveable {
             = new Keyword("|__EVENT_DESCRIPTION__|:", "event description", false);
     private static final Keyword[] SAVING_KEYWORDS = {NAME_KEYWORD, DESCRIPTION_KEYWORD};
 
-    private String eventName;
-    private String eventDescription;
+    private final String eventName;
+    private final String eventDescription;
     private ArrayList<Expense> expenses;
 
     public Event(String eventName, String eventDescription) {
@@ -69,6 +69,8 @@ public class Event implements Saveable {
 
     /**
      * Returns the number of expenses in the event.
+     *
+     * @return the number of expenses in the event.
      */
     public int getExpenseCount() {
         return expenses.size();
@@ -80,7 +82,21 @@ public class Event implements Saveable {
     }
 
     /**
+     * Returns the total amount of expenses in the event
+     *
+     * @return the total amount of expenses in the event
+     */
+    public double getTotalExpenses() {
+        double total = 0;
+        for (Expense expense : this.expenses) {
+            total += expense.getAmount();
+        }
+        return total;
+    }
+    /**
      * Returns a string representation of all expenses in the event for printing.
+     *
+     * @return a string representation of all expenses in the event for printing.
      */
     public String listExpenses() {
         StringBuilder sb = new StringBuilder();

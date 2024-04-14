@@ -3,7 +3,6 @@ package brokeculator.parser;
 import brokeculator.command.Command;
 import brokeculator.command.InvalidCommand;
 import brokeculator.command.ListCommand;
-import brokeculator.errors.ErrorMessages;
 import brokeculator.enumerators.CommandErrorMessages;
 
 public class ListParser {
@@ -24,11 +23,11 @@ public class ListParser {
         } else if (userInputAsArray.length == 3 && userInputAsArray[1].trim().equals("/a")) {
             try {
                 amountToList = Integer.parseInt(userInputAsArray[2]);
-                if (amountToList < 0) {
-                    return new InvalidCommand("Amount to list must be non-negative");
+                if (amountToList <= 0) {
+                    return new InvalidCommand("Amount to list must be one or greater");
                 }
             } catch (NumberFormatException e) {
-                return new InvalidCommand(ErrorMessages.INVALID_INDEX);
+                return new InvalidCommand("Invalid amount to list");
             }
         } else {
             return new InvalidCommand(CommandErrorMessages.INVALID_LIST_COMMAND.getString());

@@ -37,10 +37,11 @@
 
 * [JLine](https://github.com/jline/jline3)
 
+<div style="page-break-after: always;"></div>
 ## Design
 
 ### Architecture
-![img.png](images/architecture.png)\
+![img.png](images/architecture.png)
 The **Architecture Diagram** given above explains the high-level design of the App.\
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -89,8 +90,6 @@ The following code snippet shows how the `GeneralInputParser` class is used to p
     }
 ```
 
-
-
 To illustrate the flow of the application, the sequence diagram below shows how the user input is processed to add an expense:
 ![img.png](images/overview.png)
 
@@ -104,6 +103,7 @@ Without loss of generality, the high-level execution flow of the application is 
 7. The command object interacts with the relevant manager classes via the dashboard to perform the desired operation
 8. The `UI` class prints feedback, if any, to the user
 
+<div style="page-break-after: always;"></div>
 ## Implementation
 This section describes the implementation details of selected features of the Brokeculator application.
 
@@ -121,9 +121,13 @@ The `Category` class is supplemented by the following classes to interact with t
 - `CategoryCommand` This class is responsible for handling and executing the commands related to categories 
 - `CategoryParser` It is responsible for parsing the user input
 
+<div style="page-break-after: always;"></div>
 The UML diagram below shows the main relationships between the classes in the category feature.
 ![category_class.png](images/category_class.png)
 <br>
+
+<div style="page-break-after: always;"></div>
+
 The Following sequence diagram shows how a user input is processed to add, delete or list the categories:
 ![category_parse_sequence.png](images/category_parse_sequence.png)
 <br>
@@ -147,6 +151,7 @@ In addition, at program initialisation, the function `setDashboard(dashboard: Da
 is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
+<div style="page-break-after: always;"></div>
 ### Summarising expenses
 **Implementation** <br>
 The expense summarising functionality is mainly facilitated by the `SummariseCommand`and `SummariseParser` classes. 
@@ -173,6 +178,8 @@ of the user input
 the expenses stored in the `ExpenseManager` object according to the user's specifications. The list of summarised expenses 
 and the summary is then printed by the `UI` class to be viewed by the user
 6. Executing an `InvalidCommand` object would instead have its error message printed by the `UI` class to be viewed by the user
+
+<div style="page-break-after: always;"></div>
 
 ### Event
 **Implementation** <br>
@@ -202,6 +209,8 @@ The following sequence diagram show how a (valid) user input is processed by the
 to create an `AddEventCommand`: <br>
 ![img.png](images/addEventCommand.png) <br>
 
+<div style="page-break-after: always;"></div>
+
 This sequence diagram shows how an `AddEventCommand` is then executed to create an `Event` and 
 add it to the `EventManager`
 ![img.png](images/executeAddEventCommand.png)
@@ -213,6 +222,8 @@ add it to the `EventManager`
 4. When executed, the `AddEventCommand` object creates an `Event` object with the event name and description
 5. The `AddEventCommand` object calls the `addEvent` method in the `EventManager` class to add the event created in step 4
 6. Feedback is given to the user via the UI
+
+<div style="page-break-after: always;"></div>
 
 The following sequence diagram shows the execution of an `AddExpenseToEventCommand` command object <br>
 
@@ -226,6 +237,8 @@ The following sequence diagram shows the execution of an `AddExpenseToEventComma
 5. The original owning event of the expense is retrieved 
 6. If the expense has an owning event, the expense is removed from the owning event. Note that this owning event is different from the event the expense is being added to, else the command execution would have been terminated in step 4
 7. The expense is added to the new event, and its owning event is updated
+
+<div style="page-break-after: always;"></div>
 
 ### Storage
 The saving of data is managed by `FileKeyword`, `GeneralFileParser` and `FileManager`. The `FileKeyword` class is responsible for identifying the type of data stored in a file, the `GeneralFileParser` class invokes the appropriate parser based on the type of data, and the `FileManager` class reads and writes data to files.
@@ -247,7 +260,7 @@ Without loss of generality, we will explain how data is stored in the files usin
 3. The `FileManager` class writes the string representation to the file
 4. When the application is started, the `GeneralFileParser` class reads the string representation from the file and deciphers the `SaveableType` using the `FileKeyword` class
 5. The `GeneralFileParser` class then removes the keyword using the `FileKeyword` class and creates an `AddExpenseFromFileCommand` object with the original string representation as a parameter
-6. The `AddExpenseFromFileCommand` object is executed, and the string representation is passed to the `Expens` class to create the `Expense` object
+6. The `AddExpenseFromFileCommand` object is executed, and the string representation is passed to the `Expense` class to create the `Expense` object
 
 The following code snippet shows how the GeneralFileParser class is used to parse the data in the files:
 ```java
@@ -257,7 +270,8 @@ The following code snippet shows how the GeneralFileParser class is used to pars
         if (saveableType == null) {
             return new InvalidCommand("Corrupted entry: " + fileString);
         }
-        String fileStringWithoutKeyword = FileKeyword.removeKeyword(fileString);
+        String fileStringWithoutKeyword = 
+                FileKeyword.removeKeyword(fileString);
         switch (saveableType) {
         case EXPENSE:
             return new AddExpenseFromFileCommand(fileStringWithoutKeyword);
@@ -273,6 +287,8 @@ The following code snippet shows how the GeneralFileParser class is used to pars
     }
 ```
 Any data stored in the files should be registered with the `FileKeyword` class to ensure that the data can be correctly identified and parsed. It is worth mentioning that the `FileKeyword` does not modify the original data, but only returns a formatted string with the keyword.
+
+<div style="page-break-after: always;"></div>
 
 ### UI
 **Implementation**\
@@ -291,9 +307,11 @@ public class TerminalHandler {
     public TerminalHandler() {
         try {
             terminal = TerminalBuilder.builder().system(true).build();
-            lineReader = LineReaderBuilder.builder().terminal(terminal).build();
+            lineReader = LineReaderBuilder.builder()
+                    .terminal(terminal).build();
         } catch (Exception e) {
-            Logger logger = Logger.getLogger(TerminalHandler.class.getName());
+            Logger logger = 
+                    Logger.getLogger(TerminalHandler.class.getName());
             logger.severe("Error creating terminal: " + e.getMessage());
             System.exit(1);
         }
@@ -305,6 +323,8 @@ public class TerminalHandler {
 **JLine Features**
 1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
 2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Requirements
 
@@ -322,25 +342,29 @@ Brokeculator is a CLI application designed for university students to log and vi
 As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
 valuable resource for university students. The application also allows for the categorization of expenses,
 and classification of expenses into events, which is useful for students who need to track their spending habits.
-The application also allows for the import and export of data from a CSV file, which is useful for students who use multiple devices,
+The application also allows for the import and export of data from files, which is useful for students who use multiple devices,
 but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
+<div style="page-break-after: always;"></div>
+
 ### User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|\
-| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |\
-| v1.0 | student | view the expenses I have logged | know how much I have spent |\
-| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |\
-| v1.0 | student | have the ability to add expenses | ------------------ |\
-| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |\
-| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |\
-| v2.0 | university student | retrieve spending based on time periods | track important spending days |\
-| v2.0 | new user | see instructions on how to use the CLI commands| understand how to use the application |\
-| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately |\
-| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |\
-| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
-| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
+| Version | As a... | I want to... | So that I can... |
+| v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | manage my expenses based on my budgets |
+| v1.0 | student | view the expenses I have logged | know how much I have spent |
+| v1.0 | paranoid user | save my expenses into a file | backup locally via a file to prevent data loss |
+| v1.0 | student | have the ability to add expenses | ------------------ |
+| v1.0 | student | have the ability to delete expenses | remedy my erroneous expenses |
+| v1.0 | student who cares about privacy | track expenses offline | retain my privacy |
+| v2.0 | university student | retrieve spending based on time periods | track important spending days |
+| v2.0 | new user | see instructions on how to use the CLI commands | understand how to use the application |
+| v2.0 | student | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately |
+| v2.0 | student frequently using excel | import/export existing data from spreadsheet/csv | record existing information |
+| v2.0 | student | log expenses based on their categories | manage my spending habits within each category |
+| v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |
+
+<div style="page-break-after: always;"></div>
 
 ### Use Cases
 
@@ -534,17 +558,24 @@ For all use cases below, the System is `Brokeculator` and the Actor is the `user
   - **Use case ends.**
 
 ### Non-Functional Requirements
-
 1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
-2. **Performance**: The application should be able to handle user input without significant lag
-3. **Reliability**: The application should be able to handle user input without crashing
+2. **Performance**: The application should be able to handle any user input and provide feedback within 2 seconds
+3. **Reliability**: The application should be able to handle illegal user input without crashing, and provide feedback to the user
 4. **Usability**: The application should be easy to use for users familiar with CLI applications, instructions should be clear,
 and what the application carried out based on user input should be clear to the user
-
+5. **Volatility**: Since the application data is stored in txt files, there is a risk of users accidentally modifying the data. The application should be able to handle corrupted data files and provide feedback to the user
+6. **Persistence**: As users can terminate the application quickly via terminal commands at any time, the application should be able to save the data to the files before termination
+7. **Scalability**: The application should be able to handle up to 10000 expenses and events without crashing
+8. **Security**: The application should not request any personal information from the user, and the data should be stored locally in the user's device
+9. **Stability**: The application should be able to reject illegal user input such as invalid dates and negative amounts, and provide feedback to the user
 
 ### Glossary
 
 * *mainstream OS* - Windows, Linux, MacOS
+* *CLI* - Command Line Interface
+* *MSS* - Main Success Scenario
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Instructions for manual testing
 
@@ -668,7 +699,7 @@ The user should be able to summarise all the expenses by typing `summarise` and 
 The total is $136.00
 ------------------------------------
 ```
-The user can view the expenses on 12 Decmber 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
+The user can view the expenses on 12 December 2024 by typing `summarise /start 12-12-2024 /end 12-12-2024` and pressing enter. The user should see the following:
 ```dtd
 ------------------------------------
 1. test1 $16.00 (Thursday, 12 December 2024)
@@ -775,7 +806,8 @@ upon typing `viewEvent /i 3` and pressing enter, the user should see the followi
 ```dtd
 ------------------------------------
 eventtest3 (test 3)
-Event has 1 expenses:
+Event has 1 expenses. 
+Total amount spent = $100.00
 test3 $100.00 (Friday, 12 January 2024) [CAT3]
 ------------------------------------
 ```
