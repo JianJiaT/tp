@@ -135,7 +135,7 @@ The Following sequence diagram shows how a user input is processed to add, delet
 1. The user enters a command to add a category
 2. The `CategoryParser` class parses the user input and returns a `CategoryCommand` object or an `InvalidCommand` object
 depending on whether the user input is valid or not
-3. The returned Command object is executed by the Logic Class (omitted in the diagram for brevity)
+3. The returned Command object is executed by the Logic Class
 4. The appropriate method in the `Category` class is called to add the category, based on how the constructor
 of the `CategoryCommand` object was called. result of the command would be returned from the `Category` class
 to the `CategoryCommand` object, which would then be printed by the `UI` class to be viewed by the user (printing 
@@ -147,7 +147,7 @@ This is facilitated by the `FileManager` and `GeneralFileParser` classes, with t
 The `GeneralFileParser` class reads the file and returns a list of strings.
 The process is shown in the sequence diagram below:
 ![category_load_sequence.png](images/category_load_sequence.png)
-In addition, at program initialisation, the function `setDashboard(dashboard: Dashboard)`
+In addition, at program initialization, the function `setDashboard(dashboard: Dashboard)`
 is called to set the dashboard object in the `Category` class.
 This is to allow the `Category` class to access the `ExpenseManager` object stored in the `Dashboard` object.
 
