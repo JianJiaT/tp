@@ -8,7 +8,7 @@ participant "<<class>>\nGeneralFileParser" as generalFileParser
 participant ":Logic" as logic
 participant ":AddCategoryFromFileCommand" as AddCategoryFromFileCommand
 
-
+activate logic
 logic -> logic: loadFile(SavableType.CATEGORY)
 activate logic
 logic -> fileManager: openCategoryFile()
@@ -51,6 +51,7 @@ deactivate fileManager
 
         end
     end
+
     logic -[dashed]-> logic
     deactivate logic
 end box
