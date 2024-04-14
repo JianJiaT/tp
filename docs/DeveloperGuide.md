@@ -342,27 +342,27 @@ Brokeculator is a CLI application designed for university students to log and vi
 As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
 valuable resource for university students. The application also allows for the categorization of expenses,
 and classification of expenses into events, which is useful for students who need to track their spending habits.
-The application also allows for the import and export of data from a CSV file, which is useful for students who use multiple devices,
+The application also allows for the import and export of data from files, which is useful for students who use multiple devices,
 but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
 <div style="page-break-after: always;"></div>
 
 ### User Stories
-| Version | As a...                         | I want to...                                                                                | So that I can...                               |
-|---------|---------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------|
-| v1.0    | student                         | see a basic summary of my expenses to see how much i have spent in total                    | manage my expenses based on my budgets         |
-| v1.0    | student                         | view the expenses I have logged                                                             | know how much I have spent                     |
-| v1.0    | paranoid user                   | save my expenses into a file                                                                | backup locally via a file to prevent data loss |
-| v1.0    | student                         | have the ability to add expenses                                                            | ------------------                             |
-| v1.0    | student                         | have the ability to delete expenses                                                         | remedy my erroneous expenses                   |
-| v1.0    | student who cares about privacy | track expenses offline                                                                      | retain my privacy                              |
-| v2.0    | university student              | retrieve spending based on time periods                                                     | track important spending days                  |
-| v2.0    | new user                        | see instructions on how to use the CLI commands                                             | understand how to use the application          |
-| v2.0    | student                         | search and filter expenses based on various criteria such as dates, keywords and categories | track my spending more accurately              |
-| v2.0    | student frequently using excel  | import/export existing data from spreadsheet/csv                                            | record existing information                    |
-| v2.0    | student                         | log expenses based on their categories                                                      | manage my spending habits within each category |
-| v2.0    | university committee member     | classify expenses in groups of events                                                       | check expenses of events organized             |
+| Version   | As a...                         | I want to...                                                                                 | So that I can...                                 |
+| --------- | ------------------------------- | -------------------------------------------------------------------------------------------- |  ----------------------------------------------- |
+| v1.0      | student                         | see a basic summary of my expenses to see how much i have spent in total                     | manage my expenses based on my budgets           |
+| v1.0      | student                         | view the expenses I have logged                                                              | know how much I have spent                       |
+| v1.0      | paranoid user                   | save my expenses into a file                                                                 | backup locally via a file to prevent data loss   |
+| v1.0      | student                         | have the ability to add expenses                                                             | ------------------                               |
+| v1.0      | student                         | have the ability to delete expenses                                                          | remedy my erroneous expenses                     |
+| v1.0      | student who cares about privacy | track expenses offline                                                                       | retain my privacy                                |
+| v2.0      | university student              | retrieve spending based on time periods                                                      | track important spending days                    |
+| v2.0      | new user                        | see instructions on how to use the CLI commands                                              | understand how to use the application            |
+| v2.0      | student                         | search and filter expenses based on various criteria such as dates, keywords and categories  | track my spending more accurately                |
+| v2.0      | student frequently using excel  | import/export existing data from spreadsheet/csv                                             | record existing information                      |
+| v2.0      | student                         | log expenses based on their categories                                                       | manage my spending habits within each category   |
+| v2.0      | university committee member     | classify expenses in groups of events                                                        | check expenses of events organized               |
 
 <div style="page-break-after: always;"></div>
 
@@ -572,6 +572,8 @@ and what the application carried out based on user input should be clear to the 
 ### Glossary
 
 * *mainstream OS* - Windows, Linux, MacOS
+* *CLI* - Command Line Interface
+* *MSS* - Main Success Scenario
 
 <div style="page-break-after: always;"></div>
 
