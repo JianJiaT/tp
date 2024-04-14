@@ -8,13 +8,30 @@
   * [Summarising expenses](#summarising-expenses)
   * [Event](#event)
   * [Storage](#storage)
-* [Product scope](#product-scope)
-  * [Target user profile](#target-user-profile)
-  * [Value proposition](#value-proposition)
-* [User Stories](#user-stories)
-* [Non-Functional Requirements](#non-functional-requirements)
-* [Glossary](#glossary)
-* [Instructions for manual testing](#instructions-for-manual-testing)
+  * [UI](#ui)
+* [Appendix: Requirements](#appendix-requirements)
+  * [Product scope](#product-scope)
+  * [User Stories](#user-stories)
+  * [Use Cases](#use-cases)
+  * [Non-Functional Requirements](#non-functional-requirements)
+  * [Glossary](#glossary)
+* [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+  * [Testing loading of data](#testing-loading-of-data)
+  * [Testing of viewing expenses](#testing-of-viewing-expenses)
+  * [Testing of viewing categories](#testing-of-viewing-categories)
+  * [Testing of viewing events](#testing-of-viewing-events)
+  * [Testing of viewing expenses in events](#testing-of-viewing-expenses-in-events)
+  * [Basic testing of summarising expenses](#basic-testing-of-summarising-expenses)
+  * [Testing of cycling through command history](#testing-of-cycling-through-command-history)
+  * [Testing of adding an expense](#testing-of-adding-an-expense)
+  * [Testing of deleting an expense](#testing-of-deleting-an-expense)
+  * [Testing of adding an event](#testing-of-adding-an-event)
+  * [Testing of deleting an event](#testing-of-deleting-an-event)
+  * [Testing of adding an expense to an event](#testing-of-adding-an-expense-to-an-event)
+  * [Testing of deleting an expense from an event](#testing-of-deleting-an-expense-from-an-event)
+  * [Testing of adding a category](#testing-of-adding-a-category)
+  * [Testing of deleting a category](#testing-of-deleting-a-category)
+* [Manual testing to get full coverage](#manual-testing-to-get-full-coverage)
 
 ## Acknowledgements
 
@@ -289,14 +306,17 @@ public class TerminalHandler {
 1. The history feature in the `UI` allows users to navigate through their previous inputs using the `up` and `down` arrow keys. This feature is managed by the `LineReader` object within `TerminalHandler` and is a built-in capability provided by JLine. The history functionality is automatically enabled for the line reader, storing user inputs and allowing retrieval during the session.
 2. The JLine library allows the user to edit their input using the arrow keys. This feature is enabled by default in the `LineReader` object and provides a familiar command-line interface experience for users.
 
+## Appendix: Requirements
 
-## Product scope
-### Target user profile
+### Product scope
+
+**Target user profile**
 
 This project is designed to cater to the needs of university students who encounter the challenge of managing a myriad of expenses across various categories.
 university students also do not have an extreme amount of expenses and a large budget to track, so having a simple CLI application to track expenses would be sufficient,
 rather than a large scale application with a database management system.
-### Value proposition
+
+**Value proposition**
 
 Brokeculator is a CLI application designed for university students to log and view their expenses. 
 As a CLI application, it allows for faster input of expenses compared to GUI applications, saving time, a 
@@ -306,7 +326,7 @@ The application also allows for the import and export of data from a CSV file, w
 but do not want to reveal their data via the internet.
 For experienced CLI users, they can enter their expenses faster compared to GUI applications
 
-## User Stories
+### User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|\
 | v1.0 | student | see a basic summary of my expenses to see how much i have spent in total | ------------------ |\
@@ -322,7 +342,198 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 | v2.0 | student | log expenses based on their categories | manage my spending habits within each category |\
 | v2.0 | university committee member | classify expenses in groups of events | check expenses of events organized |\
 
-## Non-Functional Requirements
+### Use Cases
+
+For all use cases below, the System is `Brokeculator` and the Actor is the `user`, unless specified otherwise.
+
+**Use case: Add a category**
+
+**MSS**
+1. User requests to add a category.
+2. Brokeculator adds the category and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The category already exists.
+  - 2a1. Brokeculator shows a category already exists message.
+  - **Use case ends.**
+- 2b. The input format is invalid.
+  - 2b1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List categories**
+
+**MSS**
+1. User requests to list categories.
+2. Brokeculator shows a list of categories.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no categories to list.
+  - 2a1. Brokeculator shows a message indicating no categories.
+  - **Use case ends.**
+
+**Use case: Delete a category**
+
+**MSS**
+1. User requests to delete a specific category.
+2. Brokeculator deletes the category and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The category does not exist.
+  - 2a1. Brokeculator shows a category does not exist message.
+  - **Use case ends.**
+- 2b. The category is associated with an expense.
+  - 2b1. Brokeculator shows a message indicating the category is associated with an expense.
+  - **Use case ends.**
+
+**Use case: Add an expense**
+
+**MSS**
+1. User requests to add an expense with necessary details.
+2. Brokeculator adds the expense and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified category does not exist.
+  - 2a1. Brokeculator shows a category does not exist message.
+  - **Use case ends.**
+- 2b. The input format is invalid.
+  - 2b1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List expenses**
+
+**MSS**
+1. User requests to list expenses starting from a specific index.
+2. Brokeculator shows a list of expenses from the index.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no expenses to list from the given index.
+  - 2a1. Brokeculator shows a message indicating the list is empty.
+  - **Use case ends.**
+
+**Use case: Delete an expense**
+
+**MSS**
+1. User requests to delete an expense by index.
+2. Brokeculator deletes the expense and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: Summarise expenses**
+
+**MSS**
+1. User requests to summarise expenses with specific criteria.
+2. Brokeculator calculates and shows the expense summary.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The input format is invalid.
+  - 2a1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: Add an event**
+
+**MSS**
+1. User requests to add an event with a name and description.
+2. Brokeculator adds the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The input format is invalid.
+  - 2a1. Brokeculator shows an invalid format message.
+  - **Use case ends.**
+
+**Use case: List events**
+
+**MSS**
+1. User requests to list events.
+2. Brokeculator shows a list of events.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. There are no events to list.
+  - 2a1. Brokeculator shows a message indicating no events.
+  - **Use case ends.**
+
+**Use case: Delete an event**
+
+**MSS**
+1. User requests to delete an event by index.
+2. Brokeculator deletes the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: Add expense to event**
+
+**MSS**
+1. User requests to add an existing expense to an event using their respective indexes.
+2. Brokeculator adds the expense to the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified expense or event index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+- 2b. The expense is already associated with the event.
+  - 2b1. Brokeculator shows a message indicating the expense is already associated with the event.
+  - **Use case ends.**
+- 2c. The expense is associated with another event.
+  - 2c1. Brokeculator shows a message indicating the expense will be moved to the new event.
+  - **Use case ends.**
+
+**Use case: Delete expense from event**
+
+**MSS**
+1. User requests to delete an expense from an event using the expense index.
+2. Brokeculator deletes the expense from the event and shows a confirmation message.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+
+**Use case: List expenses in event**
+
+**MSS**
+1. User requests to view all expenses for a specific event by index.
+2. Brokeculator lists all expenses associated with the event.
+
+**Use case ends.**
+
+**Extensions**
+- 2a. The specified index is invalid.
+  - 2a1. Brokeculator shows an error message.
+  - **Use case ends.**
+- 2b. There are no expenses for the given event.
+  - 2b1. Brokeculator shows a message indicating the event has no associated expenses.
+  - **Use case ends.**
+
+### Non-Functional Requirements
 
 1. **OS requirements**: The application should be able to run on any mainstream OS with Java 11 installed
 2. **Performance**: The application should be able to handle user input without significant lag
@@ -331,11 +542,11 @@ For experienced CLI users, they can enter their expenses faster compared to GUI 
 and what the application carried out based on user input should be clear to the user
 
 
-## Glossary
+### Glossary
 
 * *mainstream OS* - Windows, Linux, MacOS
 
-## Instructions for manual testing
+## Appendix: Instructions for manual testing
 
 This section details how to do manual testing of the application. The following sections are to be followed in sequence to test the reliability of the application.
 
